@@ -1,0 +1,89 @@
+// PATHSapp data model
+// SQLite has no native enum support, so "enum-like" fields are plain
+// String columns; allowed values are enforced in the app layer (see
+// src/lib/constants.ts) and validated with zod before writing.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+/// A single advocacy/lobby objective ("labor de advocacy y lobby").
+model AdvocacyGoal {
+  id          String   @id @default(cuid())
+  name        String
+  /// "ACTION" (hacer cosas) | "OUTCOME" (conseguir cosas)
+  kind        String
+  responsible String
+  /// Optional thematic tag, e.g. "Acceso a tratamiento", "Financiación"
+  category    String?
+  description String?
+  targetDate  DateTime?
+  /// "NOT_STARTED" | "IN_PROGRESS" | "ACHIEVED" | "STALLED" | "CANCELLED"
+  status      String   @default("IN_PROGRESS")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  contacts   Contact[]
+  subtasks   Subtask[]
+  indicators Indicator[]
+}
+
+/// Someone to contact in order to move a goal forward.
+model Contact {
+  id           String   @id @default(cuid())
+  goalId       String
+  goal         AdvocacyGoal @relation(fields: [goalId], references: [id], onDelete: Cascade)
+  name         String
+  organization String?
+  role         String?
+  /// "DECISION_MAKER" (de quien depende conseguirlo) | "SUPPORTER" (quien puede ayudar)
+  relation     String
+  email        String?
+  phone        String?
+  notes        String?
+  createdAt    DateTime @default(now())
+
+  @@index([goalId])
+}
+
+/// A small, concrete action within a goal: a letter, call, meeting, event...
+model Subtask {
+  id          String   @id @default(cuid())
+  goalId      String
+  goal        AdvocacyGoal @relation(fields: [goalId], references: [id], onDelete: Cascade)
+  name        String
+  /// "LETTER" | "CALL" | "MEETING" | "ENCOUNTER" | "CAMPAIGN" | "OTHER"
+  actionType  String
+  /// Planned in advance vs. reactive/unplanned action
+  isPlanned   Boolean  @default(true)
+  dueDate     DateTime?
+  /// "PENDING" | "IN_PROGRESS" | "DONE" | "CANCELLED"
+  status      String   @default("PENDING")
+  responsible String?
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([goalId])
+}
+
+/// A success indicator / KPI, optionally linked to a specific goal.
+model Indicator {
+  id           String   @id @default(cuid())
+  goalId       String?
+  goal         AdvocacyGoal? @relation(fields: [goalId], references: [id], onDelete: SetNull)
+  name         String
+  targetValue  Float
+  currentValue Float    @default(0)
+  unit         String?
+  notes        String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([goalId])
+}

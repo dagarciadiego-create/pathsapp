@@ -1,0 +1,169 @@
+{
+  "Nav": {
+    "brand": "PATHSapp",
+    "tagline": "Hemophilia advocacy & lobby",
+    "home": "Advocacy goals",
+    "indicators": "Success indicators",
+    "language": "Language"
+  },
+  "Common": {
+    "add": "Add",
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "close": "Close",
+    "yes": "Yes",
+    "no": "No",
+    "optional": "optional",
+    "notes": "Notes",
+    "loading": "Loading…",
+    "noResults": "No results.",
+    "requiredField": "This field is required",
+    "confirmDeleteTitle": "Delete this item?",
+    "confirmDeleteBody": "This action cannot be undone.",
+    "saving": "Saving…",
+    "error": "Something went wrong. Please try again.",
+    "unassigned": "Unassigned",
+    "notSet": "Not set"
+  },
+  "Enums": {
+    "goalKind": {
+      "ACTION": "Action (doing)",
+      "OUTCOME": "Outcome (getting)"
+    },
+    "goalStatus": {
+      "NOT_STARTED": "Not started",
+      "IN_PROGRESS": "In progress",
+      "ACHIEVED": "Achieved",
+      "STALLED": "Stalled",
+      "CANCELLED": "Cancelled"
+    },
+    "contactRelation": {
+      "DECISION_MAKER": "Depends on them",
+      "SUPPORTER": "Can help achieve it"
+    },
+    "actionType": {
+      "LETTER": "Letter",
+      "CALL": "Phone call",
+      "MEETING": "Meeting",
+      "ENCOUNTER": "Encounter",
+      "CAMPAIGN": "Campaign",
+      "OTHER": "Other action"
+    },
+    "subtaskStatus": {
+      "PENDING": "Pending",
+      "IN_PROGRESS": "In progress",
+      "DONE": "Done",
+      "CANCELLED": "Cancelled"
+    },
+    "planned": {
+      "true": "Planned",
+      "false": "Unplanned"
+    }
+  },
+  "Home": {
+    "title": "Advocacy & lobby goals",
+    "subtitle": "Policy-influencing objectives the organization wants to drive forward.",
+    "newGoal": "New goal",
+    "searchPlaceholder": "Search by name, owner or category…",
+    "filterKindAll": "All types",
+    "filterStatusAll": "All statuses",
+    "emptyState": "No advocacy goals yet.",
+    "emptyStateFiltered": "No goals match the current filters.",
+    "responsible": "Owner",
+    "targetDate": "Target date",
+    "noTargetDate": "No date",
+    "progress": "Progress",
+    "subtasksDone": "{done} of {total} actions",
+    "noSubtasks": "No actions defined",
+    "viewDetails": "View details",
+    "summaryTotal": "Total goals",
+    "summaryAchieved": "Achieved",
+    "summaryInProgress": "In progress",
+    "summaryOverdue": "Past due date"
+  },
+  "GoalForm": {
+    "titleNew": "New advocacy goal",
+    "titleEdit": "Edit goal",
+    "name": "Goal name",
+    "namePlaceholder": "E.g. Public funding for coagulation factor X",
+    "kind": "Is this about doing things or getting something?",
+    "responsible": "Owner",
+    "responsiblePlaceholder": "Name of the person leading this goal",
+    "category": "Topic area",
+    "categoryPlaceholder": "E.g. Access to treatment, awareness…",
+    "description": "Description",
+    "descriptionPlaceholder": "What is this goal about, and why does it matter?",
+    "targetDate": "Date by which it should be achieved",
+    "status": "Status"
+  },
+  "GoalDetail": {
+    "backToList": "Back to list",
+    "deleteGoal": "Delete goal",
+    "contactsTitle": "Who to contact",
+    "contactsSubtitle": "Key people and organizations: who it depends on and who can help.",
+    "addContact": "Add contact",
+    "noContacts": "No contacts added yet.",
+    "subtasksTitle": "Actions & tasks",
+    "subtasksSubtitle": "Letters, calls, meetings, encounters or campaigns, planned or not.",
+    "addSubtask": "Add action",
+    "noSubtasks": "No actions added yet.",
+    "filterAllActions": "All",
+    "filterPlanned": "Planned",
+    "filterUnplanned": "Unplanned",
+    "indicatorsTitle": "Indicators for this goal",
+    "addIndicator": "Add indicator"
+  },
+  "ContactForm": {
+    "titleNew": "New contact",
+    "titleEdit": "Edit contact",
+    "name": "Name",
+    "organization": "Organization / institution",
+    "role": "Role",
+    "relation": "Relationship type",
+    "email": "Email",
+    "phone": "Phone"
+  },
+  "SubtaskForm": {
+    "titleNew": "New action",
+    "titleEdit": "Edit action",
+    "name": "Action description",
+    "namePlaceholder": "E.g. Letter to the Ministry of Health",
+    "actionType": "Action type",
+    "isPlanned": "Is it planned?",
+    "isPlannedHelp": "Mark as unplanned for a reactive or last-minute action.",
+    "dueDate": "Planned date",
+    "status": "Status",
+    "responsible": "Owner"
+  },
+  "Indicators": {
+    "title": "Success indicators",
+    "subtitle": "Quantitative tracking of progress for each goal and for the organization as a whole.",
+    "newIndicator": "New indicator",
+    "columnName": "Indicator",
+    "columnGoal": "Linked goal",
+    "columnTarget": "Target",
+    "columnCurrent": "Current",
+    "columnProgress": "% complete",
+    "globalIndicator": "General indicator (no goal assigned)",
+    "emptyState": "No indicators defined yet.",
+    "overallProgress": "Overall goal progress",
+    "achievedCount": "Achieved indicators"
+  },
+  "IndicatorForm": {
+    "titleNew": "New indicator",
+    "titleEdit": "Edit indicator",
+    "goal": "Linked goal",
+    "goalNone": "None (general indicator)",
+    "name": "Indicator name",
+    "namePlaceholder": "E.g. % of patients with access to treatment",
+    "targetValue": "Target value",
+    "currentValue": "Current value",
+    "unit": "Unit",
+    "unitPlaceholder": "E.g. %, meetings, people…"
+  },
+  "Footer": {
+    "installHint": "Tip: add PATHSapp to your phone's home screen to use it like an app."
+  }
+}

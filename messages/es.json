@@ -1,0 +1,169 @@
+{
+  "Nav": {
+    "brand": "PATHSapp",
+    "tagline": "Advocacy y lobby en hemofilia",
+    "home": "Labores de advocacy",
+    "indicators": "Indicadores de éxito",
+    "language": "Idioma"
+  },
+  "Common": {
+    "add": "Añadir",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "close": "Cerrar",
+    "yes": "Sí",
+    "no": "No",
+    "optional": "opcional",
+    "notes": "Notas",
+    "loading": "Cargando…",
+    "noResults": "No hay resultados.",
+    "requiredField": "Este campo es obligatorio",
+    "confirmDeleteTitle": "¿Eliminar este elemento?",
+    "confirmDeleteBody": "Esta acción no se puede deshacer.",
+    "saving": "Guardando…",
+    "error": "Ha ocurrido un error. Inténtalo de nuevo.",
+    "unassigned": "Sin asignar",
+    "notSet": "Sin definir"
+  },
+  "Enums": {
+    "goalKind": {
+      "ACTION": "Acción (hacer)",
+      "OUTCOME": "Logro (conseguir)"
+    },
+    "goalStatus": {
+      "NOT_STARTED": "Sin empezar",
+      "IN_PROGRESS": "En curso",
+      "ACHIEVED": "Conseguido",
+      "STALLED": "Estancado",
+      "CANCELLED": "Cancelado"
+    },
+    "contactRelation": {
+      "DECISION_MAKER": "De quien depende",
+      "SUPPORTER": "Quien puede ayudar"
+    },
+    "actionType": {
+      "LETTER": "Carta",
+      "CALL": "Llamada telefónica",
+      "MEETING": "Reunión",
+      "ENCOUNTER": "Encuentro",
+      "CAMPAIGN": "Campaña",
+      "OTHER": "Otra acción"
+    },
+    "subtaskStatus": {
+      "PENDING": "Pendiente",
+      "IN_PROGRESS": "En curso",
+      "DONE": "Hecho",
+      "CANCELLED": "Cancelado"
+    },
+    "planned": {
+      "true": "Planificada",
+      "false": "No planificada"
+    }
+  },
+  "Home": {
+    "title": "Labores de advocacy y lobby",
+    "subtitle": "Objetivos de incidencia política que la entidad quiere impulsar.",
+    "newGoal": "Nueva labor",
+    "searchPlaceholder": "Buscar por nombre, responsable o categoría…",
+    "filterKindAll": "Todos los tipos",
+    "filterStatusAll": "Todos los estados",
+    "emptyState": "Todavía no hay labores de advocacy registradas.",
+    "emptyStateFiltered": "Ninguna labor coincide con los filtros.",
+    "responsible": "Responsable",
+    "targetDate": "Fecha objetivo",
+    "noTargetDate": "Sin fecha",
+    "progress": "Progreso",
+    "subtasksDone": "{done} de {total} acciones",
+    "noSubtasks": "Sin acciones definidas",
+    "viewDetails": "Ver detalle",
+    "summaryTotal": "Labores totales",
+    "summaryAchieved": "Conseguidas",
+    "summaryInProgress": "En curso",
+    "summaryOverdue": "Con plazo vencido"
+  },
+  "GoalForm": {
+    "titleNew": "Nueva labor de advocacy",
+    "titleEdit": "Editar labor",
+    "name": "Nombre de la labor",
+    "namePlaceholder": "Ej: Financiación pública del factor de coagulación X",
+    "kind": "¿Es de hacer cosas o de conseguir cosas?",
+    "responsible": "Persona responsable",
+    "responsiblePlaceholder": "Nombre de quien lidera esta labor",
+    "category": "Área temática",
+    "categoryPlaceholder": "Ej: Acceso a tratamiento, sensibilización…",
+    "description": "Descripción",
+    "descriptionPlaceholder": "¿En qué consiste esta labor y por qué es importante?",
+    "targetDate": "Fecha en la que debería conseguirse",
+    "status": "Estado"
+  },
+  "GoalDetail": {
+    "backToList": "Volver al listado",
+    "deleteGoal": "Eliminar labor",
+    "contactsTitle": "A quién contactar",
+    "contactsSubtitle": "Personas y organizaciones clave: de quién depende conseguirlo y quién puede ayudar.",
+    "addContact": "Añadir contacto",
+    "noContacts": "Todavía no se han añadido contactos.",
+    "subtasksTitle": "Acciones y tareas",
+    "subtasksSubtitle": "Cartas, llamadas, reuniones, encuentros o campañas, planificadas o no.",
+    "addSubtask": "Añadir acción",
+    "noSubtasks": "Todavía no se han añadido acciones.",
+    "filterAllActions": "Todas",
+    "filterPlanned": "Planificadas",
+    "filterUnplanned": "No planificadas",
+    "indicatorsTitle": "Indicadores de esta labor",
+    "addIndicator": "Añadir indicador"
+  },
+  "ContactForm": {
+    "titleNew": "Nuevo contacto",
+    "titleEdit": "Editar contacto",
+    "name": "Nombre",
+    "organization": "Organización / institución",
+    "role": "Cargo",
+    "relation": "Tipo de relación",
+    "email": "Correo electrónico",
+    "phone": "Teléfono"
+  },
+  "SubtaskForm": {
+    "titleNew": "Nueva acción",
+    "titleEdit": "Editar acción",
+    "name": "Descripción de la acción",
+    "namePlaceholder": "Ej: Carta al Ministerio de Sanidad",
+    "actionType": "Tipo de acción",
+    "isPlanned": "¿Está planificada?",
+    "isPlannedHelp": "Marca como no planificada una acción reactiva o de última hora.",
+    "dueDate": "Fecha prevista",
+    "status": "Estado",
+    "responsible": "Responsable"
+  },
+  "Indicators": {
+    "title": "Indicadores de éxito",
+    "subtitle": "Seguimiento cuantitativo del avance de cada labor y de la entidad en su conjunto.",
+    "newIndicator": "Nuevo indicador",
+    "columnName": "Indicador",
+    "columnGoal": "Labor vinculada",
+    "columnTarget": "Objetivo",
+    "columnCurrent": "Actual",
+    "columnProgress": "% completado",
+    "globalIndicator": "Indicador general (sin labor asignada)",
+    "emptyState": "Todavía no hay indicadores definidos.",
+    "overallProgress": "Progreso global de las labores",
+    "achievedCount": "Indicadores cumplidos"
+  },
+  "IndicatorForm": {
+    "titleNew": "Nuevo indicador",
+    "titleEdit": "Editar indicador",
+    "goal": "Labor vinculada",
+    "goalNone": "Ninguna (indicador general)",
+    "name": "Nombre del indicador",
+    "namePlaceholder": "Ej: % de pacientes con acceso al tratamiento",
+    "targetValue": "Valor objetivo",
+    "currentValue": "Valor actual",
+    "unit": "Unidad",
+    "unitPlaceholder": "Ej: %, reuniones, personas…"
+  },
+  "Footer": {
+    "installHint": "Consejo: añade PATHSapp a la pantalla de inicio de tu móvil para usarla como una app."
+  }
+}
