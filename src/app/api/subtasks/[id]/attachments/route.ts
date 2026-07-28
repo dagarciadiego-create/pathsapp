@@ -26,7 +26,7 @@ export async function POST(request: Request, { params }: Params) {
   if (file.size > MAX_ATTACHMENT_SIZE) {
     return jsonError("File too large (max 10 MB)", 413);
   }
-  if (file.type && !ALLOWED_ATTACHMENT_MIME_TYPES.has(file.type)) {
+  if (!ALLOWED_ATTACHMENT_MIME_TYPES.has(file.type)) {
     return jsonError("Unsupported file type", 415);
   }
 
@@ -36,7 +36,7 @@ export async function POST(request: Request, { params }: Params) {
     data: {
       subtaskId,
       filename: file.name.slice(0, 255),
-      mimeType: file.type || "application/octet-stream",
+      mimeType: file.type,
       size,
       storageKey,
     },

@@ -43,9 +43,12 @@ export function AttachmentSection({
 
   async function handleDelete(id: string) {
     setDeletingId(id);
+    setError(null);
     try {
       await api.deleteAttachment(id);
       onAttachmentsChange(attachments.filter((a) => a.id !== id));
+    } catch (err) {
+      setError(err instanceof Error ? err.message : tCommon("error"));
     } finally {
       setDeletingId(null);
     }

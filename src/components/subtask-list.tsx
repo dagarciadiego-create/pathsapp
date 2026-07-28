@@ -20,6 +20,7 @@ export function SubtaskList({
 }) {
   const tEnums = useTranslations("Enums");
   const t = useTranslations("GoalDetail");
+  const tCommon = useTranslations("Common");
   const locale = useLocale();
 
   if (subtasks.length === 0) {
@@ -81,7 +82,7 @@ export function SubtaskList({
             <button
               type="button"
               onClick={() => onEdit(subtask)}
-              aria-label="Edit"
+              aria-label={tCommon("edit")}
               className="rounded-lg p-1.5 text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
             >
               <Pencil className="h-4 w-4" />
@@ -89,7 +90,7 @@ export function SubtaskList({
             <button
               type="button"
               onClick={() => onDelete(subtask)}
-              aria-label="Delete"
+              aria-label={tCommon("delete")}
               className="rounded-lg p-1.5 text-slate-500 hover:bg-rose-50 hover:text-rose-600 dark:text-slate-400 dark:hover:bg-rose-900/40 dark:hover:text-rose-400"
             >
               <Trash2 className="h-4 w-4" />

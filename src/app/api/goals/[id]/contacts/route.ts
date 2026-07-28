@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { goalContactLinkSchema } from "@/lib/validation";
-import { jsonError, parseJson, zodError } from "@/lib/api-utils";
+import { isUniqueConstraintError, jsonError, parseJson, zodError } from "@/lib/api-utils";
 
 type Params = { params: Promise<{ id: string }> };
 
@@ -36,7 +36,10 @@ export async function POST(request: Request, { params }: Params) {
       },
       include: { contact: true },
     })
-    .catch(() => null);
+    .catch((err) => {
+      if (isUniqueConstraintError(err)) return null;
+      throw err;
+    });
 
   if (!goalContact) {
     return jsonError("This contact is already linked to this goal", 409);

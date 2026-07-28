@@ -1,5 +1,5 @@
 import { setRequestLocale } from "next-intl/server";
-import { getReportData } from "@/lib/reports";
+import { getReportSummary } from "@/lib/reports";
 import { ReportsPage } from "@/components/reports-page";
 
 export const dynamic = "force-dynamic";
@@ -12,7 +12,7 @@ export default async function Reports({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const { summary } = await getReportData();
+  const summary = await getReportSummary();
 
   return <ReportsPage summary={summary} />;
 }

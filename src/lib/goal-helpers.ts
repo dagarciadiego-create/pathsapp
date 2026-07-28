@@ -1,6 +1,5 @@
 import type { AdvocacyGoal, Subtask } from "@/generated/prisma/client";
-
-export type GoalWithSubtasks = AdvocacyGoal & { subtasks: Subtask[] };
+import { utcMidnight } from "./date-utils";
 
 export function computeGoalProgress(subtasks: Pick<Subtask, "status">[]) {
   const total = subtasks.length;
@@ -9,10 +8,13 @@ export function computeGoalProgress(subtasks: Pick<Subtask, "status">[]) {
   return { done, total, percent };
 }
 
+// Compared by UTC calendar day (not exact instant): a goal isn't overdue on
+// the day it's due, only starting the day after, and this must agree with
+// how dates are formatted below and with the calendar's own overdue rule.
 export function isGoalOverdue(goal: Pick<AdvocacyGoal, "targetDate" | "status">) {
   if (!goal.targetDate) return false;
   if (goal.status === "ACHIEVED" || goal.status === "CANCELLED") return false;
-  return new Date(goal.targetDate).getTime() < Date.now();
+  return utcMidnight(goal.targetDate) < utcMidnight(new Date());
 }
 
 export function formatDate(date: Date | string | null | undefined, locale: string) {
@@ -21,7 +23,13 @@ export function formatDate(date: Date | string | null | undefined, locale: strin
     year: "numeric",
     month: "short",
     day: "numeric",
+    timeZone: "UTC",
   }).format(new Date(date));
+}
+
+export function percentOf(indicator: { targetValue: number; currentValue: number }) {
+  if (indicator.targetValue <= 0) return 0;
+  return Math.round((indicator.currentValue / indicator.targetValue) * 100);
 }
 
 export function formatIndicatorValue(value: number, unit: string | null | undefined, locale: string) {

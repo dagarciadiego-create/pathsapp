@@ -14,7 +14,7 @@ export async function GET(request: Request) {
       ...(status ? { status } : {}),
     },
     include: {
-      subtasks: true,
+      subtasks: { select: { status: true } },
       _count: { select: { goalContacts: true, indicators: true } },
     },
     orderBy: { createdAt: "desc" },

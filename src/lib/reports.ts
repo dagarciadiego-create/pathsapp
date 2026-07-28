@@ -35,6 +35,23 @@ export async function getReportData() {
 
 export type ReportData = Awaited<ReturnType<typeof getReportData>>;
 
+// Lightweight variant for the Reports page's summary cards, which only
+// need the three counts below — unlike getReportData (used by the actual
+// PDF/Excel export), it never loads every goal's subtasks/contacts.
+export async function getReportSummary() {
+  const [total, byStatus] = await Promise.all([
+    prisma.advocacyGoal.count(),
+    prisma.advocacyGoal.groupBy({ by: ["status"], _count: true }),
+  ]);
+  const countFor = (status: string) =>
+    byStatus.find((g) => g.status === status)?._count ?? 0;
+  return {
+    total,
+    achieved: countFor("ACHIEVED"),
+    inProgress: countFor("IN_PROGRESS"),
+  };
+}
+
 // A flat bag of pre-translated strings for the given locale, built once so
 // the PDF/Excel renderers never need access to next-intl's React context
 // (they run outside of it, straight from a route handler).

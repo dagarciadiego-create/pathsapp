@@ -18,6 +18,7 @@ export function ContactList({
 }) {
   const tEnums = useTranslations("Enums");
   const t = useTranslations("GoalDetail");
+  const tCommon = useTranslations("Common");
 
   if (goalContacts.length === 0) {
     return <p className="text-sm text-slate-500 dark:text-slate-400">{t("noContacts")}</p>;
@@ -41,7 +42,8 @@ export function ContactList({
                 />
                 <Link
                   href="/contacts"
-                  title="Ver en el directorio"
+                  title={t("viewInDirectory")}
+                  aria-label={t("viewInDirectory")}
                   className="text-slate-400 hover:text-teal-700 dark:hover:text-teal-400"
                 >
                   <BookUser className="h-3.5 w-3.5" aria-hidden />
@@ -83,7 +85,7 @@ export function ContactList({
               <button
                 type="button"
                 onClick={() => onEdit(goalContact)}
-                aria-label="Edit"
+                aria-label={tCommon("edit")}
                 className="rounded-lg p-1.5 text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
               >
                 <Pencil className="h-4 w-4" />

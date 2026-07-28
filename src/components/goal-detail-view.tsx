@@ -53,6 +53,7 @@ export function GoalDetailView({
     goalContact?: GoalContactWithContact | null;
   }>({ open: false });
   const [unlinkingContact, setUnlinkingContact] = useState<GoalContactWithContact | null>(null);
+  const [unlinkPending, setUnlinkPending] = useState(false);
   const linkedContactIds = useMemo(
     () => new Set(goal.goalContacts.map((gc) => gc.contactId)),
     [goal.goalContacts]
@@ -67,6 +68,7 @@ export function GoalDetailView({
     subtask?: SubtaskWithAttachments | null;
   }>({ open: false });
   const [deletingSubtask, setDeletingSubtask] = useState<SubtaskWithAttachments | null>(null);
+  const [subtaskDeletePending, setSubtaskDeletePending] = useState(false);
   const [subtaskFilter, setSubtaskFilter] = useState<SubtaskFilter>("ALL");
 
   const [indicatorDialog, setIndicatorDialog] = useState<{
@@ -74,6 +76,7 @@ export function GoalDetailView({
     indicator?: Indicator | null;
   }>({ open: false });
   const [deletingIndicator, setDeletingIndicator] = useState<Indicator | null>(null);
+  const [indicatorDeletePending, setIndicatorDeletePending] = useState(false);
 
   const { done, total, percent } = computeGoalProgress(goal.subtasks);
   const overdue = isGoalOverdue(goal);
@@ -97,23 +100,38 @@ export function GoalDetailView({
 
   async function confirmUnlinkContact() {
     if (!unlinkingContact) return;
-    await api.unlinkContact(unlinkingContact.id);
-    router.refresh();
-    setUnlinkingContact(null);
+    setUnlinkPending(true);
+    try {
+      await api.unlinkContact(unlinkingContact.id);
+      router.refresh();
+      setUnlinkingContact(null);
+    } finally {
+      setUnlinkPending(false);
+    }
   }
 
   async function confirmDeleteSubtask() {
     if (!deletingSubtask) return;
-    await api.deleteSubtask(deletingSubtask.id);
-    router.refresh();
-    setDeletingSubtask(null);
+    setSubtaskDeletePending(true);
+    try {
+      await api.deleteSubtask(deletingSubtask.id);
+      router.refresh();
+      setDeletingSubtask(null);
+    } finally {
+      setSubtaskDeletePending(false);
+    }
   }
 
   async function confirmDeleteIndicator() {
     if (!deletingIndicator) return;
-    await api.deleteIndicator(deletingIndicator.id);
-    router.refresh();
-    setDeletingIndicator(null);
+    setIndicatorDeletePending(true);
+    try {
+      await api.deleteIndicator(deletingIndicator.id);
+      router.refresh();
+      setDeletingIndicator(null);
+    } finally {
+      setIndicatorDeletePending(false);
+    }
   }
 
   return (
@@ -278,6 +296,7 @@ export function GoalDetailView({
         open={!!unlinkingContact}
         onClose={() => setUnlinkingContact(null)}
         onConfirm={confirmUnlinkContact}
+        pending={unlinkPending}
         title={t("unlinkConfirmTitle")}
         body={t("unlinkConfirmBody")}
       />
@@ -292,6 +311,7 @@ export function GoalDetailView({
         open={!!deletingSubtask}
         onClose={() => setDeletingSubtask(null)}
         onConfirm={confirmDeleteSubtask}
+        pending={subtaskDeletePending}
       />
 
       <IndicatorFormDialog
@@ -309,6 +329,7 @@ export function GoalDetailView({
         open={!!deletingIndicator}
         onClose={() => setDeletingIndicator(null)}
         onConfirm={confirmDeleteIndicator}
+        pending={indicatorDeletePending}
       />
     </div>
   );

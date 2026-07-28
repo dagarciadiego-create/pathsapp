@@ -8,12 +8,8 @@ import { Field, Input, Select, Textarea, Button } from "./ui/form";
 import { AttachmentSection } from "./attachment-section";
 import { ACTION_TYPES, SUBTASK_STATUSES } from "@/lib/constants";
 import { api } from "@/lib/api-client";
+import { toDateInputValue } from "@/lib/date-utils";
 import type { Attachment, SubtaskWithAttachments } from "@/lib/types";
-
-function toDateInputValue(date: Date | string | null | undefined) {
-  if (!date) return "";
-  return new Date(date).toISOString().slice(0, 10);
-}
 
 export function SubtaskFormDialog({
   open,

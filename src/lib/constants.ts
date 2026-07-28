@@ -1,5 +1,6 @@
-// Shared "enum-like" values. SQLite has no native enum type, so these are
-// plain strings in the database, validated at the application boundary.
+// Shared "enum-like" values, kept as plain strings (not native Postgres
+// enums) so the allowed values can evolve without a migration; validated
+// at the application boundary instead.
 
 export const GOAL_KINDS = ["ACTION", "OUTCOME"] as const;
 export type GoalKind = (typeof GOAL_KINDS)[number];

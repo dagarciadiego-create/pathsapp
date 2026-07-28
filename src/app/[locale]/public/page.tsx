@@ -3,7 +3,7 @@ import { CheckCircle2, Sparkles, Gauge } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { StatCard } from "@/components/ui/stat-card";
 import { ProgressBar } from "@/components/ui/progress-bar";
-import { computeGoalProgress, formatDate, formatIndicatorValue } from "@/lib/goal-helpers";
+import { computeGoalProgress, formatDate, formatIndicatorValue, percentOf } from "@/lib/goal-helpers";
 
 export const dynamic = "force-dynamic";
 
@@ -28,7 +28,12 @@ export default async function PublicPage({
       include: { subtasks: { select: { status: true } } },
       orderBy: { createdAt: "asc" },
     }),
-    prisma.indicator.findMany({ orderBy: { createdAt: "asc" } }),
+    prisma.indicator.findMany({
+      where: {
+        OR: [{ goalId: null }, { goal: { status: { in: ["ACHIEVED", "IN_PROGRESS"] } } }],
+      },
+      orderBy: { createdAt: "asc" },
+    }),
   ]);
 
   return (
@@ -121,10 +126,7 @@ export default async function PublicPage({
         </h2>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
           {globalIndicators.map((indicator) => {
-            const percent =
-              indicator.targetValue > 0
-                ? Math.round((indicator.currentValue / indicator.targetValue) * 100)
-                : 0;
+            const percent = percentOf(indicator);
             return (
               <StatCard
                 key={indicator.id}

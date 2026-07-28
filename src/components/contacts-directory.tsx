@@ -12,6 +12,7 @@ import type { ContactWithGoals } from "@/lib/types";
 
 export function ContactsDirectory({ initialContacts }: { initialContacts: ContactWithGoals[] }) {
   const t = useTranslations("ContactDirectory");
+  const tCommon = useTranslations("Common");
   const router = useRouter();
 
   const [query, setQuery] = useState("");
@@ -133,7 +134,7 @@ export function ContactsDirectory({ initialContacts }: { initialContacts: Contac
                   <button
                     type="button"
                     onClick={() => setDialog({ open: true, contact })}
-                    aria-label="Edit"
+                    aria-label={tCommon("edit")}
                     className="rounded-lg p-1.5 text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
                   >
                     <Pencil className="h-4 w-4" />
@@ -141,7 +142,7 @@ export function ContactsDirectory({ initialContacts }: { initialContacts: Contac
                   <button
                     type="button"
                     onClick={() => setDeleting(contact)}
-                    aria-label="Delete"
+                    aria-label={tCommon("delete")}
                     className="rounded-lg p-1.5 text-slate-500 hover:bg-rose-50 hover:text-rose-600 dark:text-slate-400 dark:hover:bg-rose-900/40 dark:hover:text-rose-400"
                   >
                     <Trash2 className="h-4 w-4" />

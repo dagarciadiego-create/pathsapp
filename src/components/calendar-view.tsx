@@ -11,23 +11,17 @@ import {
   type CalendarEvent,
   eventsOnDay,
   getMonthGridDays,
+  isEventDone,
+  isEventOverdue,
+  isSameDay,
   overdueEvents,
   upcomingEvents,
 } from "@/lib/calendar-helpers";
 import type { ActionType } from "@/lib/constants";
 
-function isSameDay(a: Date, b: Date) {
-  return (
-    a.getFullYear() === b.getFullYear() &&
-    a.getMonth() === b.getMonth() &&
-    a.getDate() === b.getDate()
-  );
-}
-
 function eventTone(event: CalendarEvent) {
-  const done = ["DONE", "ACHIEVED", "CANCELLED"].includes(event.status);
-  if (done) return "muted";
-  return event.date < new Date(new Date().toDateString()) ? "overdue" : "upcoming";
+  if (isEventDone(event)) return "muted";
+  return isEventOverdue(event) ? "overdue" : "upcoming";
 }
 
 const dotClass: Record<string, string> = {
@@ -138,7 +132,7 @@ export function CalendarView({ events }: { events: CalendarEvent[] }) {
                 <button
                   type="button"
                   onClick={() => changeMonth(-1)}
-                  aria-label="Previous month"
+                  aria-label={t("previousMonth")}
                   className="rounded-lg p-1.5 text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
                 >
                   <ChevronLeft className="h-4 w-4" />
@@ -146,7 +140,7 @@ export function CalendarView({ events }: { events: CalendarEvent[] }) {
                 <button
                   type="button"
                   onClick={() => changeMonth(1)}
-                  aria-label="Next month"
+                  aria-label={t("nextMonth")}
                   className="rounded-lg p-1.5 text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
                 >
                   <ChevronRight className="h-4 w-4" />
@@ -162,7 +156,7 @@ export function CalendarView({ events }: { events: CalendarEvent[] }) {
               ))}
               {gridDays.map((day) => {
                 const dayEvents = eventsOnDay(events, day);
-                const inMonth = day.getMonth() === viewedMonth.getMonth();
+                const inMonth = day.getUTCMonth() === viewedMonth.getMonth();
                 const isToday = isSameDay(day, today);
                 const isSelected = selectedDay && isSameDay(day, selectedDay);
                 return (
@@ -184,7 +178,7 @@ export function CalendarView({ events }: { events: CalendarEvent[] }) {
                           : "text-slate-700 dark:text-slate-300"
                       )}
                     >
-                      {day.getDate()}
+                      {day.getUTCDate()}
                     </span>
                     <span className="flex flex-wrap justify-center gap-0.5">
                       {dayEvents.slice(0, 4).map((event) => (

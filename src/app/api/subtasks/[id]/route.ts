@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { subtaskUpdateSchema } from "@/lib/validation";
-import { jsonError, parseJson, zodError } from "@/lib/api-utils";
+import { isRecordNotFoundError, jsonError, parseJson, zodError } from "@/lib/api-utils";
 
 type Params = { params: Promise<{ id: string }> };
 
@@ -24,7 +24,10 @@ export async function PATCH(request: Request, { params }: Params) {
           : {}),
       },
     })
-    .catch(() => null);
+    .catch((err) => {
+      if (isRecordNotFoundError(err)) return null;
+      throw err;
+    });
 
   if (!subtask) return jsonError("Subtask not found", 404);
   return NextResponse.json(subtask);
@@ -32,7 +35,10 @@ export async function PATCH(request: Request, { params }: Params) {
 
 export async function DELETE(_request: Request, { params }: Params) {
   const { id } = await params;
-  const deleted = await prisma.subtask.delete({ where: { id } }).catch(() => null);
+  const deleted = await prisma.subtask.delete({ where: { id } }).catch((err) => {
+    if (isRecordNotFoundError(err)) return null;
+    throw err;
+  });
   if (!deleted) return jsonError("Subtask not found", 404);
   return NextResponse.json({ ok: true });
 }

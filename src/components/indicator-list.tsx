@@ -1,15 +1,10 @@
 "use client";
 
 import { Pencil, Trash2 } from "lucide-react";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { ProgressBar } from "./ui/progress-bar";
-import { formatIndicatorValue } from "@/lib/goal-helpers";
+import { formatIndicatorValue, percentOf } from "@/lib/goal-helpers";
 import type { Indicator } from "@/lib/types";
-
-function percentOf(indicator: Indicator) {
-  if (indicator.targetValue <= 0) return 0;
-  return Math.round((indicator.currentValue / indicator.targetValue) * 100);
-}
 
 export function IndicatorList({
   indicators,
@@ -21,6 +16,7 @@ export function IndicatorList({
   onDelete: (indicator: Indicator) => void;
 }) {
   const locale = useLocale();
+  const tCommon = useTranslations("Common");
 
   return (
     <ul className="space-y-3">
@@ -35,7 +31,7 @@ export function IndicatorList({
               <button
                 type="button"
                 onClick={() => onEdit(indicator)}
-                aria-label="Edit"
+                aria-label={tCommon("edit")}
                 className="rounded-lg p-1.5 text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
               >
                 <Pencil className="h-4 w-4" />
@@ -43,7 +39,7 @@ export function IndicatorList({
               <button
                 type="button"
                 onClick={() => onDelete(indicator)}
-                aria-label="Delete"
+                aria-label={tCommon("delete")}
                 className="rounded-lg p-1.5 text-slate-500 hover:bg-rose-50 hover:text-rose-600 dark:text-slate-400 dark:hover:bg-rose-900/40 dark:hover:text-rose-400"
               >
                 <Trash2 className="h-4 w-4" />

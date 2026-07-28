@@ -121,7 +121,8 @@
     "addIndicator": "Añadir indicador",
     "unlinkContact": "Quitar de esta labor",
     "unlinkConfirmTitle": "¿Quitar este contacto de la labor?",
-    "unlinkConfirmBody": "El contacto seguirá existiendo en el directorio; solo se quita de esta labor."
+    "unlinkConfirmBody": "El contacto seguirá existiendo en el directorio; solo se quita de esta labor.",
+    "viewInDirectory": "Ver en el directorio"
   },
   "ContactForm": {
     "titleNew": "Añadir contacto",
@@ -156,6 +157,7 @@
     "title": "Indicadores de éxito",
     "subtitle": "Seguimiento cuantitativo del avance de cada labor y de la entidad en su conjunto.",
     "newIndicator": "Nuevo indicador",
+    "totalCount": "Indicadores totales",
     "columnName": "Indicador",
     "columnGoal": "Labor vinculada",
     "columnTarget": "Objetivo",
@@ -193,6 +195,8 @@
     "title": "Calendario",
     "subtitle": "Próximas acciones y fechas objetivo de las labores.",
     "today": "Hoy",
+    "previousMonth": "Mes anterior",
+    "nextMonth": "Mes siguiente",
     "viewMonth": "Mes",
     "viewAgenda": "Agenda",
     "upcoming": "Próximos 30 días",

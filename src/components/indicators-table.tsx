@@ -10,13 +10,8 @@ import { Button } from "./ui/form";
 import { ConfirmDialog } from "./ui/confirm-dialog";
 import { IndicatorFormDialog } from "./indicator-form-dialog";
 import { api } from "@/lib/api-client";
-import { formatIndicatorValue } from "@/lib/goal-helpers";
+import { formatIndicatorValue, percentOf } from "@/lib/goal-helpers";
 import type { IndicatorWithGoal } from "@/lib/types";
-
-function percentOf(indicator: IndicatorWithGoal) {
-  if (indicator.targetValue <= 0) return 0;
-  return Math.round((indicator.currentValue / indicator.targetValue) * 100);
-}
 
 export function IndicatorsTable({
   initialIndicators,
@@ -26,6 +21,7 @@ export function IndicatorsTable({
   goals: { id: string; name: string }[];
 }) {
   const t = useTranslations("Indicators");
+  const tCommon = useTranslations("Common");
   const locale = useLocale();
   const router = useRouter();
 
@@ -33,6 +29,7 @@ export function IndicatorsTable({
     open: false,
   });
   const [deleting, setDeleting] = useState<IndicatorWithGoal | null>(null);
+  const [deletePending, setDeletePending] = useState(false);
 
   const stats = useMemo(() => {
     const total = initialIndicators.length;
@@ -46,9 +43,14 @@ export function IndicatorsTable({
 
   async function confirmDelete() {
     if (!deleting) return;
-    await api.deleteIndicator(deleting.id);
-    router.refresh();
-    setDeleting(null);
+    setDeletePending(true);
+    try {
+      await api.deleteIndicator(deleting.id);
+      router.refresh();
+      setDeleting(null);
+    } finally {
+      setDeletePending(false);
+    }
   }
 
   return (
@@ -65,8 +67,12 @@ export function IndicatorsTable({
       </div>
 
       <div className="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
-        <StatCard label={t("columnName")} value={stats.total} />
-        <StatCard label={t("overallProgress")} value={`${stats.overallAvg}%`} tone="success" />
+        <StatCard label={t("totalCount")} value={stats.total} />
+        <StatCard
+          label={t("overallProgress")}
+          value={`${stats.overallAvg}%`}
+          tone={stats.overallAvg >= 100 ? "success" : "default"}
+        />
         <StatCard label={t("achievedCount")} value={stats.achieved} />
       </div>
 
@@ -128,7 +134,7 @@ export function IndicatorsTable({
                         <button
                           type="button"
                           onClick={() => setDialog({ open: true, indicator })}
-                          aria-label="Edit"
+                          aria-label={tCommon("edit")}
                           className="rounded-lg p-1.5 text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
                         >
                           <Pencil className="h-4 w-4" />
@@ -136,7 +142,7 @@ export function IndicatorsTable({
                         <button
                           type="button"
                           onClick={() => setDeleting(indicator)}
-                          aria-label="Delete"
+                          aria-label={tCommon("delete")}
                           className="rounded-lg p-1.5 text-slate-500 hover:bg-rose-50 hover:text-rose-600 dark:text-slate-400 dark:hover:bg-rose-900/40 dark:hover:text-rose-400"
                         >
                           <Trash2 className="h-4 w-4" />
@@ -157,7 +163,12 @@ export function IndicatorsTable({
         goals={goals}
         indicator={dialog.indicator}
       />
-      <ConfirmDialog open={!!deleting} onClose={() => setDeleting(null)} onConfirm={confirmDelete} />
+      <ConfirmDialog
+        open={!!deleting}
+        onClose={() => setDeleting(null)}
+        onConfirm={confirmDelete}
+        pending={deletePending}
+      />
     </div>
   );
 }

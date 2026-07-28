@@ -20,6 +20,7 @@ const optionalDateString = z.preprocess(
 );
 const optionalString = (max: number) =>
   z.preprocess(emptyToNull, z.string().max(max).nullable().optional());
+const optionalEmail = z.preprocess(emptyToNull, z.email().max(200).nullable().optional());
 
 export const goalInputSchema = z.object({
   name: z.string().trim().min(1, "Required").max(200),
@@ -36,7 +37,7 @@ export const contactInputSchema = z.object({
   name: z.string().trim().min(1, "Required").max(200),
   organization: optionalString(200),
   role: optionalString(200),
-  email: optionalString(200),
+  email: optionalEmail,
   phone: optionalString(60),
   notes: optionalString(2000),
 });

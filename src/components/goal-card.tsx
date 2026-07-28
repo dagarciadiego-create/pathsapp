@@ -21,6 +21,7 @@ export function GoalCard({
 }) {
   const t = useTranslations("Home");
   const tEnums = useTranslations("Enums");
+  const tCommon = useTranslations("Common");
   const locale = useLocale();
 
   const { done, total, percent } = computeGoalProgress(goal.subtasks);
@@ -110,7 +111,7 @@ export function GoalCard({
           <button
             type="button"
             onClick={onEdit}
-            aria-label="Edit"
+            aria-label={tCommon("edit")}
             className="rounded-lg p-1.5 text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
           >
             <Pencil className="h-4 w-4" />
@@ -118,7 +119,7 @@ export function GoalCard({
           <button
             type="button"
             onClick={onDelete}
-            aria-label="Delete"
+            aria-label={tCommon("delete")}
             className="rounded-lg p-1.5 text-slate-500 hover:bg-rose-50 hover:text-rose-600 dark:text-slate-400 dark:hover:bg-rose-900/40 dark:hover:text-rose-400"
           >
             <Trash2 className="h-4 w-4" />

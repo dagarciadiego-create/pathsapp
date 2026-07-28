@@ -121,7 +121,8 @@
     "addIndicator": "Add indicator",
     "unlinkContact": "Remove from this goal",
     "unlinkConfirmTitle": "Remove this contact from the goal?",
-    "unlinkConfirmBody": "The contact will stay in the directory; it's only removed from this goal."
+    "unlinkConfirmBody": "The contact will stay in the directory; it's only removed from this goal.",
+    "viewInDirectory": "View in directory"
   },
   "ContactForm": {
     "titleNew": "Add contact",
@@ -156,6 +157,7 @@
     "title": "Success indicators",
     "subtitle": "Quantitative tracking of progress for each goal and for the organization as a whole.",
     "newIndicator": "New indicator",
+    "totalCount": "Total indicators",
     "columnName": "Indicator",
     "columnGoal": "Linked goal",
     "columnTarget": "Target",
@@ -193,6 +195,8 @@
     "title": "Calendar",
     "subtitle": "Upcoming actions and goal target dates.",
     "today": "Today",
+    "previousMonth": "Previous month",
+    "nextMonth": "Next month",
     "viewMonth": "Month",
     "viewAgenda": "Agenda",
     "upcoming": "Next 30 days",

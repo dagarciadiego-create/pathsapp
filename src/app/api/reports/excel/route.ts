@@ -1,6 +1,7 @@
 import { Workbook } from "exceljs";
 import { NextResponse } from "next/server";
 import { buildReportLabels, getReportData } from "@/lib/reports";
+import { percentOf } from "@/lib/goal-helpers";
 import { routing } from "@/i18n/routing";
 
 export async function GET(request: Request) {
@@ -62,10 +63,7 @@ export async function GET(request: Request) {
         goal: goal.name,
         target: indicator.targetValue,
         current: indicator.currentValue,
-        progress:
-          indicator.targetValue > 0
-            ? Math.round((indicator.currentValue / indicator.targetValue) * 100)
-            : 0,
+        progress: percentOf(indicator),
       });
     }
   }
@@ -75,10 +73,7 @@ export async function GET(request: Request) {
       goal: labels.globalIndicator,
       target: indicator.targetValue,
       current: indicator.currentValue,
-      progress:
-        indicator.targetValue > 0
-          ? Math.round((indicator.currentValue / indicator.targetValue) * 100)
-          : 0,
+      progress: percentOf(indicator),
     });
   }
 

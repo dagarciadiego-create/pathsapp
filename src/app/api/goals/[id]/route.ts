@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { goalUpdateSchema } from "@/lib/validation";
-import { jsonError, parseJson, zodError } from "@/lib/api-utils";
+import { isRecordNotFoundError, jsonError, parseJson, zodError } from "@/lib/api-utils";
 
 type Params = { params: Promise<{ id: string }> };
 
@@ -38,7 +38,10 @@ export async function PATCH(request: Request, { params }: Params) {
           : {}),
       },
     })
-    .catch(() => null);
+    .catch((err) => {
+      if (isRecordNotFoundError(err)) return null;
+      throw err;
+    });
 
   if (!goal) return jsonError("Goal not found", 404);
   return NextResponse.json(goal);
@@ -46,7 +49,10 @@ export async function PATCH(request: Request, { params }: Params) {
 
 export async function DELETE(_request: Request, { params }: Params) {
   const { id } = await params;
-  const deleted = await prisma.advocacyGoal.delete({ where: { id } }).catch(() => null);
+  const deleted = await prisma.advocacyGoal.delete({ where: { id } }).catch((err) => {
+    if (isRecordNotFoundError(err)) return null;
+    throw err;
+  });
   if (!deleted) return jsonError("Goal not found", 404);
   return NextResponse.json({ ok: true });
 }

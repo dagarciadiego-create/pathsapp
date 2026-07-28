@@ -7,12 +7,8 @@ import { Modal } from "./ui/modal";
 import { Field, Input, Select, Textarea, Button } from "./ui/form";
 import { GOAL_KINDS, GOAL_STATUSES } from "@/lib/constants";
 import { api } from "@/lib/api-client";
+import { toDateInputValue } from "@/lib/date-utils";
 import type { AdvocacyGoal } from "@/lib/types";
-
-function toDateInputValue(date: Date | string | null | undefined) {
-  if (!date) return "";
-  return new Date(date).toISOString().slice(0, 10);
-}
 
 export function GoalFormDialog({
   open,

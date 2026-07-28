@@ -1,5 +1,6 @@
 import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
 import type { ReportData, ReportLabels } from "@/lib/reports";
+import { formatDate as formatDateOrNull, percentOf } from "@/lib/goal-helpers";
 
 const styles = StyleSheet.create({
   page: { padding: 36, fontSize: 10, fontFamily: "Helvetica", color: "#1e293b" },
@@ -83,10 +84,7 @@ const styles = StyleSheet.create({
 });
 
 function formatDate(date: Date | null, locale: string, noDateLabel: string) {
-  if (!date) return noDateLabel;
-  return new Intl.DateTimeFormat(locale, { year: "numeric", month: "short", day: "numeric" }).format(
-    date
-  );
+  return formatDateOrNull(date, locale) ?? noDateLabel;
 }
 
 export function AdvocacyReportPdf({
@@ -175,12 +173,7 @@ export function AdvocacyReportPdf({
                 <Text style={[styles.td, styles.colGoal]}>{goal.name}</Text>
                 <Text style={[styles.td, styles.colNum]}>{indicator.targetValue}</Text>
                 <Text style={[styles.td, styles.colNum]}>{indicator.currentValue}</Text>
-                <Text style={[styles.td, styles.colNum]}>
-                  {indicator.targetValue > 0
-                    ? Math.round((indicator.currentValue / indicator.targetValue) * 100)
-                    : 0}
-                  %
-                </Text>
+                <Text style={[styles.td, styles.colNum]}>{percentOf(indicator)}%</Text>
               </View>
             ))
           )}
@@ -190,12 +183,7 @@ export function AdvocacyReportPdf({
               <Text style={[styles.td, styles.colGoal]}>{labels.globalIndicator}</Text>
               <Text style={[styles.td, styles.colNum]}>{indicator.targetValue}</Text>
               <Text style={[styles.td, styles.colNum]}>{indicator.currentValue}</Text>
-              <Text style={[styles.td, styles.colNum]}>
-                {indicator.targetValue > 0
-                  ? Math.round((indicator.currentValue / indicator.targetValue) * 100)
-                  : 0}
-                %
-              </Text>
+              <Text style={[styles.td, styles.colNum]}>{percentOf(indicator)}%</Text>
             </View>
           ))}
         </View>

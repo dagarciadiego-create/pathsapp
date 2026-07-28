@@ -1,3 +1,5 @@
+import { utcMidnight } from "./date-utils";
+
 export type CalendarEvent = {
   id: string;
   date: Date;
@@ -60,45 +62,58 @@ export function buildCalendarEvents(
   return [...subtaskEvents, ...goalEvents].sort((a, b) => a.date.getTime() - b.date.getTime());
 }
 
-function isSameDay(a: Date, b: Date) {
-  return (
-    a.getFullYear() === b.getFullYear() &&
-    a.getMonth() === b.getMonth() &&
-    a.getDate() === b.getDate()
-  );
+// Compared by UTC calendar day everywhere in this module (not exact
+// instant, and not the browser's local timezone): grid days, event dates,
+// and "today" all need to agree on the same reference frame, or the same
+// event can render as overdue in one place and upcoming in another.
+export function isSameDay(a: Date, b: Date) {
+  return utcMidnight(a) === utcMidnight(b);
 }
 
 export function eventsOnDay(events: CalendarEvent[], day: Date) {
   return events.filter((e) => isSameDay(e.date, day));
 }
 
-function isEventDone(event: CalendarEvent) {
+export function isEventDone(event: CalendarEvent) {
   const doneStatuses = ["DONE", "ACHIEVED", "CANCELLED"];
   return doneStatuses.includes(event.status);
 }
 
+// A single source of truth for "is this overdue" so the calendar's per-day
+// dots and its overdue list can never disagree with each other. Not
+// overdue on its own due day, only starting the day after.
+export function isEventOverdue(event: CalendarEvent, now: Date = new Date()) {
+  return !isEventDone(event) && utcMidnight(event.date) < utcMidnight(now);
+}
+
 export function upcomingEvents(events: CalendarEvent[], withinDays = 30) {
   const now = new Date();
-  const end = new Date(now);
-  end.setDate(end.getDate() + withinDays);
-  return events.filter((e) => !isEventDone(e) && e.date >= now && e.date <= end);
+  const todayMs = utcMidnight(now);
+  const endMs = todayMs + withinDays * 86_400_000;
+  return events.filter((e) => {
+    if (isEventDone(e)) return false;
+    const eventMs = utcMidnight(e.date);
+    return eventMs >= todayMs && eventMs <= endMs;
+  });
 }
 
 export function overdueEvents(events: CalendarEvent[]) {
   const now = new Date();
-  return events.filter((e) => !isEventDone(e) && e.date < now);
+  return events.filter((e) => isEventOverdue(e, now));
 }
 
 // Monday-first 6x7 grid covering the full month (plus leading/trailing
-// days from adjacent months so every week row is complete).
+// days from adjacent months so every week row is complete). Built in UTC
+// so grid cells compare correctly (via isSameDay) against event dates,
+// which are themselves UTC midnight.
 export function getMonthGridDays(year: number, month: number) {
-  const firstOfMonth = new Date(year, month, 1);
-  const startWeekday = (firstOfMonth.getDay() + 6) % 7; // 0 = Monday
-  const gridStart = new Date(year, month, 1 - startWeekday);
+  const firstOfMonth = new Date(Date.UTC(year, month, 1));
+  const startWeekday = (firstOfMonth.getUTCDay() + 6) % 7; // 0 = Monday
+  const gridStart = new Date(Date.UTC(year, month, 1 - startWeekday));
 
   return Array.from({ length: 42 }, (_, i) => {
     const date = new Date(gridStart);
-    date.setDate(gridStart.getDate() + i);
+    date.setUTCDate(gridStart.getUTCDate() + i);
     return date;
   });
 }
