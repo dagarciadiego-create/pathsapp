@@ -4,7 +4,12 @@
     "tagline": "Hemophilia advocacy & lobby",
     "home": "Advocacy goals",
     "indicators": "Success indicators",
-    "language": "Language"
+    "contacts": "Directory",
+    "calendar": "Calendar",
+    "reports": "Reports",
+    "publicPage": "Public view",
+    "language": "Language",
+    "menu": "Menu"
   },
   "Common": {
     "add": "Add",
@@ -113,17 +118,27 @@
     "filterPlanned": "Planned",
     "filterUnplanned": "Unplanned",
     "indicatorsTitle": "Indicators for this goal",
-    "addIndicator": "Add indicator"
+    "addIndicator": "Add indicator",
+    "unlinkContact": "Remove from this goal",
+    "unlinkConfirmTitle": "Remove this contact from the goal?",
+    "unlinkConfirmBody": "The contact will stay in the directory; it's only removed from this goal."
   },
   "ContactForm": {
-    "titleNew": "New contact",
+    "titleNew": "Add contact",
     "titleEdit": "Edit contact",
+    "modeExisting": "Existing contact",
+    "modeNew": "New contact",
+    "pickContact": "Pick from directory",
+    "pickContactPlaceholder": "Select a contact…",
+    "noAvailableContacts": "Every directory contact is already linked to this goal.",
     "name": "Name",
     "organization": "Organization / institution",
     "role": "Role",
     "relation": "Relationship type",
     "email": "Email",
-    "phone": "Phone"
+    "phone": "Phone",
+    "linkNotes": "Notes for this goal",
+    "linkNotesPlaceholder": "Why does this contact matter for this specific goal?"
   },
   "SubtaskForm": {
     "titleNew": "New action",
@@ -162,6 +177,62 @@
     "currentValue": "Current value",
     "unit": "Unit",
     "unitPlaceholder": "E.g. %, meetings, people…"
+  },
+  "ContactDirectory": {
+    "title": "Contact directory",
+    "subtitle": "People and organizations relevant to advocacy work, reusable across several goals.",
+    "newContact": "New contact",
+    "searchPlaceholder": "Search by name, organization or role…",
+    "emptyState": "No contacts in the directory yet.",
+    "emptyStateFiltered": "No contact matches your search.",
+    "columnGoals": "Linked goals",
+    "noGoalsLinked": "Not linked to a goal yet",
+    "deleteConfirmBody": "It will also be removed from every goal it's linked to. This action cannot be undone."
+  },
+  "Calendar": {
+    "title": "Calendar",
+    "subtitle": "Upcoming actions and goal target dates.",
+    "today": "Today",
+    "viewMonth": "Month",
+    "viewAgenda": "Agenda",
+    "upcoming": "Next 30 days",
+    "overdue": "Overdue",
+    "noEvents": "No actions or deadlines that day.",
+    "noUpcoming": "Nothing planned in the next 30 days.",
+    "noOverdue": "Nothing overdue. Nice work!",
+    "goalTargetDate": "Goal target date",
+    "selectDay": "Select a day to see its details."
+  },
+  "Attachments": {
+    "title": "Attached documents",
+    "upload": "Upload file",
+    "uploading": "Uploading…",
+    "noAttachments": "No attached files.",
+    "saveFirst": "Save the action first to attach files.",
+    "deleteConfirmBody": "This attached file will be deleted. This action cannot be undone.",
+    "tooLarge": "The file exceeds the maximum allowed size (10 MB).",
+    "uploadError": "The file could not be uploaded."
+  },
+  "Reports": {
+    "title": "Reports",
+    "subtitle": "Generate a downloadable report on the status of goals and indicators — useful for board meetings or the annual report.",
+    "downloadPdf": "Download PDF",
+    "downloadExcel": "Download Excel",
+    "generating": "Generating…",
+    "previewTitle": "Summary",
+    "generatedAt": "Generated on {date}",
+    "sheetGoals": "Goals",
+    "sheetIndicators": "Indicators"
+  },
+  "PublicPage": {
+    "title": "Our advocacy work",
+    "subtitle": "A public summary of the goals we pursue and the achievements reached on behalf of people with hemophilia.",
+    "achievedTitle": "Achievements",
+    "inProgressTitle": "Underway now",
+    "indicatorsTitle": "Our impact in numbers",
+    "noAchieved": "No achievements published yet.",
+    "noInProgress": "No goals currently in progress.",
+    "internalLink": "Go to internal panel"
   },
   "Footer": {
     "installHint": "Tip: add PATHSapp to your phone's home screen to use it like an app."

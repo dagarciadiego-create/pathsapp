@@ -45,3 +45,6 @@ next-env.d.ts
 # sqlite database (local dev only, never commit real data)
 *.db
 *.db-journal
+
+# locally uploaded attachments (not suitable for production storage anyway)
+/uploads

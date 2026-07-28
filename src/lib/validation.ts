@@ -36,12 +36,30 @@ export const contactInputSchema = z.object({
   name: z.string().trim().min(1, "Required").max(200),
   organization: optionalString(200),
   role: optionalString(200),
-  relation: z.enum(CONTACT_RELATIONS),
   email: optionalString(200),
   phone: optionalString(60),
   notes: optionalString(2000),
 });
 export const contactUpdateSchema = contactInputSchema.partial();
+
+// Linking a directory contact to a goal: either reference an existing
+// contact by id, or create a brand new one inline (exactly one of the two).
+export const goalContactLinkSchema = z
+  .object({
+    contactId: optionalString(60),
+    contact: contactInputSchema.optional(),
+    relation: z.enum(CONTACT_RELATIONS),
+    notes: optionalString(2000),
+  })
+  .refine((data) => Boolean(data.contactId) !== Boolean(data.contact), {
+    message: "Provide either contactId or contact, not both",
+  });
+
+export const goalContactUpdateSchema = z.object({
+  relation: z.enum(CONTACT_RELATIONS).optional(),
+  notes: optionalString(2000),
+  contact: contactInputSchema.partial().optional(),
+});
 
 export const subtaskInputSchema = z.object({
   name: z.string().trim().min(1, "Required").max(200),

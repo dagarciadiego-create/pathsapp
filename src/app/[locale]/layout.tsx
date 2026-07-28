@@ -4,7 +4,6 @@ import { getMessages, getTranslations, setRequestLocale } from "next-intl/server
 import { notFound } from "next/navigation";
 import { Geist, Geist_Mono } from "next/font/google";
 import { routing } from "@/i18n/routing";
-import { NavHeader } from "@/components/nav-header";
 import "../globals.css";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -35,6 +34,10 @@ export const viewport: Viewport = {
   themeColor: "#0f766e",
 };
 
+// Only the truly global chrome lives here: <html>/<body>, fonts, and the
+// i18n provider. The internal app nav and the public page each define
+// their own layout on top of this (see the (app) and public/ segments) so
+// the public transparency page never inherits the admin navigation.
 export default async function LocaleLayout({
   children,
   params,
@@ -54,19 +57,8 @@ export default async function LocaleLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
-        <NextIntlClientProvider messages={messages}>
-          <NavHeader />
-          <main className="flex-1">{children}</main>
-          <footer className="border-t border-slate-200 py-4 text-center text-xs text-slate-500 dark:border-slate-800 dark:text-slate-400">
-            <FooterHint />
-          </footer>
-        </NextIntlClientProvider>
+        <NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>
       </body>
     </html>
   );
-}
-
-async function FooterHint() {
-  const t = await getTranslations("Footer");
-  return <p>{t("installHint")}</p>;
 }

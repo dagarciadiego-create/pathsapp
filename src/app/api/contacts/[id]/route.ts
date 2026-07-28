@@ -5,6 +5,16 @@ import { jsonError, parseJson, zodError } from "@/lib/api-utils";
 
 type Params = { params: Promise<{ id: string }> };
 
+export async function GET(_request: Request, { params }: Params) {
+  const { id } = await params;
+  const contact = await prisma.contact.findUnique({
+    where: { id },
+    include: { goalLinks: { include: { goal: { select: { id: true, name: true } } } } },
+  });
+  if (!contact) return jsonError("Contact not found", 404);
+  return NextResponse.json(contact);
+}
+
 export async function PATCH(request: Request, { params }: Params) {
   const { id } = await params;
   const { data, error } = await parseJson(request);

@@ -5,9 +5,10 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { Modal } from "./ui/modal";
 import { Field, Input, Select, Textarea, Button } from "./ui/form";
+import { AttachmentSection } from "./attachment-section";
 import { ACTION_TYPES, SUBTASK_STATUSES } from "@/lib/constants";
 import { api } from "@/lib/api-client";
-import type { Subtask } from "@/lib/types";
+import type { Attachment, SubtaskWithAttachments } from "@/lib/types";
 
 function toDateInputValue(date: Date | string | null | undefined) {
   if (!date) return "";
@@ -23,7 +24,7 @@ export function SubtaskFormDialog({
   open: boolean;
   onClose: () => void;
   goalId: string;
-  subtask?: Subtask | null;
+  subtask?: SubtaskWithAttachments | null;
 }) {
   const t = useTranslations("SubtaskForm");
 
@@ -41,9 +42,10 @@ function SubtaskFormFields({
 }: {
   onClose: () => void;
   goalId: string;
-  subtask?: Subtask | null;
+  subtask?: SubtaskWithAttachments | null;
 }) {
   const t = useTranslations("SubtaskForm");
+  const tAttachments = useTranslations("Attachments");
   const tEnums = useTranslations("Enums");
   const tCommon = useTranslations("Common");
   const router = useRouter();
@@ -55,6 +57,7 @@ function SubtaskFormFields({
   const [status, setStatus] = useState<string>(subtask?.status ?? SUBTASK_STATUSES[0]);
   const [responsible, setResponsible] = useState(subtask?.responsible ?? "");
   const [notes, setNotes] = useState(subtask?.notes ?? "");
+  const [attachments, setAttachments] = useState<Attachment[]>(subtask?.attachments ?? []);
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -84,6 +87,11 @@ function SubtaskFormFields({
     } finally {
       setPending(false);
     }
+  }
+
+  function handleAttachmentsChange(next: Attachment[]) {
+    setAttachments(next);
+    router.refresh();
   }
 
   return (
@@ -160,6 +168,18 @@ function SubtaskFormFields({
           maxLength={2000}
         />
       </Field>
+
+      {subtask ? (
+        <AttachmentSection
+          subtaskId={subtask.id}
+          attachments={attachments}
+          onAttachmentsChange={handleAttachmentsChange}
+        />
+      ) : (
+        <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
+          {tAttachments("saveFirst")}
+        </p>
+      )}
 
       {error && <p className="mb-4 text-sm text-rose-600">{error}</p>}
 

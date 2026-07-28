@@ -2,6 +2,8 @@ import { setRequestLocale } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
 import { IndicatorsTable } from "@/components/indicators-table";
 
+export const dynamic = "force-dynamic";
+
 export default async function IndicatorsPage({
   params,
 }: {

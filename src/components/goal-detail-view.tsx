@@ -19,12 +19,24 @@ import { IndicatorList } from "./indicator-list";
 import { IndicatorFormDialog } from "./indicator-form-dialog";
 import { api } from "@/lib/api-client";
 import { computeGoalProgress, formatDate, isGoalOverdue } from "@/lib/goal-helpers";
-import type { GoalDetail, Contact, Subtask, Indicator } from "@/lib/types";
+import type {
+  GoalDetail,
+  Contact,
+  GoalContactWithContact,
+  SubtaskWithAttachments,
+  Indicator,
+} from "@/lib/types";
 import type { GoalKind, GoalStatus } from "@/lib/constants";
 
 type SubtaskFilter = "ALL" | "PLANNED" | "UNPLANNED";
 
-export function GoalDetailView({ goal }: { goal: GoalDetail }) {
+export function GoalDetailView({
+  goal,
+  directoryContacts,
+}: {
+  goal: GoalDetail;
+  directoryContacts: Contact[];
+}) {
   const t = useTranslations("GoalDetail");
   const tHome = useTranslations("Home");
   const tEnums = useTranslations("Enums");
@@ -36,15 +48,25 @@ export function GoalDetailView({ goal }: { goal: GoalDetail }) {
   const [deleteGoalOpen, setDeleteGoalOpen] = useState(false);
   const [deletePending, setDeletePending] = useState(false);
 
-  const [contactDialog, setContactDialog] = useState<{ open: boolean; contact?: Contact | null }>({
-    open: false,
-  });
-  const [deletingContact, setDeletingContact] = useState<Contact | null>(null);
+  const [contactDialog, setContactDialog] = useState<{
+    open: boolean;
+    goalContact?: GoalContactWithContact | null;
+  }>({ open: false });
+  const [unlinkingContact, setUnlinkingContact] = useState<GoalContactWithContact | null>(null);
+  const linkedContactIds = useMemo(
+    () => new Set(goal.goalContacts.map((gc) => gc.contactId)),
+    [goal.goalContacts]
+  );
+  const availableContacts = useMemo(
+    () => directoryContacts.filter((c) => !linkedContactIds.has(c.id)),
+    [directoryContacts, linkedContactIds]
+  );
 
-  const [subtaskDialog, setSubtaskDialog] = useState<{ open: boolean; subtask?: Subtask | null }>({
-    open: false,
-  });
-  const [deletingSubtask, setDeletingSubtask] = useState<Subtask | null>(null);
+  const [subtaskDialog, setSubtaskDialog] = useState<{
+    open: boolean;
+    subtask?: SubtaskWithAttachments | null;
+  }>({ open: false });
+  const [deletingSubtask, setDeletingSubtask] = useState<SubtaskWithAttachments | null>(null);
   const [subtaskFilter, setSubtaskFilter] = useState<SubtaskFilter>("ALL");
 
   const [indicatorDialog, setIndicatorDialog] = useState<{
@@ -73,11 +95,11 @@ export function GoalDetailView({ goal }: { goal: GoalDetail }) {
     }
   }
 
-  async function confirmDeleteContact() {
-    if (!deletingContact) return;
-    await api.deleteContact(deletingContact.id);
+  async function confirmUnlinkContact() {
+    if (!unlinkingContact) return;
+    await api.unlinkContact(unlinkingContact.id);
     router.refresh();
-    setDeletingContact(null);
+    setUnlinkingContact(null);
   }
 
   async function confirmDeleteSubtask() {
@@ -176,12 +198,12 @@ export function GoalDetailView({ goal }: { goal: GoalDetail }) {
         title={t("contactsTitle")}
         subtitle={t("contactsSubtitle")}
         addLabel={t("addContact")}
-        onAdd={() => setContactDialog({ open: true, contact: null })}
+        onAdd={() => setContactDialog({ open: true, goalContact: null })}
       >
         <ContactList
-          contacts={goal.contacts}
-          onEdit={(contact) => setContactDialog({ open: true, contact })}
-          onDelete={setDeletingContact}
+          goalContacts={goal.goalContacts}
+          onEdit={(goalContact) => setContactDialog({ open: true, goalContact })}
+          onUnlink={setUnlinkingContact}
         />
       </Section>
 
@@ -249,12 +271,15 @@ export function GoalDetailView({ goal }: { goal: GoalDetail }) {
         open={contactDialog.open}
         onClose={() => setContactDialog({ open: false })}
         goalId={goal.id}
-        contact={contactDialog.contact}
+        availableContacts={availableContacts}
+        goalContact={contactDialog.goalContact}
       />
       <ConfirmDialog
-        open={!!deletingContact}
-        onClose={() => setDeletingContact(null)}
-        onConfirm={confirmDeleteContact}
+        open={!!unlinkingContact}
+        onClose={() => setUnlinkingContact(null)}
+        onConfirm={confirmUnlinkContact}
+        title={t("unlinkConfirmTitle")}
+        body={t("unlinkConfirmBody")}
       />
 
       <SubtaskFormDialog

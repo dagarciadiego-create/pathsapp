@@ -1,12 +1,12 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
-import { Pencil, Trash2, CalendarDays, User } from "lucide-react";
+import { Pencil, Trash2, CalendarDays, User, Paperclip } from "lucide-react";
 import { clsx } from "clsx";
 import { ActionTypeIcon } from "./ui/action-type-icon";
 import { SubtaskStatusBadge } from "./ui/status-badge";
 import { formatDate } from "@/lib/goal-helpers";
-import type { Subtask } from "@/lib/types";
+import type { SubtaskWithAttachments } from "@/lib/types";
 import type { ActionType, SubtaskStatus } from "@/lib/constants";
 
 export function SubtaskList({
@@ -14,9 +14,9 @@ export function SubtaskList({
   onEdit,
   onDelete,
 }: {
-  subtasks: Subtask[];
-  onEdit: (subtask: Subtask) => void;
-  onDelete: (subtask: Subtask) => void;
+  subtasks: SubtaskWithAttachments[];
+  onEdit: (subtask: SubtaskWithAttachments) => void;
+  onDelete: (subtask: SubtaskWithAttachments) => void;
 }) {
   const tEnums = useTranslations("Enums");
   const t = useTranslations("GoalDetail");
@@ -59,6 +59,12 @@ export function SubtaskList({
                   <span className="flex items-center gap-1">
                     <User className="h-3.5 w-3.5" aria-hidden />
                     {subtask.responsible}
+                  </span>
+                )}
+                {subtask.attachments.length > 0 && (
+                  <span className="flex items-center gap-1">
+                    <Paperclip className="h-3.5 w-3.5" aria-hidden />
+                    {subtask.attachments.length}
                   </span>
                 )}
               </div>

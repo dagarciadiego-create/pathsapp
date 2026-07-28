@@ -4,7 +4,12 @@
     "tagline": "Advocacy y lobby en hemofilia",
     "home": "Labores de advocacy",
     "indicators": "Indicadores de éxito",
-    "language": "Idioma"
+    "contacts": "Directorio",
+    "calendar": "Calendario",
+    "reports": "Informes",
+    "publicPage": "Vista pública",
+    "language": "Idioma",
+    "menu": "Menú"
   },
   "Common": {
     "add": "Añadir",
@@ -113,17 +118,27 @@
     "filterPlanned": "Planificadas",
     "filterUnplanned": "No planificadas",
     "indicatorsTitle": "Indicadores de esta labor",
-    "addIndicator": "Añadir indicador"
+    "addIndicator": "Añadir indicador",
+    "unlinkContact": "Quitar de esta labor",
+    "unlinkConfirmTitle": "¿Quitar este contacto de la labor?",
+    "unlinkConfirmBody": "El contacto seguirá existiendo en el directorio; solo se quita de esta labor."
   },
   "ContactForm": {
-    "titleNew": "Nuevo contacto",
+    "titleNew": "Añadir contacto",
     "titleEdit": "Editar contacto",
+    "modeExisting": "Contacto existente",
+    "modeNew": "Contacto nuevo",
+    "pickContact": "Elegir del directorio",
+    "pickContactPlaceholder": "Selecciona un contacto…",
+    "noAvailableContacts": "Todos los contactos del directorio ya están vinculados a esta labor.",
     "name": "Nombre",
     "organization": "Organización / institución",
     "role": "Cargo",
     "relation": "Tipo de relación",
     "email": "Correo electrónico",
-    "phone": "Teléfono"
+    "phone": "Teléfono",
+    "linkNotes": "Notas para esta labor",
+    "linkNotesPlaceholder": "¿Por qué es relevante este contacto para esta labor en concreto?"
   },
   "SubtaskForm": {
     "titleNew": "Nueva acción",
@@ -162,6 +177,62 @@
     "currentValue": "Valor actual",
     "unit": "Unidad",
     "unitPlaceholder": "Ej: %, reuniones, personas…"
+  },
+  "ContactDirectory": {
+    "title": "Directorio de contactos",
+    "subtitle": "Personas y organizaciones relevantes para la incidencia política, reutilizables entre varias labores.",
+    "newContact": "Nuevo contacto",
+    "searchPlaceholder": "Buscar por nombre, organización o cargo…",
+    "emptyState": "Todavía no hay contactos en el directorio.",
+    "emptyStateFiltered": "Ningún contacto coincide con la búsqueda.",
+    "columnGoals": "Labores vinculadas",
+    "noGoalsLinked": "Sin labor vinculada todavía",
+    "deleteConfirmBody": "Se eliminará también de todas las labores a las que esté vinculado. Esta acción no se puede deshacer."
+  },
+  "Calendar": {
+    "title": "Calendario",
+    "subtitle": "Próximas acciones y fechas objetivo de las labores.",
+    "today": "Hoy",
+    "viewMonth": "Mes",
+    "viewAgenda": "Agenda",
+    "upcoming": "Próximos 30 días",
+    "overdue": "Vencidos",
+    "noEvents": "Sin acciones ni plazos ese día.",
+    "noUpcoming": "No hay nada previsto en los próximos 30 días.",
+    "noOverdue": "No hay nada vencido. ¡Buen trabajo!",
+    "goalTargetDate": "Fecha objetivo de la labor",
+    "selectDay": "Selecciona un día para ver el detalle."
+  },
+  "Attachments": {
+    "title": "Documentos adjuntos",
+    "upload": "Subir archivo",
+    "uploading": "Subiendo…",
+    "noAttachments": "Sin archivos adjuntos.",
+    "saveFirst": "Guarda la acción para poder adjuntar archivos.",
+    "deleteConfirmBody": "Se eliminará este archivo adjunto. Esta acción no se puede deshacer.",
+    "tooLarge": "El archivo supera el tamaño máximo permitido (10 MB).",
+    "uploadError": "No se ha podido subir el archivo."
+  },
+  "Reports": {
+    "title": "Informes",
+    "subtitle": "Genera un informe descargable con el estado de las labores e indicadores, útil para reuniones de junta o la memoria anual.",
+    "downloadPdf": "Descargar PDF",
+    "downloadExcel": "Descargar Excel",
+    "generating": "Generando…",
+    "previewTitle": "Resumen",
+    "generatedAt": "Generado el {date}",
+    "sheetGoals": "Labores",
+    "sheetIndicators": "Indicadores"
+  },
+  "PublicPage": {
+    "title": "Nuestra labor de incidencia",
+    "subtitle": "Un resumen público de los objetivos que perseguimos y los logros conseguidos en representación de las personas con hemofilia.",
+    "achievedTitle": "Logros conseguidos",
+    "inProgressTitle": "En marcha ahora",
+    "indicatorsTitle": "Nuestro impacto en cifras",
+    "noAchieved": "Todavía no hay logros publicados.",
+    "noInProgress": "No hay labores en curso en este momento.",
+    "internalLink": "Acceder al panel interno"
   },
   "Footer": {
     "installHint": "Consejo: añade PATHSapp a la pantalla de inicio de tu móvil para usarla como una app."

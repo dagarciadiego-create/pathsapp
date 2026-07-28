@@ -29,3 +29,9 @@ export function formatIndicatorValue(value: number, unit: string | null | undefi
   if (!unit) return formattedValue;
   return unit.trim().startsWith("%") ? `${formattedValue}${unit}` : `${formattedValue} ${unit}`;
 }
+
+export function formatFileSize(bytes: number) {
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(0)} KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+}

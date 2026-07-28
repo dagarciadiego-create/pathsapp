@@ -15,7 +15,7 @@ export async function GET(request: Request) {
     },
     include: {
       subtasks: true,
-      _count: { select: { contacts: true, indicators: true } },
+      _count: { select: { goalContacts: true, indicators: true } },
     },
     orderBy: { createdAt: "desc" },
   });

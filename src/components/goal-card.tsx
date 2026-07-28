@@ -76,7 +76,7 @@ export function GoalCard({
         <p className="flex items-center gap-3 text-slate-500 dark:text-slate-400">
           <span className="flex items-center gap-1">
             <Users className="h-4 w-4 shrink-0 text-slate-400" aria-hidden />
-            {goal._count.contacts}
+            {goal._count.goalContacts}
           </span>
           <span className="flex items-center gap-1">
             <Gauge className="h-4 w-4 shrink-0 text-slate-400" aria-hidden />

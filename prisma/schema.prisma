@@ -28,27 +28,45 @@ model AdvocacyGoal {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  contacts   Contact[]
-  subtasks   Subtask[]
-  indicators Indicator[]
+  goalContacts GoalContact[]
+  subtasks     Subtask[]
+  indicators   Indicator[]
 }
 
-/// Someone to contact in order to move a goal forward.
+/// A stakeholder in the shared contact directory. Not tied to a single
+/// goal — the same person/organization can be relevant to several goals
+/// (see GoalContact).
 model Contact {
   id           String   @id @default(cuid())
-  goalId       String
-  goal         AdvocacyGoal @relation(fields: [goalId], references: [id], onDelete: Cascade)
   name         String
   organization String?
   role         String?
-  /// "DECISION_MAKER" (de quien depende conseguirlo) | "SUPPORTER" (quien puede ayudar)
-  relation     String
   email        String?
   phone        String?
   notes        String?
   createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
+  goalLinks GoalContact[]
+}
+
+/// Links a directory Contact to a goal, with a relation type that is
+/// specific to that goal (the same person could be a decision-maker for
+/// one goal and merely a supporter for another).
+model GoalContact {
+  id        String       @id @default(cuid())
+  goalId    String
+  goal      AdvocacyGoal @relation(fields: [goalId], references: [id], onDelete: Cascade)
+  contactId String
+  contact   Contact      @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  /// "DECISION_MAKER" (de quien depende conseguirlo) | "SUPPORTER" (quien puede ayudar)
+  relation  String
+  notes     String?
+  createdAt DateTime     @default(now())
+
+  @@unique([goalId, contactId])
   @@index([goalId])
+  @@index([contactId])
 }
 
 /// A small, concrete action within a goal: a letter, call, meeting, event...
@@ -69,7 +87,25 @@ model Subtask {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
+  attachments Attachment[]
+
   @@index([goalId])
+}
+
+/// A file attached to a subtask (the sent letter, meeting minutes, a photo
+/// of the encounter...). Stored on local disk outside of `public/`, served
+/// through /api/attachments/[id]/file.
+model Attachment {
+  id         String   @id @default(cuid())
+  subtaskId  String
+  subtask    Subtask  @relation(fields: [subtaskId], references: [id], onDelete: Cascade)
+  filename   String
+  mimeType   String
+  size       Int
+  storageKey String
+  createdAt  DateTime @default(now())
+
+  @@index([subtaskId])
 }
 
 /// A success indicator / KPI, optionally linked to a specific goal.
