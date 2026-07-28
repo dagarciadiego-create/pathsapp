@@ -1,12 +1,27 @@
 import { randomUUID } from "crypto";
 import { mkdir, readFile, unlink, writeFile } from "fs/promises";
 import path from "path";
+import { getStore } from "@netlify/blobs";
 
-// Uploaded files are stored outside `public/` so they're never served as
-// static assets directly — access always goes through
-// /api/attachments/[id]/file, which can add auth checks later without
-// having to move anything on disk.
+// On Netlify, attachments live in Netlify Blobs (durable, persists across
+// deploys) instead of the local filesystem, which is wiped between
+// invocations on Netlify's serverless runtime. `NETLIFY=true` is set by
+// Netlify in both the build and the function runtime. Outside of Netlify
+// (plain `next dev`, without the Netlify CLI) Blobs has no environment to
+// connect to, so local development falls back to disk — this keeps
+// `next dev` working without requiring `netlify dev` just to test uploads.
+//
+// Either way, access always goes through /api/attachments/[id]/file, which
+// can add auth checks later without having to move anything on disk or
+// in blob storage.
+const ON_NETLIFY = process.env.NETLIFY === "true";
 const UPLOAD_DIR = path.join(process.cwd(), "uploads");
+
+function attachmentsStore() {
+  // Strong consistency so a file is readable immediately after upload,
+  // rather than only eventually — this app reads back what it just wrote.
+  return getStore({ name: "attachments", consistency: "strong" });
+}
 
 export const MAX_ATTACHMENT_SIZE = 10 * 1024 * 1024; // 10 MB
 
@@ -38,20 +53,41 @@ export const INLINE_RENDERABLE_MIME_TYPES = new Set([
   "image/gif",
 ]);
 
-export async function saveUploadedFile(file: File) {
-  await mkdir(UPLOAD_DIR, { recursive: true });
+function storageKeyFor(file: File) {
   const rawExt = path.extname(file.name).slice(0, 20);
   const ext = /^\.[a-zA-Z0-9]+$/.test(rawExt) ? rawExt : "";
-  const storageKey = `${randomUUID()}${ext}`;
-  const buffer = Buffer.from(await file.arrayBuffer());
-  await writeFile(path.join(UPLOAD_DIR, storageKey), buffer);
-  return { storageKey, size: buffer.byteLength };
+  return `${randomUUID()}${ext}`;
 }
 
-export async function readStoredFile(storageKey: string) {
-  return readFile(path.join(UPLOAD_DIR, storageKey));
+export async function saveUploadedFile(file: File) {
+  const storageKey = storageKeyFor(file);
+  const arrayBuffer = await file.arrayBuffer();
+
+  if (ON_NETLIFY) {
+    await attachmentsStore().set(storageKey, arrayBuffer);
+  } else {
+    await mkdir(UPLOAD_DIR, { recursive: true });
+    await writeFile(path.join(UPLOAD_DIR, storageKey), Buffer.from(arrayBuffer));
+  }
+
+  return { storageKey, size: arrayBuffer.byteLength };
+}
+
+export async function readStoredFile(storageKey: string): Promise<Buffer> {
+  if (!ON_NETLIFY) {
+    return readFile(path.join(UPLOAD_DIR, storageKey));
+  }
+  const data = await attachmentsStore().get(storageKey, { type: "arrayBuffer" });
+  if (!data) throw new Error("File missing in blob storage");
+  return Buffer.from(data);
 }
 
 export async function deleteStoredFile(storageKey: string) {
+  if (ON_NETLIFY) {
+    await attachmentsStore()
+      .delete(storageKey)
+      .catch(() => {});
+    return;
+  }
   await unlink(path.join(UPLOAD_DIR, storageKey)).catch(() => {});
 }

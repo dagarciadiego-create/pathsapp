@@ -21,7 +21,7 @@ export async function GET(_request: Request, { params }: Params) {
 
   const disposition = INLINE_RENDERABLE_MIME_TYPES.has(attachment.mimeType) ? "inline" : "attachment";
 
-  return new NextResponse(buffer, {
+  return new NextResponse(new Uint8Array(buffer), {
     headers: {
       "Content-Type": attachment.mimeType,
       "Content-Length": String(attachment.size),
