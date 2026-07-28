@@ -1,5 +1,6 @@
 import { PrismaClient } from "@/generated/prisma/client";
-import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
+import { PrismaPg } from "@prisma/adapter-pg";
+import { resolveDatabaseUrl } from "./database-url";
 
 // Reuse a single PrismaClient/connection pool across module reloads in dev.
 const globalForPrisma = globalThis as unknown as {
@@ -7,9 +8,7 @@ const globalForPrisma = globalThis as unknown as {
 };
 
 function createPrismaClient() {
-  const adapter = new PrismaBetterSqlite3({
-    url: process.env.DATABASE_URL ?? "file:./dev.db",
-  });
+  const adapter = new PrismaPg({ connectionString: resolveDatabaseUrl() });
   return new PrismaClient({ adapter });
 }
 

@@ -1,7 +1,7 @@
 // PATHSapp data model
-// SQLite has no native enum support, so "enum-like" fields are plain
-// String columns; allowed values are enforced in the app layer (see
-// src/lib/constants.ts) and validated with zod before writing.
+// "Enum-like" fields are plain String columns (not native Postgres enums)
+// so the allowed values can evolve without a migration; they are enforced
+// in the app layer (see src/lib/constants.ts) and validated with zod.
 
 generator client {
   provider = "prisma-client"
@@ -9,7 +9,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
 }
 
 /// A single advocacy/lobby objective ("labor de advocacy y lobby").

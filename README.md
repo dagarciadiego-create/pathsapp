@@ -79,7 +79,7 @@ añadirse a la pantalla de inicio del móvil y usarse como una app.
 |---|---|
 | Framework | Next.js 16 (App Router, Turbopack) + TypeScript |
 | Estilos | Tailwind CSS 4 |
-| Base de datos | SQLite (desarrollo) vía Prisma ORM 7 + `@prisma/adapter-better-sqlite3` |
+| Base de datos | PostgreSQL vía Prisma ORM 7 + `@prisma/adapter-pg` ([Netlify DB](https://docs.netlify.com/build/data-and-storage/netlify-db/) en producción) |
 | Internacionalización | next-intl (rutas `/es`, `/en`) |
 | Validación | Zod |
 | Informes | `exceljs` (Excel) y `@react-pdf/renderer` (PDF) |
@@ -104,10 +104,14 @@ contacto internos.
 
 ## 3. Cómo ejecutar el proyecto en local
 
+Hace falta una base de datos **Postgres** accesible (una instancia local,
+Docker, o la misma que uses en producción) — no hay modo SQLite ni fichero
+local de por medio.
+
 ```bash
 npm install
-cp .env.example .env        # ya viene configurado para SQLite local
-npx prisma migrate dev      # crea dev.db con el esquema
+cp .env.example .env        # pon tu cadena de conexión Postgres en DATABASE_URL
+npx prisma migrate dev      # crea las tablas
 npx prisma db seed          # datos de ejemplo (opcional pero recomendado)
 npm run dev                 # http://localhost:3000
 ```
@@ -115,27 +119,49 @@ npm run dev                 # http://localhost:3000
 Otros comandos útiles:
 
 ```bash
-npm run build       # build de producción
+npm run build       # build de producción (aplica migraciones pendientes y compila)
 npm run lint         # ESLint
 npm run db:studio   # explorador visual de la base de datos (Prisma Studio)
 npm run db:seed     # volver a cargar los datos de ejemplo
 ```
 
-### Pasar a una base de datos "de verdad"
+### Documentos adjuntos en producción (pendiente)
 
-SQLite es cómodo para desarrollo/demo, pero un fichero local no sobrevive en
-plataformas serverless (Vercel, etc.) porque el disco no es persistente entre
-peticiones. Para producción, cambia el `provider` en `prisma/schema.prisma` a
-`postgresql` (o `mysql`), pon la cadena de conexión real en `DATABASE_URL` y
-cambia el adapter en `src/lib/prisma.ts` por `@prisma/adapter-pg` (Prisma ya
-trae ese flujo documentado). El resto de la aplicación no cambia.
+Los adjuntos se guardan en la carpeta local `uploads/` (fuera de `public/`,
+gitignored), lo cual funciona en local pero **no sobrevive en Netlify**: las
+funciones serverless no tienen disco persistente entre peticiones, así que
+cualquier archivo subido se perderá tras un tiempo. Antes de depender de esa
+función en producción, cambia `src/lib/storage.ts` para subir a un bucket
+(Netlify Blobs, S3, Cloudflare R2...) en vez de al disco local — el resto de
+la aplicación (subida, descarga, borrado) no cambia porque toda la lógica de
+almacenamiento está aislada en ese fichero.
 
-Lo mismo aplica a los **documentos adjuntos**: hoy se guardan en la carpeta
-local `uploads/` (fuera de `public/`, gitignored). En un despliegue
-serverless ese disco tampoco es persistente — para producción, cambia
-`src/lib/storage.ts` para subir a un bucket (S3, Cloudflare R2, etc.) en vez
-de al disco local; el resto de la aplicación (subida, descarga, borrado) no
-cambia porque toda la lógica de almacenamiento está aislada en ese fichero.
+### Desplegar en Netlify
+
+El repositorio ya incluye `netlify.toml` y el `build` de `package.json`
+ejecuta `prisma migrate deploy` automáticamente antes de compilar, así que
+las tablas se crean solas en el primer deploy. Estos pasos se hacen una vez
+desde el dashboard de Netlify (con tu cuenta):
+
+1. **Crear el site** — *Add new site* → *Import an existing project* →
+   conecta GitHub → elige el repo `pathsapp` y la rama a publicar. Netlify
+   detecta `netlify.toml` y usa `npm run build` sin configuración adicional.
+2. **Activar Netlify DB** — en el site, pestaña *Extensions* → busca
+   **Netlify DB** → *Install*/*Enable*. Provisiona una base Postgres (Neon) y
+   define automáticamente `NETLIFY_DATABASE_URL` /
+   `NETLIFY_DATABASE_URL_UNPOOLED`; la app las detecta sola
+   (`src/lib/database-url.ts`), no hay que copiar nada a mano.
+3. **Redesplegar** si el primer build terminó antes de activar la base de
+   datos (*Deploys* → *Trigger deploy*), para que corra con la variable ya
+   disponible.
+4. **(Opcional) Cargar datos de ejemplo** — copia el valor de
+   `NETLIFY_DATABASE_URL_UNPOOLED` (*Site configuration* → *Environment
+   variables*) a tu `.env` local como `DATABASE_URL` y ejecuta
+   `npx prisma db seed` desde tu máquina. Si vas a usar datos reales de la
+   organización desde el principio, sáltate este paso.
+
+Al terminar, Netlify te da una URL `https://<nombre-del-site>.netlify.app`
+lista para compartir.
 
 ---
 
