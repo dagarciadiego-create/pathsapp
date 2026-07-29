@@ -8,7 +8,10 @@
     "calendar": "Calendario",
     "deadlines": "Plazos",
     "triage": "Triaje",
+    "positions": "Cargos",
+    "spokespeople": "Portavoces",
     "reports": "Informes",
+    "more": "Más",
     "publicPage": "Vista pública",
     "language": "Idioma",
     "menu": "Menú"
@@ -91,6 +94,13 @@
       "SUBMITTED": "Presentado",
       "MISSED": "Perdido",
       "CANCELLED": "Cancelado"
+    },
+    "strategicDateKind": {
+      "BUDGET": "Presupuestos",
+      "ELECTION": "Elecciones",
+      "AWARENESS_DAY": "Día de sensibilización",
+      "LEGISLATIVE": "Legislativo",
+      "OTHER": "Otro"
     }
   },
   "Home": {
@@ -343,7 +353,78 @@
     "noUpcoming": "No hay nada previsto en los próximos 30 días.",
     "noOverdue": "No hay nada vencido. ¡Buen trabajo!",
     "goalTargetDate": "Fecha objetivo de la labor",
-    "selectDay": "Selecciona un día para ver el detalle."
+    "selectDay": "Selecciona un día para ver el detalle.",
+    "strategicDatesTitle": "Calendario estratégico",
+    "strategicDatesSubtitle": "Ventanas presupuestarias, elecciones y días de sensibilización para planificar las labores.",
+    "newStrategicDate": "Añadir hito",
+    "noStrategicDates": "Todavía no se han añadido hitos estratégicos.",
+    "recurringOn": "se repite el {date}"
+  },
+  "PositionForm": {
+    "titleNew": "Nuevo cargo",
+    "titleEdit": "Editar cargo",
+    "title": "Nombre del cargo",
+    "titlePlaceholder": "Ej: Dirección General de Cartera Común de Servicios",
+    "organization": "Organización"
+  },
+  "PositionHolderForm": {
+    "titleAssign": "Asignar titular",
+    "titleEdit": "Editar titular",
+    "contact": "Contacto",
+    "noContacts": "Añade antes un contacto al directorio.",
+    "startDate": "Fecha de inicio",
+    "endDate": "Fecha de fin",
+    "endDateHint": "Déjalo vacío si sigue ocupando este cargo.",
+    "submitAssign": "Asignar"
+  },
+  "Positions": {
+    "title": "Cargos",
+    "subtitle": "Puestos y cargos que se siguen por separado de quien los ocupa ahora mismo, para que la relación sobreviva a unas elecciones o un cambio de gobierno.",
+    "newPosition": "Nuevo cargo",
+    "emptyState": "Todavía no hay cargos registrados.",
+    "deleteConfirmBody": "Se eliminará el cargo y su historial de sucesión. Los contactos vinculados seguirán en el directorio.",
+    "vacant": "Vacante",
+    "since": "desde {date}",
+    "changeHolder": "Cambiar titular",
+    "assignHolder": "Asignar titular",
+    "editCurrentHolder": "Editar titular actual",
+    "history": "Historial de sucesión ({count})"
+  },
+  "SpokespersonForm": {
+    "titleNew": "Nuevo portavoz",
+    "titleEdit": "Editar portavoz",
+    "name": "Nombre",
+    "role": "Cargo",
+    "topics": "Temas",
+    "topicsHint": "Separados por comas, ej. \"acceso a tratamiento, financiación\"",
+    "topicsPlaceholder": "Acceso a tratamiento, financiación europea…",
+    "email": "Correo electrónico",
+    "phone": "Teléfono",
+    "bio": "Biografía",
+    "bioHint": "Resumen breve útil para preparar a un periodista.",
+    "mediaTrained": "Formación en medios",
+    "mediaTrainedLabel": "Ha completado formación en medios / puede hablar con prensa"
+  },
+  "Spokespeople": {
+    "title": "Portavoces",
+    "subtitle": "Personas autorizadas para representar públicamente a la entidad, y sobre qué temas pueden hablar.",
+    "newSpokesperson": "Nuevo portavoz",
+    "searchPlaceholder": "Buscar por nombre, cargo o tema…",
+    "emptyState": "Todavía no hay portavoces registrados.",
+    "emptyStateFiltered": "Ningún portavoz coincide con la búsqueda.",
+    "mediaTrainedBadge": "Formación en medios"
+  },
+  "StrategicDateForm": {
+    "titleNew": "Nuevo hito estratégico",
+    "titleEdit": "Editar hito estratégico",
+    "title": "Título",
+    "titlePlaceholder": "Ej: Día Mundial de la Hemofilia",
+    "kind": "Tipo",
+    "date": "Fecha",
+    "isRecurring": "Recurrencia",
+    "isRecurringHint": "Una fecha recurrente se repite el mismo mes y día cada año.",
+    "isRecurringLabel": "Se repite cada año",
+    "description": "Descripción"
   },
   "Attachments": {
     "title": "Documentos adjuntos",

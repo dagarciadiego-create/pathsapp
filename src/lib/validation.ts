@@ -9,6 +9,7 @@ import {
   COMMITMENT_STATUSES,
   DEADLINE_KINDS,
   DEADLINE_STATUSES,
+  STRATEGIC_DATE_KINDS,
 } from "./constants";
 
 // Empty strings from HTML forms should be treated as "no value", not as an
@@ -135,6 +136,54 @@ export const deadlineInputSchema = z.object({
   notes: optionalString(2000),
 });
 export const deadlineUpdateSchema = deadlineInputSchema.partial();
+
+export const positionInputSchema = z.object({
+  title: z.string().trim().min(1, "Required").max(200),
+  organization: optionalString(200),
+  notes: optionalString(2000),
+});
+export const positionUpdateSchema = positionInputSchema.partial();
+
+// Assigning a new holder (POST /api/positions/[id]/holders): the server
+// closes out whichever holder is currently open, so this only needs the
+// incoming holder's own data.
+export const positionHolderAssignSchema = z.object({
+  contactId: z.string().trim().min(1, "Required").max(60),
+  startDate: z.string().refine((val) => !Number.isNaN(Date.parse(val)), "Invalid date"),
+  notes: optionalString(2000),
+});
+
+// Correcting an existing holder record (dates, notes, even endDate to
+// mark a departure with no successor yet) — no auto-close side effects.
+export const positionHolderUpdateSchema = z.object({
+  startDate: z
+    .string()
+    .refine((val) => !Number.isNaN(Date.parse(val)), "Invalid date")
+    .optional(),
+  endDate: optionalDateString,
+  notes: optionalString(2000),
+});
+
+export const strategicDateInputSchema = z.object({
+  title: z.string().trim().min(1, "Required").max(200),
+  kind: z.enum(STRATEGIC_DATE_KINDS),
+  date: z.string().refine((val) => !Number.isNaN(Date.parse(val)), "Invalid date"),
+  description: optionalString(2000),
+  isRecurring: z.boolean().optional(),
+});
+export const strategicDateUpdateSchema = strategicDateInputSchema.partial();
+
+export const spokespersonInputSchema = z.object({
+  name: z.string().trim().min(1, "Required").max(200),
+  role: optionalString(200),
+  topics: optionalString(500),
+  email: optionalEmail,
+  phone: optionalString(60),
+  bio: optionalString(2000),
+  mediaTrained: z.boolean().optional(),
+  notes: optionalString(2000),
+});
+export const spokespersonUpdateSchema = spokespersonInputSchema.partial();
 
 export const indicatorInputSchema = z.object({
   goalId: optionalString(60),

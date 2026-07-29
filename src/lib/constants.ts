@@ -57,3 +57,12 @@ export type DeadlineKind = (typeof DEADLINE_KINDS)[number];
 
 export const DEADLINE_STATUSES = ["OPEN", "SUBMITTED", "MISSED", "CANCELLED"] as const;
 export type DeadlineStatus = (typeof DEADLINE_STATUSES)[number];
+
+export const STRATEGIC_DATE_KINDS = [
+  "BUDGET",
+  "ELECTION",
+  "AWARENESS_DAY",
+  "LEGISLATIVE",
+  "OTHER",
+] as const;
+export type StrategicDateKind = (typeof STRATEGIC_DATE_KINDS)[number];

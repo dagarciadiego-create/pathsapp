@@ -2,11 +2,27 @@
 
 import { useMemo, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { ChevronLeft, ChevronRight, Flag, CalendarClock } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Flag,
+  CalendarClock,
+  Plus,
+  Pencil,
+  Trash2,
+  Wallet,
+  Vote,
+  Megaphone,
+  Gavel,
+  Star,
+} from "lucide-react";
 import { clsx } from "clsx";
-import { Link } from "@/i18n/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 import { Button } from "./ui/form";
+import { ConfirmDialog } from "./ui/confirm-dialog";
 import { ActionTypeIcon } from "./ui/action-type-icon";
+import { StrategicDateFormDialog } from "./strategic-date-form-dialog";
+import { api } from "@/lib/api-client";
 import {
   type CalendarEvent,
   eventsOnDay,
@@ -17,9 +33,20 @@ import {
   overdueEvents,
   upcomingEvents,
 } from "@/lib/calendar-helpers";
-import type { ActionType } from "@/lib/constants";
+import { formatDate } from "@/lib/goal-helpers";
+import type { ActionType, StrategicDateKind } from "@/lib/constants";
+import type { StrategicDate } from "@/lib/types";
+
+const strategicIcons: Record<StrategicDateKind, typeof Wallet> = {
+  BUDGET: Wallet,
+  ELECTION: Vote,
+  AWARENESS_DAY: Megaphone,
+  LEGISLATIVE: Gavel,
+  OTHER: Star,
+};
 
 function eventTone(event: CalendarEvent) {
+  if (event.kind === "strategic") return "strategic";
   if (isEventDone(event)) return "muted";
   return isEventOverdue(event) ? "overdue" : "upcoming";
 }
@@ -28,12 +55,14 @@ const dotClass: Record<string, string> = {
   overdue: "bg-rose-500",
   upcoming: "bg-teal-500",
   muted: "bg-slate-300 dark:bg-slate-600",
+  strategic: "bg-purple-500",
 };
 
 const badgeClass: Record<string, string> = {
   overdue: "bg-rose-100 text-rose-700 dark:bg-rose-900/50 dark:text-rose-300",
   upcoming: "bg-teal-100 text-teal-700 dark:bg-teal-900/50 dark:text-teal-300",
   muted: "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300",
+  strategic: "bg-purple-100 text-purple-700 dark:bg-purple-900/50 dark:text-purple-300",
 };
 
 function EventRow({ event }: { event: CalendarEvent }) {
@@ -44,23 +73,28 @@ function EventRow({ event }: { event: CalendarEvent }) {
     event.date
   );
 
-  return (
-    <Link
-      href={`/goals/${event.goalId}`}
-      className="flex items-start gap-2.5 rounded-lg px-2 py-1.5 hover:bg-slate-50 dark:hover:bg-slate-800/60"
-    >
+  const icon =
+    event.kind === "goalTarget" ? (
+      <Flag className="h-3 w-3 shrink-0" aria-hidden />
+    ) : event.kind === "strategic" ? (
+      (() => {
+        const Icon = strategicIcons[event.strategicKind as StrategicDateKind] ?? Star;
+        return <Icon className="h-3 w-3 shrink-0" aria-hidden />;
+      })()
+    ) : (
+      <ActionTypeIcon type={event.actionType as ActionType} className="h-3 w-3 shrink-0" />
+    );
+
+  const content = (
+    <>
       <span className={clsx("mt-1 h-2 w-2 shrink-0 rounded-full", dotClass[tone])} />
       <span className="min-w-0 flex-1">
         <span className="block truncate text-sm font-medium text-slate-800 dark:text-slate-200">
           {event.title}
         </span>
         <span className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400">
-          {event.kind === "goalTarget" ? (
-            <Flag className="h-3 w-3 shrink-0" aria-hidden />
-          ) : (
-            <ActionTypeIcon type={event.actionType as ActionType} className="h-3 w-3 shrink-0" />
-          )}
-          <span className="truncate">{event.goalName}</span>
+          {icon}
+          {event.kind !== "strategic" && <span className="truncate">{event.goalName}</span>}
           <span
             className={clsx(
               "ml-auto shrink-0 rounded-full px-1.5 py-0.5 font-medium",
@@ -71,13 +105,56 @@ function EventRow({ event }: { event: CalendarEvent }) {
           </span>
         </span>
       </span>
+    </>
+  );
+
+  if (event.kind === "strategic") {
+    return (
+      <div className="flex items-start gap-2.5 rounded-lg px-2 py-1.5">{content}</div>
+    );
+  }
+
+  return (
+    <Link
+      href={`/goals/${event.goalId}`}
+      className="flex items-start gap-2.5 rounded-lg px-2 py-1.5 hover:bg-slate-50 dark:hover:bg-slate-800/60"
+    >
+      {content}
     </Link>
   );
 }
 
-export function CalendarView({ events }: { events: CalendarEvent[] }) {
+export function CalendarView({
+  events,
+  strategicDates,
+}: {
+  events: CalendarEvent[];
+  strategicDates: StrategicDate[];
+}) {
   const t = useTranslations("Calendar");
+  const tEnums = useTranslations("Enums");
+  const tCommon = useTranslations("Common");
   const locale = useLocale();
+  const router = useRouter();
+
+  const [strategicDialog, setStrategicDialog] = useState<{
+    open: boolean;
+    strategicDate?: StrategicDate | null;
+  }>({ open: false });
+  const [deletingStrategic, setDeletingStrategic] = useState<StrategicDate | null>(null);
+  const [strategicDeletePending, setStrategicDeletePending] = useState(false);
+
+  async function confirmDeleteStrategic() {
+    if (!deletingStrategic) return;
+    setStrategicDeletePending(true);
+    try {
+      await api.deleteStrategicDate(deletingStrategic.id);
+      router.refresh();
+      setDeletingStrategic(null);
+    } finally {
+      setStrategicDeletePending(false);
+    }
+  }
 
   const today = useMemo(() => new Date(), []);
   const [viewedMonth, setViewedMonth] = useState(() => new Date(today.getFullYear(), today.getMonth(), 1));
@@ -248,6 +325,100 @@ export function CalendarView({ events }: { events: CalendarEvent[] }) {
           </div>
         </div>
       </div>
+
+      <div className="mt-6 rounded-xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+        <div className="mb-3 flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">
+              {t("strategicDatesTitle")}
+            </h3>
+            <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
+              {t("strategicDatesSubtitle")}
+            </p>
+          </div>
+          <Button
+            variant="secondary"
+            onClick={() => setStrategicDialog({ open: true, strategicDate: null })}
+          >
+            <Plus className="h-4 w-4" />
+            {t("newStrategicDate")}
+          </Button>
+        </div>
+
+        {strategicDates.length === 0 ? (
+          <p className="text-sm text-slate-500 dark:text-slate-400">
+            {t("noStrategicDates")}
+          </p>
+        ) : (
+          <ul className="space-y-1.5">
+            {[...strategicDates]
+              .sort((a, b) => a.title.localeCompare(b.title))
+              .map((sd) => {
+                const Icon = strategicIcons[sd.kind as StrategicDateKind] ?? Star;
+                return (
+                  <li
+                    key={sd.id}
+                    className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-slate-200 px-3 py-2 dark:border-slate-800"
+                  >
+                    <div className="flex min-w-0 items-center gap-2">
+                      <span className="shrink-0 rounded-full bg-purple-100 p-1.5 text-purple-600 dark:bg-purple-900/40 dark:text-purple-300">
+                        <Icon className="h-3.5 w-3.5" aria-hidden />
+                      </span>
+                      <div className="min-w-0">
+                        <p className="truncate text-sm font-medium text-slate-800 dark:text-slate-200">
+                          {sd.title}
+                        </p>
+                        <p className="text-xs text-slate-500 dark:text-slate-400">
+                          {tEnums(`strategicDateKind.${sd.kind as StrategicDateKind}`)}
+                          {" · "}
+                          {sd.isRecurring
+                            ? t("recurringOn", {
+                                date: new Intl.DateTimeFormat(locale, {
+                                  month: "long",
+                                  day: "numeric",
+                                  timeZone: "UTC",
+                                }).format(new Date(sd.date)),
+                              })
+                            : formatDate(sd.date, locale)}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex shrink-0 gap-1">
+                      <button
+                        type="button"
+                        onClick={() => setStrategicDialog({ open: true, strategicDate: sd })}
+                        aria-label={tCommon("edit")}
+                        className="rounded-lg p-1.5 text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
+                      >
+                        <Pencil className="h-4 w-4" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setDeletingStrategic(sd)}
+                        aria-label={tCommon("delete")}
+                        className="rounded-lg p-1.5 text-slate-500 hover:bg-rose-50 hover:text-rose-600 dark:text-slate-400 dark:hover:bg-rose-900/40 dark:hover:text-rose-400"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </button>
+                    </div>
+                  </li>
+                );
+              })}
+          </ul>
+        )}
+      </div>
+
+      <StrategicDateFormDialog
+        open={strategicDialog.open}
+        onClose={() => setStrategicDialog({ open: false })}
+        strategicDate={strategicDialog.strategicDate}
+      />
+      <ConfirmDialog
+        open={!!deletingStrategic}
+        onClose={() => setDeletingStrategic(null)}
+        onConfirm={confirmDeleteStrategic}
+        pending={strategicDeletePending}
+      />
     </div>
   );
 }

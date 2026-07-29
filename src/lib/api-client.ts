@@ -94,6 +94,37 @@ export const api = {
     request<T>(`/api/deadlines/${id}`, { method: "PATCH", body: JSON.stringify(data) }),
   deleteDeadline: (id: string) => request(`/api/deadlines/${id}`, { method: "DELETE" }),
 
+  // Positions/seats and their succession history (see Position/PositionHolder).
+  createPosition: <T>(data: unknown) =>
+    request<T>("/api/positions", { method: "POST", body: JSON.stringify(data) }),
+  updatePosition: <T>(id: string, data: unknown) =>
+    request<T>(`/api/positions/${id}`, { method: "PATCH", body: JSON.stringify(data) }),
+  deletePosition: (id: string) => request(`/api/positions/${id}`, { method: "DELETE" }),
+  assignPositionHolder: <T>(positionId: string, data: unknown) =>
+    request<T>(`/api/positions/${positionId}/holders`, {
+      method: "POST",
+      body: JSON.stringify(data),
+    }),
+  updatePositionHolder: <T>(id: string, data: unknown) =>
+    request<T>(`/api/position-holders/${id}`, { method: "PATCH", body: JSON.stringify(data) }),
+  deletePositionHolder: (id: string) =>
+    request(`/api/position-holders/${id}`, { method: "DELETE" }),
+
+  // Strategic calendar overlay (budget/election/awareness-day markers).
+  createStrategicDate: <T>(data: unknown) =>
+    request<T>("/api/strategic-dates", { method: "POST", body: JSON.stringify(data) }),
+  updateStrategicDate: <T>(id: string, data: unknown) =>
+    request<T>(`/api/strategic-dates/${id}`, { method: "PATCH", body: JSON.stringify(data) }),
+  deleteStrategicDate: (id: string) =>
+    request(`/api/strategic-dates/${id}`, { method: "DELETE" }),
+
+  // Designated spokespeople roster.
+  createSpokesperson: <T>(data: unknown) =>
+    request<T>("/api/spokespeople", { method: "POST", body: JSON.stringify(data) }),
+  updateSpokesperson: <T>(id: string, data: unknown) =>
+    request<T>(`/api/spokespeople/${id}`, { method: "PATCH", body: JSON.stringify(data) }),
+  deleteSpokesperson: (id: string) => request(`/api/spokespeople/${id}`, { method: "DELETE" }),
+
   uploadAttachment: async <T>(subtaskId: string, file: File): Promise<T> => {
     const formData = new FormData();
     formData.append("file", file);

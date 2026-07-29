@@ -8,7 +8,10 @@
     "calendar": "Calendar",
     "deadlines": "Deadlines",
     "triage": "Triage",
+    "positions": "Positions",
+    "spokespeople": "Spokespeople",
     "reports": "Reports",
+    "more": "More",
     "publicPage": "Public view",
     "language": "Language",
     "menu": "Menu"
@@ -91,6 +94,13 @@
       "SUBMITTED": "Submitted",
       "MISSED": "Missed",
       "CANCELLED": "Cancelled"
+    },
+    "strategicDateKind": {
+      "BUDGET": "Budget",
+      "ELECTION": "Election",
+      "AWARENESS_DAY": "Awareness day",
+      "LEGISLATIVE": "Legislative",
+      "OTHER": "Other"
     }
   },
   "Home": {
@@ -343,7 +353,78 @@
     "noUpcoming": "Nothing planned in the next 30 days.",
     "noOverdue": "Nothing overdue. Nice work!",
     "goalTargetDate": "Goal target date",
-    "selectDay": "Select a day to see its details."
+    "selectDay": "Select a day to see its details.",
+    "strategicDatesTitle": "Strategic calendar",
+    "strategicDatesSubtitle": "Budget windows, elections and awareness days to plan goals around.",
+    "newStrategicDate": "Add milestone",
+    "noStrategicDates": "No strategic dates added yet.",
+    "recurringOn": "recurs on {date}"
+  },
+  "PositionForm": {
+    "titleNew": "New position",
+    "titleEdit": "Edit position",
+    "title": "Position title",
+    "titlePlaceholder": "E.g. Director General of Common Services Portfolio",
+    "organization": "Organization"
+  },
+  "PositionHolderForm": {
+    "titleAssign": "Assign holder",
+    "titleEdit": "Edit holder",
+    "contact": "Contact",
+    "noContacts": "Add a contact to the directory first.",
+    "startDate": "Start date",
+    "endDate": "End date",
+    "endDateHint": "Leave empty if they still hold this position.",
+    "submitAssign": "Assign"
+  },
+  "Positions": {
+    "title": "Positions",
+    "subtitle": "Offices and seats tracked separately from the people who currently hold them, so the relationship survives an election or a reshuffle.",
+    "newPosition": "New position",
+    "emptyState": "No positions tracked yet.",
+    "deleteConfirmBody": "The position and its succession history will be deleted. Linked contacts stay in the directory.",
+    "vacant": "Vacant",
+    "since": "since {date}",
+    "changeHolder": "Change holder",
+    "assignHolder": "Assign holder",
+    "editCurrentHolder": "Edit current holder",
+    "history": "Succession history ({count})"
+  },
+  "SpokespersonForm": {
+    "titleNew": "New spokesperson",
+    "titleEdit": "Edit spokesperson",
+    "name": "Name",
+    "role": "Role",
+    "topics": "Topics",
+    "topicsHint": "Comma-separated, e.g. \"treatment access, funding\"",
+    "topicsPlaceholder": "Treatment access, EU funding…",
+    "email": "Email",
+    "phone": "Phone",
+    "bio": "Bio",
+    "bioHint": "Short background useful when briefing a journalist.",
+    "mediaTrained": "Media training",
+    "mediaTrainedLabel": "Completed media training / cleared to speak to press"
+  },
+  "Spokespeople": {
+    "title": "Spokespeople",
+    "subtitle": "Designated people authorized to represent the organization publicly, and what they're prepared to speak on.",
+    "newSpokesperson": "New spokesperson",
+    "searchPlaceholder": "Search by name, role or topic…",
+    "emptyState": "No spokespeople registered yet.",
+    "emptyStateFiltered": "No spokespeople match the search.",
+    "mediaTrainedBadge": "Media-trained"
+  },
+  "StrategicDateForm": {
+    "titleNew": "New strategic milestone",
+    "titleEdit": "Edit strategic milestone",
+    "title": "Title",
+    "titlePlaceholder": "E.g. World Hemophilia Day",
+    "kind": "Type",
+    "date": "Date",
+    "isRecurring": "Recurrence",
+    "isRecurringHint": "A recurring date repeats on the same month and day every year.",
+    "isRecurringLabel": "Repeats every year",
+    "description": "Description"
   },
   "Attachments": {
     "title": "Attached documents",

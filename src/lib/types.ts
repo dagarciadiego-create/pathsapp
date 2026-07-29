@@ -8,6 +8,10 @@ import type {
   Commitment,
   StanceChange,
   Deadline,
+  Position,
+  PositionHolder,
+  StrategicDate,
+  Spokesperson,
 } from "@/generated/prisma/client";
 
 export type GoalListItem = AdvocacyGoal & {
@@ -81,6 +85,12 @@ export type ContactDetail = Contact & {
   connections: ContactConnectionView[];
 };
 
+export type PositionHolderWithContact = PositionHolder & { contact: Contact };
+
+export type PositionDetail = Position & {
+  holders: PositionHolderWithContact[];
+};
+
 export type {
   AdvocacyGoal,
   Contact,
@@ -91,4 +101,8 @@ export type {
   Commitment,
   StanceChange,
   Deadline,
+  Position,
+  PositionHolder,
+  StrategicDate,
+  Spokesperson,
 };

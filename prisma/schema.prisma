@@ -64,6 +64,78 @@ model Contact {
   commitments  Commitment[]
   connectionsAsA ContactConnection[] @relation("ConnectionA")
   connectionsAsB ContactConnection[] @relation("ConnectionB")
+  positionHolderships PositionHolder[]
+}
+
+/// An office/seat whose occupant changes over time (a ministry
+/// directorate, a parliamentary seat...) — tracked separately from the
+/// person currently holding it, so the advocacy relationship with
+/// "whoever holds this role" survives an election or a reshuffle.
+model Position {
+  id           String   @id @default(cuid())
+  title        String
+  organization String?
+  notes        String?
+  createdAt    DateTime @default(now())
+
+  holders PositionHolder[]
+}
+
+/// One person's tenure in a Position. The current holder is the one with
+/// endDate null; assigning a new holder closes out the previous one's
+/// endDate (enforced in the API route, not by a DB constraint).
+model PositionHolder {
+  id         String    @id @default(cuid())
+  positionId String
+  position   Position  @relation(fields: [positionId], references: [id], onDelete: Cascade)
+  contactId  String
+  contact    Contact   @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  startDate  DateTime
+  endDate    DateTime?
+  notes      String?
+  createdAt  DateTime  @default(now())
+
+  @@index([positionId])
+  @@index([contactId])
+}
+
+/// A date on the broader political/legislative calendar (budget
+/// presentations, elections, awareness days) shown as a distinct overlay
+/// on the calendar, even though it isn't an action this organization
+/// takes itself.
+model StrategicDate {
+  id          String   @id @default(cuid())
+  title       String
+  /// "BUDGET" | "ELECTION" | "AWARENESS_DAY" | "LEGISLATIVE" | "OTHER"
+  kind        String
+  date        DateTime
+  description String?
+  /// Recurs on the same month/day every year (awareness days, a typical
+  /// budget presentation window) vs. a specific one-off date (a
+  /// particular election).
+  isRecurring Boolean  @default(false)
+  createdAt   DateTime @default(now())
+}
+
+/// A designated spokesperson authorized to represent the organization
+/// publicly — distinct from Contact, which tracks external stakeholders
+/// rather than the organization's own people.
+model Spokesperson {
+  id           String   @id @default(cuid())
+  name         String
+  role         String?
+  /// Topics/areas this person is prepared to speak on (free text, kept
+  /// simple rather than introducing a separate tagging model).
+  topics       String?
+  email        String?
+  phone        String?
+  bio          String?
+  /// Whether they've completed media training / are cleared to speak to
+  /// press without additional prep.
+  mediaTrained Boolean  @default(false)
+  notes        String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
 /// An informal link between two contacts — "who can open a door to X" —

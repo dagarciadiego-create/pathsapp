@@ -4,12 +4,16 @@ export type CalendarEvent = {
   id: string;
   date: Date;
   title: string;
-  kind: "subtask" | "goalTarget";
-  goalId: string;
-  goalName: string;
-  status: string;
+  kind: "subtask" | "goalTarget" | "strategic";
+  // Only subtask/goalTarget events belong to a goal; a strategic date is an
+  // external milestone (a budget window, an election, an awareness day)
+  // this organization doesn't own, so it has neither.
+  goalId?: string;
+  goalName?: string;
+  status?: string;
   actionType?: string;
   isPlanned?: boolean;
+  strategicKind?: string;
 };
 
 type SubtaskForCalendar = {
@@ -29,9 +33,62 @@ type GoalForCalendar = {
   status: string;
 };
 
+type StrategicDateForCalendar = {
+  id: string;
+  title: string;
+  kind: string;
+  date: Date;
+  isRecurring: boolean;
+};
+
+// Recurring strategic dates (awareness days, a typical budget window) only
+// store one month/day; this projects one occurrence per year across a
+// window around "now" wide enough to cover realistic calendar navigation,
+// rather than trying to render every year that ever existed.
+const RECURRING_YEARS_BACK = 2;
+const RECURRING_YEARS_FORWARD = 3;
+
+export function buildStrategicEvents(
+  strategicDates: StrategicDateForCalendar[],
+  referenceDate: Date = new Date()
+): CalendarEvent[] {
+  const events: CalendarEvent[] = [];
+  const currentYear = referenceDate.getUTCFullYear();
+
+  for (const sd of strategicDates) {
+    const original = new Date(sd.date);
+    if (!sd.isRecurring) {
+      events.push({
+        id: `strategic-${sd.id}`,
+        date: original,
+        title: sd.title,
+        kind: "strategic",
+        strategicKind: sd.kind,
+      });
+      continue;
+    }
+    for (
+      let year = currentYear - RECURRING_YEARS_BACK;
+      year <= currentYear + RECURRING_YEARS_FORWARD;
+      year++
+    ) {
+      events.push({
+        id: `strategic-${sd.id}-${year}`,
+        date: new Date(Date.UTC(year, original.getUTCMonth(), original.getUTCDate())),
+        title: sd.title,
+        kind: "strategic",
+        strategicKind: sd.kind,
+      });
+    }
+  }
+
+  return events;
+}
+
 export function buildCalendarEvents(
   subtasks: SubtaskForCalendar[],
-  goals: GoalForCalendar[]
+  goals: GoalForCalendar[],
+  strategicDates: StrategicDateForCalendar[] = []
 ): CalendarEvent[] {
   const subtaskEvents: CalendarEvent[] = subtasks
     .filter((s) => s.dueDate)
@@ -59,7 +116,11 @@ export function buildCalendarEvents(
       status: g.status,
     }));
 
-  return [...subtaskEvents, ...goalEvents].sort((a, b) => a.date.getTime() - b.date.getTime());
+  const strategicEvents = buildStrategicEvents(strategicDates);
+
+  return [...subtaskEvents, ...goalEvents, ...strategicEvents].sort(
+    (a, b) => a.date.getTime() - b.date.getTime()
+  );
 }
 
 // Compared by UTC calendar day everywhere in this module (not exact
@@ -76,22 +137,27 @@ export function eventsOnDay(events: CalendarEvent[], day: Date) {
 
 export function isEventDone(event: CalendarEvent) {
   const doneStatuses = ["DONE", "ACHIEVED", "CANCELLED"];
-  return doneStatuses.includes(event.status);
+  return event.status !== undefined && doneStatuses.includes(event.status);
 }
 
 // A single source of truth for "is this overdue" so the calendar's per-day
 // dots and its overdue list can never disagree with each other. Not
-// overdue on its own due day, only starting the day after.
+// overdue on its own due day, only starting the day after. A strategic
+// date is never "overdue" — it's an external milestone, not a task this
+// organization can miss.
 export function isEventOverdue(event: CalendarEvent, now: Date = new Date()) {
+  if (event.kind === "strategic") return false;
   return !isEventDone(event) && utcMidnight(event.date) < utcMidnight(now);
 }
 
+// The "next 30 days" / "overdue" panels are about actionable work, so
+// strategic milestones (shown on the grid itself instead) are excluded.
 export function upcomingEvents(events: CalendarEvent[], withinDays = 30) {
   const now = new Date();
   const todayMs = utcMidnight(now);
   const endMs = todayMs + withinDays * 86_400_000;
   return events.filter((e) => {
-    if (isEventDone(e)) return false;
+    if (e.kind === "strategic" || isEventDone(e)) return false;
     const eventMs = utcMidnight(e.date);
     return eventMs >= todayMs && eventMs <= endMs;
   });
