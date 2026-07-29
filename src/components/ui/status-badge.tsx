@@ -6,6 +6,8 @@ import type {
   Stance,
   CommitmentStatus,
   DeadlineStatus,
+  CosignerStatus,
+  MediaTone,
 } from "@/lib/constants";
 
 const goalStatusColors: Record<GoalStatus, string> = {
@@ -50,6 +52,19 @@ const deadlineStatusColors: Record<DeadlineStatus, string> = {
   SUBMITTED: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-300",
   MISSED: "bg-rose-100 text-rose-700 dark:bg-rose-900/50 dark:text-rose-300",
   CANCELLED: "bg-slate-100 text-slate-700 dark:bg-slate-700/60 dark:text-slate-200",
+};
+
+const cosignerStatusColors: Record<CosignerStatus, string> = {
+  INVITED: "bg-slate-100 text-slate-700 dark:bg-slate-700/60 dark:text-slate-200",
+  CONFIRMED: "bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300",
+  SIGNED: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-300",
+  DECLINED: "bg-rose-100 text-rose-700 dark:bg-rose-900/50 dark:text-rose-300",
+};
+
+const mediaToneColors: Record<MediaTone, string> = {
+  POSITIVE: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-300",
+  NEUTRAL: "bg-slate-100 text-slate-700 dark:bg-slate-700/60 dark:text-slate-200",
+  NEGATIVE: "bg-rose-100 text-rose-700 dark:bg-rose-900/50 dark:text-rose-300",
 };
 
 function Badge({ className, label }: { className: string; label: string }) {
@@ -111,4 +126,18 @@ export function DeadlineStatusBadge({
   label: string;
 }) {
   return <Badge className={deadlineStatusColors[status]} label={label} />;
+}
+
+export function CosignerStatusBadge({
+  status,
+  label,
+}: {
+  status: CosignerStatus;
+  label: string;
+}) {
+  return <Badge className={cosignerStatusColors[status]} label={label} />;
+}
+
+export function MediaToneBadge({ tone, label }: { tone: MediaTone; label: string }) {
+  return <Badge className={mediaToneColors[tone]} label={label} />;
 }

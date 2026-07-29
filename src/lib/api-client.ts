@@ -125,6 +125,48 @@ export const api = {
     request<T>(`/api/spokespeople/${id}`, { method: "PATCH", body: JSON.stringify(data) }),
   deleteSpokesperson: (id: string) => request(`/api/spokespeople/${id}`, { method: "DELETE" }),
 
+  // Reusable petitions/asks, versioned text, and supporting evidence.
+  createPetition: <T>(data: unknown) =>
+    request<T>("/api/petitions", { method: "POST", body: JSON.stringify(data) }),
+  updatePetition: <T>(id: string, data: unknown) =>
+    request<T>(`/api/petitions/${id}`, { method: "PATCH", body: JSON.stringify(data) }),
+  deletePetition: (id: string) => request(`/api/petitions/${id}`, { method: "DELETE" }),
+  addPetitionVersion: <T>(petitionId: string, data: unknown) =>
+    request<T>(`/api/petitions/${petitionId}/versions`, {
+      method: "POST",
+      body: JSON.stringify(data),
+    }),
+  deletePetitionVersion: (id: string) =>
+    request(`/api/petition-versions/${id}`, { method: "DELETE" }),
+  createEvidence: <T>(data: unknown) =>
+    request<T>("/api/evidence", { method: "POST", body: JSON.stringify(data) }),
+  updateEvidence: <T>(id: string, data: unknown) =>
+    request<T>(`/api/evidence/${id}`, { method: "PATCH", body: JSON.stringify(data) }),
+  deleteEvidence: (id: string) => request(`/api/evidence/${id}`, { method: "DELETE" }),
+
+  // Joint sign-on letters and their co-signers.
+  createJointLetter: <T>(data: unknown) =>
+    request<T>("/api/joint-letters", { method: "POST", body: JSON.stringify(data) }),
+  updateJointLetter: <T>(id: string, data: unknown) =>
+    request<T>(`/api/joint-letters/${id}`, { method: "PATCH", body: JSON.stringify(data) }),
+  deleteJointLetter: (id: string) => request(`/api/joint-letters/${id}`, { method: "DELETE" }),
+  addCosigner: <T>(jointLetterId: string, data: unknown) =>
+    request<T>(`/api/joint-letters/${jointLetterId}/cosigners`, {
+      method: "POST",
+      body: JSON.stringify(data),
+    }),
+  updateCosigner: <T>(id: string, data: unknown) =>
+    request<T>(`/api/cosigners/${id}`, { method: "PATCH", body: JSON.stringify(data) }),
+  deleteCosigner: (id: string) => request(`/api/cosigners/${id}`, { method: "DELETE" }),
+
+  // Media coverage log.
+  createMediaCoverage: <T>(data: unknown) =>
+    request<T>("/api/media-coverage", { method: "POST", body: JSON.stringify(data) }),
+  updateMediaCoverage: <T>(id: string, data: unknown) =>
+    request<T>(`/api/media-coverage/${id}`, { method: "PATCH", body: JSON.stringify(data) }),
+  deleteMediaCoverage: (id: string) =>
+    request(`/api/media-coverage/${id}`, { method: "DELETE" }),
+
   uploadAttachment: async <T>(subtaskId: string, file: File): Promise<T> => {
     const formData = new FormData();
     formData.append("file", file);

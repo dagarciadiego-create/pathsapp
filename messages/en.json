@@ -10,6 +10,9 @@
     "triage": "Triage",
     "positions": "Positions",
     "spokespeople": "Spokespeople",
+    "petitions": "Petitions",
+    "jointLetters": "Joint letters",
+    "mediaCoverage": "Media coverage",
     "reports": "Reports",
     "more": "More",
     "publicPage": "Public view",
@@ -101,6 +104,17 @@
       "AWARENESS_DAY": "Awareness day",
       "LEGISLATIVE": "Legislative",
       "OTHER": "Other"
+    },
+    "cosignerStatus": {
+      "INVITED": "Invited",
+      "CONFIRMED": "Confirmed",
+      "DECLINED": "Declined",
+      "SIGNED": "Signed"
+    },
+    "mediaTone": {
+      "POSITIVE": "Positive",
+      "NEUTRAL": "Neutral",
+      "NEGATIVE": "Negative"
     }
   },
   "Home": {
@@ -486,6 +500,108 @@
         "hint": "Low impact, high effort — reconsider or delegate."
       }
     }
+  },
+  "Petitions": {
+    "title": "Petition & evidence library",
+    "subtitle": "Reusable formal asks, versioned over time, with the evidence that backs them.",
+    "newPetition": "New petition",
+    "emptyState": "No petitions in the library yet.",
+    "deleteConfirmBody": "The petition, all its versions and its evidence will be deleted.",
+    "noVersions": "No version drafted yet.",
+    "versionDate": "Version from {date}",
+    "history": "Earlier versions ({count})",
+    "addVersion": "Add version",
+    "evidenceTitle": "Supporting evidence ({count})",
+    "addEvidence": "Add evidence",
+    "noEvidence": "No evidence linked yet."
+  },
+  "PetitionForm": {
+    "titleNew": "New petition",
+    "titleEdit": "Edit petition",
+    "title": "Petition title",
+    "titlePlaceholder": "E.g. Universal access to prophylaxis",
+    "category": "Topic area",
+    "categoryPlaceholder": "E.g. Access to treatment, funding…"
+  },
+  "PetitionVersionForm": {
+    "title": "Add a new version",
+    "description": "This becomes the current version; earlier ones stay visible in the history below.",
+    "contentEs": "Text (Spanish)",
+    "contentEn": "Text (English)",
+    "contentEnHint": "Optional — fill in when sending this ask to an EU-level body.",
+    "changeNotes": "What changed",
+    "changeNotesHint": "Optional note on why this version was drafted.",
+    "submit": "Save version"
+  },
+  "EvidenceForm": {
+    "titleNew": "Add evidence",
+    "titleEdit": "Edit evidence",
+    "title": "Title",
+    "titlePlaceholder": "E.g. Cost-effectiveness study 2025",
+    "source": "Source",
+    "url": "Link",
+    "summary": "Summary"
+  },
+  "JointLetters": {
+    "title": "Joint sign-on letters",
+    "subtitle": "Advocacy letters co-signed with other organizations, and who's on board.",
+    "newLetter": "New letter",
+    "emptyState": "No joint letters yet.",
+    "deleteConfirmBody": "The letter and its list of co-signers will be deleted.",
+    "addressedTo": "To: {target}",
+    "viewLetter": "View letter",
+    "cosignersTitle": "Co-signers ({count})",
+    "addCosigner": "Add co-signer",
+    "noCosigners": "No co-signers invited yet.",
+    "cosignerStatus": "Status"
+  },
+  "JointLetterForm": {
+    "titleNew": "New joint letter",
+    "titleEdit": "Edit joint letter",
+    "title": "Letter title",
+    "titlePlaceholder": "E.g. Joint letter on prophylaxis funding",
+    "targetName": "Addressed to",
+    "targetNamePlaceholder": "E.g. Ministry of Health",
+    "sentDate": "Sent date",
+    "url": "Link",
+    "goal": "Related goal",
+    "goalNone": "None",
+    "content": "Letter text"
+  },
+  "CosignerForm": {
+    "titleNew": "Add co-signer",
+    "titleEdit": "Edit co-signer",
+    "organization": "Organization",
+    "contactName": "Contact person",
+    "status": "Status"
+  },
+  "MediaCoverage": {
+    "title": "Media coverage",
+    "subtitle": "Press mentions and media appearances, logged to show our footprint over time.",
+    "newEntry": "New entry",
+    "emptyState": "No media coverage logged yet.",
+    "summaryTotal": "Total mentions",
+    "summaryPositive": "Positive",
+    "summaryNegative": "Negative",
+    "columnDate": "Date",
+    "columnOutlet": "Outlet",
+    "columnTitle": "Headline",
+    "columnGoal": "Goal",
+    "columnTone": "Tone"
+  },
+  "MediaCoverageForm": {
+    "titleNew": "New media coverage entry",
+    "titleEdit": "Edit media coverage entry",
+    "outlet": "Outlet",
+    "outletPlaceholder": "E.g. El País, RTVE…",
+    "publishedDate": "Published date",
+    "title": "Headline",
+    "url": "Link",
+    "tone": "Tone",
+    "reach": "Reach",
+    "reachHint": "Estimated audience, if known",
+    "goal": "Related goal",
+    "goalNone": "None"
   },
   "Footer": {
     "installHint": "Tip: add PATHSapp to your phone's home screen to use it like an app."

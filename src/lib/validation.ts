@@ -10,6 +10,8 @@ import {
   DEADLINE_KINDS,
   DEADLINE_STATUSES,
   STRATEGIC_DATE_KINDS,
+  COSIGNER_STATUSES,
+  MEDIA_TONES,
 } from "./constants";
 
 // Empty strings from HTML forms should be treated as "no value", not as an
@@ -31,6 +33,10 @@ const optionalEmail = z.preprocess(emptyToNull, z.email().max(200).nullable().op
 const optionalScore = z.preprocess(
   emptyToNull,
   z.coerce.number().int().min(1).max(5).nullable().optional()
+);
+const optionalNonNegativeInt = z.preprocess(
+  emptyToNull,
+  z.coerce.number().int().nonnegative().nullable().optional()
 );
 
 export const goalInputSchema = z.object({
@@ -184,6 +190,60 @@ export const spokespersonInputSchema = z.object({
   notes: optionalString(2000),
 });
 export const spokespersonUpdateSchema = spokespersonInputSchema.partial();
+
+export const petitionInputSchema = z.object({
+  title: z.string().trim().min(1, "Required").max(200),
+  category: optionalString(120),
+});
+export const petitionUpdateSchema = petitionInputSchema.partial();
+
+// Adding a version never edits a previous one — the wording's evolution
+// stays visible instead of being overwritten (POST /api/petitions/[id]/versions).
+export const petitionVersionInputSchema = z.object({
+  contentEs: z.string().trim().min(1, "Required").max(8000),
+  contentEn: optionalString(8000),
+  notes: optionalString(2000),
+});
+
+export const evidenceInputSchema = z.object({
+  title: z.string().trim().min(1, "Required").max(200),
+  source: optionalString(200),
+  url: optionalString(500),
+  summary: optionalString(2000),
+  petitionId: optionalString(60),
+});
+export const evidenceUpdateSchema = evidenceInputSchema.partial();
+
+export const jointLetterInputSchema = z.object({
+  title: z.string().trim().min(1, "Required").max(200),
+  targetName: optionalString(200),
+  sentDate: optionalDateString,
+  content: optionalString(8000),
+  url: optionalString(500),
+  goalId: optionalString(60),
+  notes: optionalString(2000),
+});
+export const jointLetterUpdateSchema = jointLetterInputSchema.partial();
+
+export const jointLetterCosignerInputSchema = z.object({
+  organization: z.string().trim().min(1, "Required").max(200),
+  contactName: optionalString(200),
+  status: z.enum(COSIGNER_STATUSES).optional(),
+  notes: optionalString(2000),
+});
+export const jointLetterCosignerUpdateSchema = jointLetterCosignerInputSchema.partial();
+
+export const mediaCoverageInputSchema = z.object({
+  outlet: z.string().trim().min(1, "Required").max(200),
+  title: z.string().trim().min(1, "Required").max(300),
+  url: optionalString(500),
+  publishedDate: z.string().refine((val) => !Number.isNaN(Date.parse(val)), "Invalid date"),
+  tone: z.enum(MEDIA_TONES).optional(),
+  reach: optionalNonNegativeInt,
+  goalId: optionalString(60),
+  notes: optionalString(2000),
+});
+export const mediaCoverageUpdateSchema = mediaCoverageInputSchema.partial();
 
 export const indicatorInputSchema = z.object({
   goalId: optionalString(60),

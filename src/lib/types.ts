@@ -12,6 +12,12 @@ import type {
   PositionHolder,
   StrategicDate,
   Spokesperson,
+  Petition,
+  PetitionVersion,
+  Evidence,
+  JointLetter,
+  JointLetterCosigner,
+  MediaCoverage,
 } from "@/generated/prisma/client";
 
 export type GoalListItem = AdvocacyGoal & {
@@ -91,6 +97,20 @@ export type PositionDetail = Position & {
   holders: PositionHolderWithContact[];
 };
 
+export type PetitionDetail = Petition & {
+  versions: PetitionVersion[];
+  evidence: Evidence[];
+};
+
+export type JointLetterWithGoalAndCosigners = JointLetter & {
+  goal: { id: string; name: string } | null;
+  cosigners: JointLetterCosigner[];
+};
+
+export type MediaCoverageWithGoal = MediaCoverage & {
+  goal: { id: string; name: string } | null;
+};
+
 export type {
   AdvocacyGoal,
   Contact,
@@ -105,4 +125,10 @@ export type {
   PositionHolder,
   StrategicDate,
   Spokesperson,
+  Petition,
+  PetitionVersion,
+  Evidence,
+  JointLetter,
+  JointLetterCosigner,
+  MediaCoverage,
 };

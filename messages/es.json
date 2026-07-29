@@ -10,6 +10,9 @@
     "triage": "Triaje",
     "positions": "Cargos",
     "spokespeople": "Portavoces",
+    "petitions": "Peticiones",
+    "jointLetters": "Cartas conjuntas",
+    "mediaCoverage": "Cobertura mediática",
     "reports": "Informes",
     "more": "Más",
     "publicPage": "Vista pública",
@@ -101,6 +104,17 @@
       "AWARENESS_DAY": "Día de sensibilización",
       "LEGISLATIVE": "Legislativo",
       "OTHER": "Otro"
+    },
+    "cosignerStatus": {
+      "INVITED": "Invitado",
+      "CONFIRMED": "Confirmado",
+      "DECLINED": "Declinado",
+      "SIGNED": "Firmado"
+    },
+    "mediaTone": {
+      "POSITIVE": "Positiva",
+      "NEUTRAL": "Neutral",
+      "NEGATIVE": "Negativa"
     }
   },
   "Home": {
@@ -476,6 +490,108 @@
         "hint": "Poco impacto, mucho esfuerzo — replantear o delegar."
       }
     }
+  },
+  "Petitions": {
+    "title": "Biblioteca de peticiones y evidencias",
+    "subtitle": "Peticiones formales reutilizables, versionadas en el tiempo, con la evidencia que las respalda.",
+    "newPetition": "Nueva petición",
+    "emptyState": "Todavía no hay peticiones en la biblioteca.",
+    "deleteConfirmBody": "Se eliminará la petición, todas sus versiones y su evidencia.",
+    "noVersions": "Todavía no se ha redactado ninguna versión.",
+    "versionDate": "Versión del {date}",
+    "history": "Versiones anteriores ({count})",
+    "addVersion": "Añadir versión",
+    "evidenceTitle": "Evidencia de apoyo ({count})",
+    "addEvidence": "Añadir evidencia",
+    "noEvidence": "Todavía no se ha vinculado evidencia."
+  },
+  "PetitionForm": {
+    "titleNew": "Nueva petición",
+    "titleEdit": "Editar petición",
+    "title": "Título de la petición",
+    "titlePlaceholder": "Ej: Acceso universal a la profilaxis",
+    "category": "Área temática",
+    "categoryPlaceholder": "Ej: Acceso a tratamiento, financiación…"
+  },
+  "PetitionVersionForm": {
+    "title": "Añadir una nueva versión",
+    "description": "Esta pasará a ser la versión actual; las anteriores quedan visibles en el historial de abajo.",
+    "contentEs": "Texto (español)",
+    "contentEn": "Texto (inglés)",
+    "contentEnHint": "Opcional — rellénalo al enviar esta petición a un organismo de la UE.",
+    "changeNotes": "Qué cambió",
+    "changeNotesHint": "Nota opcional sobre por qué se redactó esta versión.",
+    "submit": "Guardar versión"
+  },
+  "EvidenceForm": {
+    "titleNew": "Añadir evidencia",
+    "titleEdit": "Editar evidencia",
+    "title": "Título",
+    "titlePlaceholder": "Ej: Estudio de coste-efectividad 2025",
+    "source": "Fuente",
+    "url": "Enlace",
+    "summary": "Resumen"
+  },
+  "JointLetters": {
+    "title": "Cartas conjuntas",
+    "subtitle": "Cartas de incidencia firmadas junto a otras organizaciones, y quién se ha sumado.",
+    "newLetter": "Nueva carta",
+    "emptyState": "Todavía no hay cartas conjuntas.",
+    "deleteConfirmBody": "Se eliminará la carta y su listado de firmantes.",
+    "addressedTo": "Dirigida a: {target}",
+    "viewLetter": "Ver carta",
+    "cosignersTitle": "Firmantes ({count})",
+    "addCosigner": "Añadir firmante",
+    "noCosigners": "Todavía no se ha invitado a ningún firmante.",
+    "cosignerStatus": "Estado"
+  },
+  "JointLetterForm": {
+    "titleNew": "Nueva carta conjunta",
+    "titleEdit": "Editar carta conjunta",
+    "title": "Título de la carta",
+    "titlePlaceholder": "Ej: Carta conjunta sobre financiación de la profilaxis",
+    "targetName": "Dirigida a",
+    "targetNamePlaceholder": "Ej: Ministerio de Sanidad",
+    "sentDate": "Fecha de envío",
+    "url": "Enlace",
+    "goal": "Labor relacionada",
+    "goalNone": "Ninguna",
+    "content": "Texto de la carta"
+  },
+  "CosignerForm": {
+    "titleNew": "Añadir firmante",
+    "titleEdit": "Editar firmante",
+    "organization": "Organización",
+    "contactName": "Persona de contacto",
+    "status": "Estado"
+  },
+  "MediaCoverage": {
+    "title": "Cobertura mediática",
+    "subtitle": "Menciones y apariciones en prensa, registradas para mostrar nuestra huella mediática en el tiempo.",
+    "newEntry": "Nueva entrada",
+    "emptyState": "Todavía no se ha registrado cobertura mediática.",
+    "summaryTotal": "Menciones totales",
+    "summaryPositive": "Positivas",
+    "summaryNegative": "Negativas",
+    "columnDate": "Fecha",
+    "columnOutlet": "Medio",
+    "columnTitle": "Titular",
+    "columnGoal": "Labor",
+    "columnTone": "Tono"
+  },
+  "MediaCoverageForm": {
+    "titleNew": "Nueva entrada de cobertura mediática",
+    "titleEdit": "Editar entrada de cobertura mediática",
+    "outlet": "Medio",
+    "outletPlaceholder": "Ej: El País, RTVE…",
+    "publishedDate": "Fecha de publicación",
+    "title": "Titular",
+    "url": "Enlace",
+    "tone": "Tono",
+    "reach": "Alcance",
+    "reachHint": "Audiencia estimada, si se conoce",
+    "goal": "Labor relacionada",
+    "goalNone": "Ninguna"
   },
   "PublicPage": {
     "title": "Nuestra labor de incidencia",

@@ -37,11 +37,13 @@ model AdvocacyGoal {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  goalContacts GoalContact[]
-  subtasks     Subtask[]
-  indicators   Indicator[]
-  commitments  Commitment[]
-  deadlines    Deadline[]
+  goalContacts  GoalContact[]
+  subtasks      Subtask[]
+  indicators    Indicator[]
+  commitments   Commitment[]
+  deadlines     Deadline[]
+  jointLetters  JointLetter[]
+  mediaCoverage MediaCoverage[]
 }
 
 /// A stakeholder in the shared contact directory. Not tied to a single
@@ -294,6 +296,105 @@ model Deadline {
   notes       String?
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
+
+  @@index([goalId])
+}
+
+/// A reusable formal ask/petition (a policy demand, a position statement)
+/// that can be cited across multiple goals over time, versioned so
+/// changes to the wording stay visible instead of being overwritten.
+model Petition {
+  id        String   @id @default(cuid())
+  title     String
+  category  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  versions PetitionVersion[]
+  evidence Evidence[]
+}
+
+/// One version of a petition's text, in Spanish and (optionally) English
+/// so the same formal ask can be sent to national and EU-level bodies.
+model PetitionVersion {
+  id         String   @id @default(cuid())
+  petitionId String
+  petition   Petition @relation(fields: [petitionId], references: [id], onDelete: Cascade)
+  contentEs  String
+  contentEn  String?
+  notes      String?
+  createdAt  DateTime @default(now())
+
+  @@index([petitionId])
+}
+
+/// A piece of supporting evidence (a study, a statistic, a reference to
+/// testimonials) backing a petition.
+model Evidence {
+  id         String    @id @default(cuid())
+  petitionId String?
+  petition   Petition? @relation(fields: [petitionId], references: [id], onDelete: SetNull)
+  title      String
+  source     String?
+  url        String?
+  summary    String?
+  createdAt  DateTime  @default(now())
+
+  @@index([petitionId])
+}
+
+/// A joint sign-on letter — an advocacy letter several organizations
+/// co-sign together. Tracked separately from Subtask because what
+/// matters here is who co-signed, not a single action this organization
+/// took alone.
+model JointLetter {
+  id         String        @id @default(cuid())
+  title      String
+  targetName String?
+  sentDate   DateTime?
+  content    String?
+  url        String?
+  goalId     String?
+  goal       AdvocacyGoal? @relation(fields: [goalId], references: [id], onDelete: SetNull)
+  notes      String?
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+
+  cosigners JointLetterCosigner[]
+
+  @@index([goalId])
+}
+
+/// One organization's co-signing status on a joint letter.
+model JointLetterCosigner {
+  id            String      @id @default(cuid())
+  jointLetterId String
+  jointLetter   JointLetter @relation(fields: [jointLetterId], references: [id], onDelete: Cascade)
+  organization  String
+  contactName   String?
+  /// "INVITED" | "CONFIRMED" | "DECLINED" | "SIGNED"
+  status        String      @default("INVITED")
+  notes         String?
+  createdAt     DateTime    @default(now())
+
+  @@index([jointLetterId])
+}
+
+/// A press mention or media appearance, logged so the organization can
+/// show its media footprint and track how coverage of a goal evolves.
+model MediaCoverage {
+  id            String        @id @default(cuid())
+  outlet        String
+  title         String
+  url           String?
+  publishedDate DateTime
+  /// "POSITIVE" | "NEUTRAL" | "NEGATIVE"
+  tone          String        @default("NEUTRAL")
+  reach         Int?
+  goalId        String?
+  goal          AdvocacyGoal? @relation(fields: [goalId], references: [id], onDelete: SetNull)
+  notes         String?
+  createdAt     DateTime      @default(now())
 
   @@index([goalId])
 }

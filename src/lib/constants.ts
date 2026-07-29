@@ -66,3 +66,9 @@ export const STRATEGIC_DATE_KINDS = [
   "OTHER",
 ] as const;
 export type StrategicDateKind = (typeof STRATEGIC_DATE_KINDS)[number];
+
+export const COSIGNER_STATUSES = ["INVITED", "CONFIRMED", "DECLINED", "SIGNED"] as const;
+export type CosignerStatus = (typeof COSIGNER_STATUSES)[number];
+
+export const MEDIA_TONES = ["POSITIVE", "NEUTRAL", "NEGATIVE"] as const;
+export type MediaTone = (typeof MEDIA_TONES)[number];
