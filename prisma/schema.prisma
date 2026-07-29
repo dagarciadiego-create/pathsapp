@@ -31,6 +31,7 @@ model AdvocacyGoal {
   goalContacts GoalContact[]
   subtasks     Subtask[]
   indicators   Indicator[]
+  commitments  Commitment[]
 }
 
 /// A stakeholder in the shared contact directory. Not tied to a single
@@ -47,7 +48,10 @@ model Contact {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  goalLinks GoalContact[]
+  goalLinks    GoalContact[]
+  /// Interaction log entries involving this contact (see Subtask.contactId).
+  interactions Subtask[]
+  commitments  Commitment[]
 }
 
 /// Links a directory Contact to a goal, with a relation type that is
@@ -62,34 +66,58 @@ model GoalContact {
   /// "DECISION_MAKER" (de quien depende conseguirlo) | "SUPPORTER" (quien puede ayudar)
   relation  String
   notes     String?
+  /// Current stance on this goal: "CHAMPION" | "FRIENDLY" | "NEUTRAL" |
+  /// "SKEPTICAL" | "OPPOSED". History of changes in StanceChange.
+  stance    String?
   createdAt DateTime     @default(now())
+
+  stanceHistory StanceChange[]
 
   @@unique([goalId, contactId])
   @@index([goalId])
   @@index([contactId])
 }
 
-/// A small, concrete action within a goal: a letter, call, meeting, event...
+/// A dated record of a stance change on a GoalContact, so movement over
+/// time can be charted instead of only showing the current value.
+model StanceChange {
+  id            String      @id @default(cuid())
+  goalContactId String
+  goalContact   GoalContact @relation(fields: [goalContactId], references: [id], onDelete: Cascade)
+  stance        String
+  note          String?
+  changedAt     DateTime    @default(now())
+
+  @@index([goalContactId])
+}
+
+/// A small, concrete action or logged interaction: a letter, call,
+/// meeting, encounter... Usually tied to a goal, but goalId is optional so
+/// a quick interaction with a contact can be logged before there's a
+/// specific goal for it yet (see Contact.interactions).
 model Subtask {
-  id          String   @id @default(cuid())
-  goalId      String
-  goal        AdvocacyGoal @relation(fields: [goalId], references: [id], onDelete: Cascade)
+  id          String        @id @default(cuid())
+  goalId      String?
+  goal        AdvocacyGoal? @relation(fields: [goalId], references: [id], onDelete: Cascade)
+  contactId   String?
+  contact     Contact?      @relation(fields: [contactId], references: [id], onDelete: SetNull)
   name        String
   /// "LETTER" | "CALL" | "MEETING" | "ENCOUNTER" | "CAMPAIGN" | "OTHER"
   actionType  String
   /// Planned in advance vs. reactive/unplanned action
-  isPlanned   Boolean  @default(true)
+  isPlanned   Boolean       @default(true)
   dueDate     DateTime?
   /// "PENDING" | "IN_PROGRESS" | "DONE" | "CANCELLED"
-  status      String   @default("PENDING")
+  status      String        @default("PENDING")
   responsible String?
   notes       String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
 
   attachments Attachment[]
 
   @@index([goalId])
+  @@index([contactId])
 }
 
 /// A file attached to a subtask (the sent letter, meeting minutes, a photo
@@ -121,5 +149,27 @@ model Indicator {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
+  @@index([goalId])
+}
+
+/// A promise made *to us* by a contact (not an action we took) — e.g. "the
+/// DG said she'd raise this at the next Consejo Interterritorial" — with a
+/// follow-up date so it can be chased instead of forgotten.
+model Commitment {
+  id           String        @id @default(cuid())
+  contactId    String
+  contact      Contact       @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  goalId       String?
+  goal         AdvocacyGoal? @relation(fields: [goalId], references: [id], onDelete: SetNull)
+  description  String
+  madeDate     DateTime
+  followUpDate DateTime?
+  /// "PENDING" | "FULFILLED" | "BROKEN"
+  status       String        @default("PENDING")
+  notes        String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@index([contactId])
   @@index([goalId])
 }

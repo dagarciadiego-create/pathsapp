@@ -57,6 +57,26 @@ export const api = {
     request<T>(`/api/indicators/${id}`, { method: "PATCH", body: JSON.stringify(data) }),
   deleteIndicator: (id: string) => request(`/api/indicators/${id}`, { method: "DELETE" }),
 
+  // Contact-centric interaction log (letters, calls, meetings...), goal
+  // link optional. Reuses the same records/endpoints as goal subtasks.
+  createInteraction: <T>(contactId: string, data: unknown) =>
+    request<T>(`/api/contacts/${contactId}/interactions`, {
+      method: "POST",
+      body: JSON.stringify(data),
+    }),
+  updateInteraction: <T>(id: string, data: unknown) =>
+    request<T>(`/api/subtasks/${id}`, { method: "PATCH", body: JSON.stringify(data) }),
+  deleteInteraction: (id: string) => request(`/api/subtasks/${id}`, { method: "DELETE" }),
+
+  createCommitment: <T>(contactId: string, data: unknown) =>
+    request<T>(`/api/contacts/${contactId}/commitments`, {
+      method: "POST",
+      body: JSON.stringify(data),
+    }),
+  updateCommitment: <T>(id: string, data: unknown) =>
+    request<T>(`/api/commitments/${id}`, { method: "PATCH", body: JSON.stringify(data) }),
+  deleteCommitment: (id: string) => request(`/api/commitments/${id}`, { method: "DELETE" }),
+
   uploadAttachment: async <T>(subtaskId: string, file: File): Promise<T> => {
     const formData = new FormData();
     formData.append("file", file);

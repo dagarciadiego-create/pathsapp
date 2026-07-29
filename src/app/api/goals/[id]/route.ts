@@ -10,7 +10,10 @@ export async function GET(_request: Request, { params }: Params) {
   const goal = await prisma.advocacyGoal.findUnique({
     where: { id },
     include: {
-      goalContacts: { include: { contact: true }, orderBy: { createdAt: "asc" } },
+      goalContacts: {
+        include: { contact: true, stanceHistory: { orderBy: { changedAt: "desc" } } },
+        orderBy: { createdAt: "asc" },
+      },
       subtasks: { include: { attachments: true }, orderBy: { createdAt: "asc" } },
       indicators: { orderBy: { createdAt: "asc" } },
     },

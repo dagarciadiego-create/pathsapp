@@ -18,16 +18,23 @@ export async function PATCH(request: Request, { params }: Params) {
   const existing = await prisma.goalContact.findUnique({ where: { id } });
   if (!existing) return jsonError("Link not found", 404);
 
-  const { contact, ...linkFields } = parsed.data;
+  const { contact, stance, stanceNote, ...linkFields } = parsed.data;
 
   const goalContact = await prisma.$transaction(async (tx) => {
     if (contact) {
       await tx.contact.update({ where: { id: existing.contactId }, data: contact });
     }
+    // A stance change is appended to the history rather than only
+    // overwriting the current value, so movement over time can be charted.
+    if (stance) {
+      await tx.stanceChange.create({
+        data: { goalContactId: id, stance, note: stanceNote },
+      });
+    }
     return tx.goalContact.update({
       where: { id },
-      data: linkFields,
-      include: { contact: true },
+      data: { ...linkFields, ...(stance ? { stance } : {}) },
+      include: { contact: true, stanceHistory: { orderBy: { changedAt: "desc" } } },
     });
   });
 

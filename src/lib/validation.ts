@@ -5,6 +5,8 @@ import {
   CONTACT_RELATIONS,
   ACTION_TYPES,
   SUBTASK_STATUSES,
+  STANCE_VALUES,
+  COMMITMENT_STATUSES,
 } from "./constants";
 
 // Empty strings from HTML forms should be treated as "no value", not as an
@@ -59,6 +61,11 @@ export const goalContactLinkSchema = z
 export const goalContactUpdateSchema = z.object({
   relation: z.enum(CONTACT_RELATIONS).optional(),
   notes: optionalString(2000),
+  // A stance change is recorded as a new StanceChange row rather than an
+  // in-place update, so the history can be charted; stanceNote annotates
+  // that one change and isn't stored on GoalContact itself.
+  stance: z.enum(STANCE_VALUES).optional(),
+  stanceNote: optionalString(500),
   contact: contactInputSchema.partial().optional(),
 });
 
@@ -70,8 +77,33 @@ export const subtaskInputSchema = z.object({
   status: z.enum(SUBTASK_STATUSES).optional(),
   responsible: optionalString(200),
   notes: optionalString(2000),
+  contactId: optionalString(60),
 });
 export const subtaskUpdateSchema = subtaskInputSchema.partial();
+
+// A contact-centric interaction log entry: same shape as a subtask, but
+// created from the contact's side, so the goal link is optional instead
+// of coming from the URL.
+export const interactionInputSchema = z.object({
+  name: z.string().trim().min(1, "Required").max(200),
+  actionType: z.enum(ACTION_TYPES),
+  isPlanned: z.boolean().optional(),
+  dueDate: optionalDateString,
+  status: z.enum(SUBTASK_STATUSES).optional(),
+  responsible: optionalString(200),
+  notes: optionalString(2000),
+  goalId: optionalString(60),
+});
+
+export const commitmentInputSchema = z.object({
+  description: z.string().trim().min(1, "Required").max(2000),
+  madeDate: z.string().refine((val) => !Number.isNaN(Date.parse(val)), "Invalid date"),
+  followUpDate: optionalDateString,
+  status: z.enum(COMMITMENT_STATUSES).optional(),
+  notes: optionalString(2000),
+  goalId: optionalString(60),
+});
+export const commitmentUpdateSchema = commitmentInputSchema.partial();
 
 export const indicatorInputSchema = z.object({
   goalId: optionalString(60),

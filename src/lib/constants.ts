@@ -34,3 +34,15 @@ export const SUBTASK_STATUSES = [
   "CANCELLED",
 ] as const;
 export type SubtaskStatus = (typeof SUBTASK_STATUSES)[number];
+
+export const STANCE_VALUES = [
+  "CHAMPION",
+  "FRIENDLY",
+  "NEUTRAL",
+  "SKEPTICAL",
+  "OPPOSED",
+] as const;
+export type Stance = (typeof STANCE_VALUES)[number];
+
+export const COMMITMENT_STATUSES = ["PENDING", "FULFILLED", "BROKEN"] as const;
+export type CommitmentStatus = (typeof COMMITMENT_STATUSES)[number];

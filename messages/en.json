@@ -65,6 +65,18 @@
     "planned": {
       "true": "Planned",
       "false": "Unplanned"
+    },
+    "stance": {
+      "CHAMPION": "Champion",
+      "FRIENDLY": "Friendly",
+      "NEUTRAL": "Neutral",
+      "SKEPTICAL": "Skeptical",
+      "OPPOSED": "Opposed"
+    },
+    "commitmentStatus": {
+      "PENDING": "Pending",
+      "FULFILLED": "Fulfilled",
+      "BROKEN": "Broken"
     }
   },
   "Home": {
@@ -122,7 +134,9 @@
     "unlinkContact": "Remove from this goal",
     "unlinkConfirmTitle": "Remove this contact from the goal?",
     "unlinkConfirmBody": "The contact will stay in the directory; it's only removed from this goal.",
-    "viewInDirectory": "View in directory"
+    "viewInDirectory": "View in directory",
+    "stance": "Stance on this goal",
+    "stanceUnset": "Set stance…"
   },
   "ContactForm": {
     "titleNew": "Add contact",
@@ -190,6 +204,47 @@
     "columnGoals": "Linked goals",
     "noGoalsLinked": "Not linked to a goal yet",
     "deleteConfirmBody": "It will also be removed from every goal it's linked to. This action cannot be undone."
+  },
+  "ContactDetail": {
+    "linkedGoalsTitle": "Linked goals",
+    "linkedGoalsSubtitle": "Goals this contact is involved in, and their stance on each one.",
+    "noLinkedGoals": "Not linked to any goal yet.",
+    "stance": "Stance",
+    "stanceUnset": "Set stance…",
+    "stanceHistory": "{count, plural, one {# change} other {# changes}}",
+    "interactionsTitle": "Interaction timeline",
+    "interactionsSubtitle": "Every letter, call, meeting or encounter logged with this contact, across all goals.",
+    "logInteraction": "Log interaction",
+    "noInteractions": "No interactions logged yet.",
+    "commitmentsTitle": "Commitments",
+    "commitmentsSubtitle": "Promises this contact made to us, so they can be followed up instead of forgotten.",
+    "addCommitment": "Add commitment",
+    "noCommitments": "No commitments logged yet.",
+    "madeOn": "made on {date}",
+    "followUpOn": "follow up on {date}"
+  },
+  "Interactions": {
+    "titleNew": "Log interaction",
+    "titleEdit": "Edit interaction",
+    "summary": "What happened",
+    "summaryPlaceholder": "E.g. Call about the school protocol delay",
+    "date": "Date",
+    "goal": "Related goal",
+    "goalNone": "None yet",
+    "notesLabel": "Debrief notes",
+    "notesHint": "Attendees, tone, asks made, next step — the two-minute debrief.",
+    "saveFirstForAttachments": "Save the interaction first to attach files."
+  },
+  "Commitments": {
+    "titleNew": "New commitment",
+    "titleEdit": "Edit commitment",
+    "description": "What they committed to",
+    "descriptionPlaceholder": "E.g. Raise the school protocol at the next Consejo Interterritorial",
+    "madeDate": "Made on",
+    "followUpDate": "Follow up on",
+    "status": "Status",
+    "goal": "Related goal",
+    "goalNone": "None"
   },
   "Calendar": {
     "title": "Calendar",

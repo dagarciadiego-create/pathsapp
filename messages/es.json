@@ -65,6 +65,18 @@
     "planned": {
       "true": "Planificada",
       "false": "No planificada"
+    },
+    "stance": {
+      "CHAMPION": "Aliado",
+      "FRIENDLY": "Favorable",
+      "NEUTRAL": "Neutral",
+      "SKEPTICAL": "Escéptico",
+      "OPPOSED": "Opuesto"
+    },
+    "commitmentStatus": {
+      "PENDING": "Pendiente",
+      "FULFILLED": "Cumplido",
+      "BROKEN": "Incumplido"
     }
   },
   "Home": {
@@ -122,7 +134,9 @@
     "unlinkContact": "Quitar de esta labor",
     "unlinkConfirmTitle": "¿Quitar este contacto de la labor?",
     "unlinkConfirmBody": "El contacto seguirá existiendo en el directorio; solo se quita de esta labor.",
-    "viewInDirectory": "Ver en el directorio"
+    "viewInDirectory": "Ver en el directorio",
+    "stance": "Postura sobre esta labor",
+    "stanceUnset": "Marcar postura…"
   },
   "ContactForm": {
     "titleNew": "Añadir contacto",
@@ -190,6 +204,47 @@
     "columnGoals": "Labores vinculadas",
     "noGoalsLinked": "Sin labor vinculada todavía",
     "deleteConfirmBody": "Se eliminará también de todas las labores a las que esté vinculado. Esta acción no se puede deshacer."
+  },
+  "ContactDetail": {
+    "linkedGoalsTitle": "Labores vinculadas",
+    "linkedGoalsSubtitle": "Labores en las que participa este contacto, y su postura sobre cada una.",
+    "noLinkedGoals": "Todavía no está vinculado a ninguna labor.",
+    "stance": "Postura",
+    "stanceUnset": "Marcar postura…",
+    "stanceHistory": "{count, plural, one {# cambio} other {# cambios}}",
+    "interactionsTitle": "Línea de tiempo de interacciones",
+    "interactionsSubtitle": "Cada carta, llamada, reunión o encuentro registrado con este contacto, en todas las labores.",
+    "logInteraction": "Registrar interacción",
+    "noInteractions": "Todavía no se ha registrado ninguna interacción.",
+    "commitmentsTitle": "Compromisos",
+    "commitmentsSubtitle": "Promesas que este contacto nos hizo, para poder hacerles seguimiento en vez de olvidarlas.",
+    "addCommitment": "Añadir compromiso",
+    "noCommitments": "Todavía no se ha registrado ningún compromiso.",
+    "madeOn": "hecho el {date}",
+    "followUpOn": "seguimiento el {date}"
+  },
+  "Interactions": {
+    "titleNew": "Registrar interacción",
+    "titleEdit": "Editar interacción",
+    "summary": "Qué pasó",
+    "summaryPlaceholder": "Ej: Llamada sobre el retraso del protocolo escolar",
+    "date": "Fecha",
+    "goal": "Labor relacionada",
+    "goalNone": "Todavía ninguna",
+    "notesLabel": "Notas del resumen",
+    "notesHint": "Asistentes, tono, peticiones planteadas, próximo paso — el resumen de dos minutos.",
+    "saveFirstForAttachments": "Guarda la interacción primero para poder adjuntar archivos."
+  },
+  "Commitments": {
+    "titleNew": "Nuevo compromiso",
+    "titleEdit": "Editar compromiso",
+    "description": "Qué se comprometieron a hacer",
+    "descriptionPlaceholder": "Ej: Plantear el protocolo escolar en el próximo Consejo Interterritorial",
+    "madeDate": "Hecho el",
+    "followUpDate": "Seguimiento el",
+    "status": "Estado",
+    "goal": "Labor relacionada",
+    "goalNone": "Ninguna"
   },
   "Calendar": {
     "title": "Calendario",

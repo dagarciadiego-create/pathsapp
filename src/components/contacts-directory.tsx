@@ -77,7 +77,12 @@ export function ContactsDirectory({ initialContacts }: { initialContacts: Contac
             >
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div className="min-w-0 flex-1">
-                  <p className="font-semibold text-slate-900 dark:text-slate-100">{contact.name}</p>
+                  <Link
+                    href={`/contacts/${contact.id}`}
+                    className="font-semibold text-slate-900 hover:text-teal-700 dark:text-slate-100 dark:hover:text-teal-400"
+                  >
+                    {contact.name}
+                  </Link>
                   {(contact.organization || contact.role) && (
                     <p className="flex items-center gap-1.5 text-sm text-slate-600 dark:text-slate-300">
                       <Building2 className="h-3.5 w-3.5 shrink-0 text-slate-400" aria-hidden />

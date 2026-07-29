@@ -13,9 +13,13 @@ export default async function CalendarPage({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const [subtasks, goals] = await Promise.all([
+  const [subtasksRaw, goals] = await Promise.all([
+    // Goal-less entries are contact interactions (see Contact.interactions),
+    // not scheduled goal work — they show on the contact's own timeline
+    // instead of this goal-focused calendar. The where clause guarantees
+    // goal is non-null; the filter below just proves that to TypeScript.
     prisma.subtask.findMany({
-      where: { dueDate: { not: null } },
+      where: { dueDate: { not: null }, goalId: { not: null } },
       include: { goal: { select: { id: true, name: true } } },
     }),
     prisma.advocacyGoal.findMany({
@@ -23,6 +27,9 @@ export default async function CalendarPage({
       select: { id: true, name: true, targetDate: true, status: true },
     }),
   ]);
+  const subtasks = subtasksRaw.filter(
+    (s): s is typeof s & { goal: { id: string; name: string } } => s.goal !== null
+  );
 
   const events = buildCalendarEvents(subtasks, goals);
 

@@ -9,7 +9,20 @@ export async function GET(_request: Request, { params }: Params) {
   const { id } = await params;
   const contact = await prisma.contact.findUnique({
     where: { id },
-    include: { goalLinks: { include: { goal: { select: { id: true, name: true } } } } },
+    include: {
+      goalLinks: {
+        include: { goal: { select: { id: true, name: true } } },
+        orderBy: { createdAt: "asc" },
+      },
+      interactions: {
+        include: { attachments: true },
+        orderBy: { createdAt: "desc" },
+      },
+      commitments: {
+        include: { goal: { select: { id: true, name: true } } },
+        orderBy: { createdAt: "desc" },
+      },
+    },
   });
   if (!contact) return jsonError("Contact not found", 404);
   return NextResponse.json(contact);
