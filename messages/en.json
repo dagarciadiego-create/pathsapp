@@ -7,6 +7,7 @@
     "contacts": "Directory",
     "calendar": "Calendar",
     "deadlines": "Deadlines",
+    "triage": "Triage",
     "reports": "Reports",
     "publicPage": "Public view",
     "language": "Language",
@@ -126,10 +127,15 @@
     "description": "Description",
     "descriptionPlaceholder": "What is this goal about, and why does it matter?",
     "targetDate": "Date by which it should be achieved",
-    "status": "Status"
+    "status": "Status",
+    "effort": "Effort required",
+    "impact": "Expected impact",
+    "scoreHint": "1 = low, 5 = high",
+    "scoreUnset": "Not scored"
   },
   "GoalDetail": {
     "backToList": "Back to list",
+    "duplicateGoal": "Duplicate as template",
     "deleteGoal": "Delete goal",
     "contactsTitle": "Who to contact",
     "contactsSubtitle": "Key people and organizations: who it depends on and who can help.",
@@ -150,6 +156,20 @@
     "viewInDirectory": "View in directory",
     "stance": "Stance on this goal",
     "stanceUnset": "Set stance…"
+  },
+  "DuplicateGoalForm": {
+    "title": "Duplicate as template",
+    "description": "Creates a new goal with the same actions, likely contacts and indicators, but with dates, statuses and stance history reset — ready to run again.",
+    "name": "New goal name",
+    "copyName": "{name} (copy)",
+    "submit": "Create duplicate"
+  },
+  "OutcomeChain": {
+    "title": "How it happened",
+    "subtitle": "A timeline of the actions and stance shifts that led to this goal being achieved.",
+    "created": "Goal defined",
+    "achieved": "Goal achieved",
+    "stanceChange": "{contact}’s stance changed to"
   },
   "ContactForm": {
     "titleNew": "Add contact",
@@ -355,6 +375,36 @@
     "noAchieved": "No achievements published yet.",
     "noInProgress": "No goals currently in progress.",
     "internalLink": "Go to internal panel"
+  },
+  "Triage": {
+    "title": "Effort/impact triage",
+    "subtitle": "Prioritize active goals by how much effort they take against how much impact they'd have.",
+    "unscoredTitle": "Not scored yet",
+    "unscoredSubtitle": "Score these goals to place them on the matrix below.",
+    "emptyState": "No active goals to triage.",
+    "quadrantEmpty": "No goals here.",
+    "effort": "Effort",
+    "impact": "Impact",
+    "scoreUnset": "Not scored",
+    "legend": "Effort and impact are scored 1-5; 4-5 counts as \"high\" on each axis.",
+    "quadrant": {
+      "QUICK_WIN": {
+        "title": "Quick wins",
+        "hint": "High impact, low effort — do these first."
+      },
+      "MAJOR_PROJECT": {
+        "title": "Major projects",
+        "hint": "High impact, high effort — worth planning for."
+      },
+      "FILL_IN": {
+        "title": "Fill-ins",
+        "hint": "Low impact, low effort — nice to have, low priority."
+      },
+      "THANKLESS": {
+        "title": "Thankless tasks",
+        "hint": "Low impact, high effort — reconsider or delegate."
+      }
+    }
   },
   "Footer": {
     "installHint": "Tip: add PATHSapp to your phone's home screen to use it like an app."

@@ -49,6 +49,8 @@ function GoalFormFields({
   const [description, setDescription] = useState(goal?.description ?? "");
   const [targetDate, setTargetDate] = useState(toDateInputValue(goal?.targetDate));
   const [status, setStatus] = useState<string>(goal?.status ?? "IN_PROGRESS");
+  const [effortScore, setEffortScore] = useState(goal?.effortScore?.toString() ?? "");
+  const [impactScore, setImpactScore] = useState(goal?.impactScore?.toString() ?? "");
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -65,6 +67,8 @@ function GoalFormFields({
         description: description || null,
         targetDate: targetDate || null,
         status,
+        effortScore: effortScore || null,
+        impactScore: impactScore || null,
       };
       if (goal) {
         await api.updateGoal(goal.id, payload);
@@ -149,6 +153,37 @@ function GoalFormFields({
             {GOAL_STATUSES.map((s) => (
               <option key={s} value={s}>
                 {tEnums(`goalStatus.${s}`)}
+              </option>
+            ))}
+          </Select>
+        </Field>
+      </div>
+
+      <div className="grid grid-cols-2 gap-3">
+        <Field label={t("effort")} htmlFor="goal-effort" hint={t("scoreHint")}>
+          <Select
+            id="goal-effort"
+            value={effortScore}
+            onChange={(e) => setEffortScore(e.target.value)}
+          >
+            <option value="">{t("scoreUnset")}</option>
+            {[1, 2, 3, 4, 5].map((n) => (
+              <option key={n} value={n}>
+                {n}
+              </option>
+            ))}
+          </Select>
+        </Field>
+        <Field label={t("impact")} htmlFor="goal-impact" hint={t("scoreHint")}>
+          <Select
+            id="goal-impact"
+            value={impactScore}
+            onChange={(e) => setImpactScore(e.target.value)}
+          >
+            <option value="">{t("scoreUnset")}</option>
+            {[1, 2, 3, 4, 5].map((n) => (
+              <option key={n} value={n}>
+                {n}
               </option>
             ))}
           </Select>

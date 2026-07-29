@@ -30,7 +30,21 @@ export async function PATCH(request: Request, { params }: Params) {
   const parsed = goalUpdateSchema.safeParse(data);
   if (!parsed.success) return zodError(parsed.error);
 
+  const existing = await prisma.advocacyGoal.findUnique({ where: { id }, select: { status: true } });
+  if (!existing) return jsonError("Goal not found", 404);
+
   const { targetDate, ...rest } = parsed.data;
+  // achievedAt tracks the real moment status last became ACHIEVED, so the
+  // outcome-chain narrative doesn't have to fake a date from updatedAt
+  // (which changes on any unrelated edit). Reopening a goal clears it.
+  const nextStatus = rest.status ?? existing.status;
+  const achievedAtUpdate =
+    nextStatus === "ACHIEVED" && existing.status !== "ACHIEVED"
+      ? { achievedAt: new Date() }
+      : nextStatus !== "ACHIEVED" && existing.status === "ACHIEVED"
+        ? { achievedAt: null }
+        : {};
+
   const goal = await prisma.advocacyGoal
     .update({
       where: { id },
@@ -39,6 +53,7 @@ export async function PATCH(request: Request, { params }: Params) {
         ...(targetDate !== undefined
           ? { targetDate: targetDate ? new Date(targetDate) : null }
           : {}),
+        ...achievedAtUpdate,
       },
     })
     .catch((err) => {

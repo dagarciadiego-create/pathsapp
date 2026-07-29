@@ -7,6 +7,7 @@
     "contacts": "Directorio",
     "calendar": "Calendario",
     "deadlines": "Plazos",
+    "triage": "Triaje",
     "reports": "Informes",
     "publicPage": "Vista pública",
     "language": "Idioma",
@@ -126,10 +127,15 @@
     "description": "Descripción",
     "descriptionPlaceholder": "¿En qué consiste esta labor y por qué es importante?",
     "targetDate": "Fecha en la que debería conseguirse",
-    "status": "Estado"
+    "status": "Estado",
+    "effort": "Esfuerzo requerido",
+    "impact": "Impacto esperado",
+    "scoreHint": "1 = bajo, 5 = alto",
+    "scoreUnset": "Sin puntuar"
   },
   "GoalDetail": {
     "backToList": "Volver al listado",
+    "duplicateGoal": "Duplicar como plantilla",
     "deleteGoal": "Eliminar labor",
     "contactsTitle": "A quién contactar",
     "contactsSubtitle": "Personas y organizaciones clave: de quién depende conseguirlo y quién puede ayudar.",
@@ -150,6 +156,20 @@
     "viewInDirectory": "Ver en el directorio",
     "stance": "Postura sobre esta labor",
     "stanceUnset": "Marcar postura…"
+  },
+  "DuplicateGoalForm": {
+    "title": "Duplicar como plantilla",
+    "description": "Crea una nueva labor con las mismas acciones, contactos habituales e indicadores, pero con fechas, estados e historial de postura reiniciados — lista para repetirse.",
+    "name": "Nombre de la nueva labor",
+    "copyName": "{name} (copia)",
+    "submit": "Crear duplicado"
+  },
+  "OutcomeChain": {
+    "title": "Cómo se consiguió",
+    "subtitle": "Cronología de las acciones y los cambios de postura que llevaron a conseguir esta labor.",
+    "created": "Labor definida",
+    "achieved": "Labor conseguida",
+    "stanceChange": "La postura de {contact} cambió a"
   },
   "ContactForm": {
     "titleNew": "Añadir contacto",
@@ -345,6 +365,36 @@
     "generatedAt": "Generado el {date}",
     "sheetGoals": "Labores",
     "sheetIndicators": "Indicadores"
+  },
+  "Triage": {
+    "title": "Triaje de esfuerzo e impacto",
+    "subtitle": "Prioriza las labores activas según el esfuerzo que requieren frente al impacto que tendrían.",
+    "unscoredTitle": "Todavía sin puntuar",
+    "unscoredSubtitle": "Puntúa estas labores para situarlas en la matriz de abajo.",
+    "emptyState": "No hay labores activas que priorizar.",
+    "quadrantEmpty": "No hay labores aquí.",
+    "effort": "Esfuerzo",
+    "impact": "Impacto",
+    "scoreUnset": "Sin puntuar",
+    "legend": "El esfuerzo y el impacto se puntúan de 1 a 5; 4-5 cuenta como \"alto\" en cada eje.",
+    "quadrant": {
+      "QUICK_WIN": {
+        "title": "Victorias rápidas",
+        "hint": "Alto impacto, poco esfuerzo — hazlas primero."
+      },
+      "MAJOR_PROJECT": {
+        "title": "Grandes proyectos",
+        "hint": "Alto impacto, mucho esfuerzo — merece la pena planificarlas."
+      },
+      "FILL_IN": {
+        "title": "De relleno",
+        "hint": "Poco impacto, poco esfuerzo — deseables, baja prioridad."
+      },
+      "THANKLESS": {
+        "title": "Poco agradecidas",
+        "hint": "Poco impacto, mucho esfuerzo — replantear o delegar."
+      }
+    }
   },
   "PublicPage": {
     "title": "Nuestra labor de incidencia",

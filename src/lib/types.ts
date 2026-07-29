@@ -62,6 +62,18 @@ export type DeadlineWithGoal = Deadline & {
   goal: { id: string; name: string } | null;
 };
 
+export type TriageGoal = Pick<
+  AdvocacyGoal,
+  | "id"
+  | "name"
+  | "kind"
+  | "status"
+  | "category"
+  | "targetDate"
+  | "effortScore"
+  | "impactScore"
+>;
+
 export type ContactDetail = Contact & {
   goalLinks: GoalLinkWithStanceHistory[];
   interactions: SubtaskWithAttachments[];

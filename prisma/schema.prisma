@@ -25,6 +25,15 @@ model AdvocacyGoal {
   targetDate  DateTime?
   /// "NOT_STARTED" | "IN_PROGRESS" | "ACHIEVED" | "STALLED" | "CANCELLED"
   status      String   @default("IN_PROGRESS")
+  /// Effort to achieve it (1=low..5=high) for the effort-impact triage view.
+  /// Unset until the user scores it.
+  effortScore Int?
+  /// Expected impact if achieved (1=low..5=high), same scale as effortScore.
+  impactScore Int?
+  /// Set when status last transitioned into ACHIEVED (cleared if reopened),
+  /// so the outcome-chain narrative has a real date instead of reusing
+  /// updatedAt, which changes on any unrelated edit.
+  achievedAt  DateTime?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 

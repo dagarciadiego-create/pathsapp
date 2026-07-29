@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { Pencil, Trash2, User, CalendarDays, ArrowLeft } from "lucide-react";
+import { Pencil, Trash2, User, CalendarDays, ArrowLeft, Copy } from "lucide-react";
 import { clsx } from "clsx";
 import { Link, useRouter } from "@/i18n/navigation";
 import { GoalStatusBadge } from "./ui/status-badge";
@@ -11,12 +11,14 @@ import { Button } from "./ui/form";
 import { Section } from "./ui/section";
 import { ConfirmDialog } from "./ui/confirm-dialog";
 import { GoalFormDialog } from "./goal-form-dialog";
+import { DuplicateGoalDialog } from "./duplicate-goal-dialog";
 import { ContactList } from "./contact-list";
 import { ContactFormDialog } from "./contact-form-dialog";
 import { SubtaskList } from "./subtask-list";
 import { SubtaskFormDialog } from "./subtask-form-dialog";
 import { IndicatorList } from "./indicator-list";
 import { IndicatorFormDialog } from "./indicator-form-dialog";
+import { OutcomeChain } from "./outcome-chain";
 import { api } from "@/lib/api-client";
 import { computeGoalProgress, formatDate, isGoalOverdue } from "@/lib/goal-helpers";
 import type {
@@ -47,6 +49,7 @@ export function GoalDetailView({
   const [editGoalOpen, setEditGoalOpen] = useState(false);
   const [deleteGoalOpen, setDeleteGoalOpen] = useState(false);
   const [deletePending, setDeletePending] = useState(false);
+  const [duplicateOpen, setDuplicateOpen] = useState(false);
 
   const [contactDialog, setContactDialog] = useState<{
     open: boolean;
@@ -167,7 +170,11 @@ export function GoalDetailView({
               </span>
             )}
           </div>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
+            <Button variant="secondary" onClick={() => setDuplicateOpen(true)}>
+              <Copy className="h-4 w-4" />
+              {t("duplicateGoal")}
+            </Button>
             <Button variant="secondary" onClick={() => setEditGoalOpen(true)}>
               <Pencil className="h-4 w-4" />
               {tCommon("edit")}
@@ -211,6 +218,8 @@ export function GoalDetailView({
           <p className="text-xs text-slate-400 dark:text-slate-500">{tHome("noSubtasks")}</p>
         )}
       </div>
+
+      {goal.status === "ACHIEVED" && <OutcomeChain goal={goal} />}
 
       <Section
         title={t("contactsTitle")}
@@ -283,6 +292,11 @@ export function GoalDetailView({
         onClose={() => setDeleteGoalOpen(false)}
         onConfirm={confirmDeleteGoal}
         pending={deletePending}
+      />
+      <DuplicateGoalDialog
+        open={duplicateOpen}
+        onClose={() => setDuplicateOpen(false)}
+        goal={goal}
       />
 
       <ContactFormDialog

@@ -20,6 +20,8 @@ export const api = {
   updateGoal: <T>(id: string, data: unknown) =>
     request<T>(`/api/goals/${id}`, { method: "PATCH", body: JSON.stringify(data) }),
   deleteGoal: (id: string) => request(`/api/goals/${id}`, { method: "DELETE" }),
+  duplicateGoal: <T>(id: string, data: unknown) =>
+    request<T>(`/api/goals/${id}/duplicate`, { method: "POST", body: JSON.stringify(data) }),
 
   // Shared contact directory (not tied to a single goal).
   createContact: <T>(data: unknown) =>

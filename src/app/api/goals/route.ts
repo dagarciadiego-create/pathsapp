@@ -35,6 +35,7 @@ export async function POST(request: Request) {
     data: {
       ...rest,
       targetDate: targetDate ? new Date(targetDate) : null,
+      achievedAt: rest.status === "ACHIEVED" ? new Date() : null,
     },
   });
 

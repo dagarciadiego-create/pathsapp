@@ -25,6 +25,12 @@ const optionalDateString = z.preprocess(
 const optionalString = (max: number) =>
   z.preprocess(emptyToNull, z.string().max(max).nullable().optional());
 const optionalEmail = z.preprocess(emptyToNull, z.email().max(200).nullable().optional());
+// 1-5 triage score (effort/impact); empty string from the form select means
+// "not scored yet", same treatment as the other optional fields above.
+const optionalScore = z.preprocess(
+  emptyToNull,
+  z.coerce.number().int().min(1).max(5).nullable().optional()
+);
 
 export const goalInputSchema = z.object({
   name: z.string().trim().min(1, "Required").max(200),
@@ -34,8 +40,14 @@ export const goalInputSchema = z.object({
   description: optionalString(4000),
   targetDate: optionalDateString,
   status: z.enum(GOAL_STATUSES).optional(),
+  effortScore: optionalScore,
+  impactScore: optionalScore,
 });
 export const goalUpdateSchema = goalInputSchema.partial();
+
+export const goalDuplicateSchema = z.object({
+  name: z.string().trim().min(1, "Required").max(200),
+});
 
 export const contactInputSchema = z.object({
   name: z.string().trim().min(1, "Required").max(200),
