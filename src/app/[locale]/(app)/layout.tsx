@@ -15,5 +15,10 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
 async function FooterHint() {
   const t = await getTranslations("Footer");
-  return <p>{t("installHint")}</p>;
+  return (
+    <div className="space-y-1 px-4">
+      <p>{t("installHint")}</p>
+      <p>{t("privacyNotice", { year: new Date().getFullYear() })}</p>
+    </div>
+  );
 }

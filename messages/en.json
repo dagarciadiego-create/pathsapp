@@ -604,6 +604,7 @@
     "goalNone": "None"
   },
   "Footer": {
-    "installHint": "Tip: add PATHSapp to your phone's home screen to use it like an app."
+    "installHint": "Tip: add PATHSapp to your phone's home screen to use it like an app.",
+    "privacyNotice": "Privacy note: PATHSapp and its content are the exclusive property of Daniel-Aníbal García Diego. © {year}. All rights reserved."
   }
 }

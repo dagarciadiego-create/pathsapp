@@ -604,6 +604,7 @@
     "internalLink": "Acceder al panel interno"
   },
   "Footer": {
-    "installHint": "Consejo: añade PATHSapp a la pantalla de inicio de tu móvil para usarla como una app."
+    "installHint": "Consejo: añade PATHSapp a la pantalla de inicio de tu móvil para usarla como una app.",
+    "privacyNotice": "Nota de privacidad: PATHSapp y su contenido son propiedad exclusiva de Daniel-Aníbal García Diego. © {year}. Todos los derechos reservados."
   }
 }

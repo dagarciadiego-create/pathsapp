@@ -11,8 +11,16 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
     <>
       <PublicHeader />
       <main className="flex-1">{children}</main>
+      <footer className="border-t border-slate-200 py-4 text-center text-xs text-slate-500 dark:border-slate-800 dark:text-slate-400">
+        <PublicFooterNotice />
+      </footer>
     </>
   );
+}
+
+async function PublicFooterNotice() {
+  const t = await getTranslations("Footer");
+  return <p className="px-4">{t("privacyNotice", { year: new Date().getFullYear() })}</p>;
 }
 
 async function PublicHeader() {
