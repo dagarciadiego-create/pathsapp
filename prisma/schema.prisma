@@ -32,6 +32,7 @@ model AdvocacyGoal {
   subtasks     Subtask[]
   indicators   Indicator[]
   commitments  Commitment[]
+  deadlines    Deadline[]
 }
 
 /// A stakeholder in the shared contact directory. Not tied to a single
@@ -52,6 +53,25 @@ model Contact {
   /// Interaction log entries involving this contact (see Subtask.contactId).
   interactions Subtask[]
   commitments  Commitment[]
+  connectionsAsA ContactConnection[] @relation("ConnectionA")
+  connectionsAsB ContactConnection[] @relation("ConnectionB")
+}
+
+/// An informal link between two contacts — "who can open a door to X" —
+/// e.g. a board member's relative works in an official's office. Undirected
+/// in practice: shown on both contacts' pages regardless of which side
+/// created it.
+model ContactConnection {
+  id          String   @id @default(cuid())
+  contactAId  String
+  contactA    Contact  @relation("ConnectionA", fields: [contactAId], references: [id], onDelete: Cascade)
+  contactBId  String
+  contactB    Contact  @relation("ConnectionB", fields: [contactBId], references: [id], onDelete: Cascade)
+  description String
+  createdAt   DateTime @default(now())
+
+  @@index([contactAId])
+  @@index([contactBId])
 }
 
 /// Links a directory Contact to a goal, with a relation type that is
@@ -171,5 +191,28 @@ model Commitment {
   updatedAt    DateTime      @updatedAt
 
   @@index([contactId])
+  @@index([goalId])
+}
+
+/// An external window with a hard deadline — a public consultation, a
+/// parliamentary hearing slot, an amendment deadline — tracked so it's
+/// never missed. Distinct from Subtask: this isn't our own action, it's a
+/// window the outside world opened that we need to act within.
+model Deadline {
+  id          String        @id @default(cuid())
+  title       String
+  /// "PUBLIC_CONSULTATION" | "HEARING" | "AMENDMENT" | "OTHER"
+  kind        String
+  description String?
+  dueDate     DateTime
+  responsible String?
+  /// "OPEN" | "SUBMITTED" | "MISSED" | "CANCELLED"
+  status      String        @default("OPEN")
+  goalId      String?
+  goal        AdvocacyGoal? @relation(fields: [goalId], references: [id], onDelete: SetNull)
+  notes       String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
   @@index([goalId])
 }

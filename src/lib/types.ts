@@ -7,6 +7,7 @@ import type {
   Attachment,
   Commitment,
   StanceChange,
+  Deadline,
 } from "@/generated/prisma/client";
 
 export type GoalListItem = AdvocacyGoal & {
@@ -47,10 +48,35 @@ export type CommitmentWithGoal = Commitment & {
   goal: { id: string; name: string } | null;
 };
 
+// A ContactConnection is undirected in practice (see schema comment), so
+// it's normalized to "the other contact" before reaching the UI — nothing
+// downstream needs to know whether this contact was stored as A or B.
+export type ContactConnectionView = {
+  id: string;
+  description: string;
+  createdAt: Date;
+  otherContact: { id: string; name: string };
+};
+
+export type DeadlineWithGoal = Deadline & {
+  goal: { id: string; name: string } | null;
+};
+
 export type ContactDetail = Contact & {
   goalLinks: GoalLinkWithStanceHistory[];
   interactions: SubtaskWithAttachments[];
   commitments: CommitmentWithGoal[];
+  connections: ContactConnectionView[];
 };
 
-export type { AdvocacyGoal, Contact, GoalContact, Subtask, Indicator, Attachment, Commitment, StanceChange };
+export type {
+  AdvocacyGoal,
+  Contact,
+  GoalContact,
+  Subtask,
+  Indicator,
+  Attachment,
+  Commitment,
+  StanceChange,
+  Deadline,
+};

@@ -77,6 +77,21 @@ export const api = {
     request<T>(`/api/commitments/${id}`, { method: "PATCH", body: JSON.stringify(data) }),
   deleteCommitment: (id: string) => request(`/api/commitments/${id}`, { method: "DELETE" }),
 
+  // Informal "who can open a door to X" links between two contacts.
+  createConnection: <T>(contactId: string, data: unknown) =>
+    request<T>(`/api/contacts/${contactId}/connections`, {
+      method: "POST",
+      body: JSON.stringify(data),
+    }),
+  deleteConnection: (id: string) => request(`/api/connections/${id}`, { method: "DELETE" }),
+
+  // External windows/deadlines (public consultations, hearings...).
+  createDeadline: <T>(data: unknown) =>
+    request<T>("/api/deadlines", { method: "POST", body: JSON.stringify(data) }),
+  updateDeadline: <T>(id: string, data: unknown) =>
+    request<T>(`/api/deadlines/${id}`, { method: "PATCH", body: JSON.stringify(data) }),
+  deleteDeadline: (id: string) => request(`/api/deadlines/${id}`, { method: "DELETE" }),
+
   uploadAttachment: async <T>(subtaskId: string, file: File): Promise<T> => {
     const formData = new FormData();
     formData.append("file", file);

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { contactUpdateSchema } from "@/lib/validation";
 import { isRecordNotFoundError, jsonError, parseJson, zodError } from "@/lib/api-utils";
+import { normalizeConnections } from "@/lib/contact-helpers";
 
 type Params = { params: Promise<{ id: string }> };
 
@@ -22,10 +23,17 @@ export async function GET(_request: Request, { params }: Params) {
         include: { goal: { select: { id: true, name: true } } },
         orderBy: { createdAt: "desc" },
       },
+      connectionsAsA: { include: { contactA: true, contactB: true } },
+      connectionsAsB: { include: { contactA: true, contactB: true } },
     },
   });
   if (!contact) return jsonError("Contact not found", 404);
-  return NextResponse.json(contact);
+
+  const { connectionsAsA, connectionsAsB, ...rest } = contact;
+  return NextResponse.json({
+    ...rest,
+    connections: normalizeConnections(connectionsAsA, connectionsAsB),
+  });
 }
 
 export async function PATCH(request: Request, { params }: Params) {

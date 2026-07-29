@@ -7,6 +7,8 @@ import {
   SUBTASK_STATUSES,
   STANCE_VALUES,
   COMMITMENT_STATUSES,
+  DEADLINE_KINDS,
+  DEADLINE_STATUSES,
 } from "./constants";
 
 // Empty strings from HTML forms should be treated as "no value", not as an
@@ -104,6 +106,23 @@ export const commitmentInputSchema = z.object({
   goalId: optionalString(60),
 });
 export const commitmentUpdateSchema = commitmentInputSchema.partial();
+
+export const contactConnectionInputSchema = z.object({
+  otherContactId: z.string().trim().min(1, "Required").max(60),
+  description: z.string().trim().min(1, "Required").max(500),
+});
+
+export const deadlineInputSchema = z.object({
+  title: z.string().trim().min(1, "Required").max(200),
+  kind: z.enum(DEADLINE_KINDS),
+  description: optionalString(2000),
+  dueDate: z.string().refine((val) => !Number.isNaN(Date.parse(val)), "Invalid date"),
+  responsible: optionalString(200),
+  status: z.enum(DEADLINE_STATUSES).optional(),
+  goalId: optionalString(60),
+  notes: optionalString(2000),
+});
+export const deadlineUpdateSchema = deadlineInputSchema.partial();
 
 export const indicatorInputSchema = z.object({
   goalId: optionalString(60),

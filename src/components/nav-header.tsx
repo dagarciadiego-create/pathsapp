@@ -8,6 +8,7 @@ import {
   Gauge,
   BookUser,
   CalendarDays,
+  Hourglass,
   FileDown,
   Globe,
   Menu,
@@ -26,6 +27,7 @@ export function NavHeader() {
     { href: "/", label: t("home"), icon: ClipboardList },
     { href: "/contacts", label: t("contacts"), icon: BookUser },
     { href: "/calendar", label: t("calendar"), icon: CalendarDays },
+    { href: "/deadlines", label: t("deadlines"), icon: Hourglass },
     { href: "/indicators", label: t("indicators"), icon: Gauge },
     { href: "/reports", label: t("reports"), icon: FileDown },
   ];

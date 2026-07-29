@@ -5,6 +5,7 @@ import type {
   ContactRelation,
   Stance,
   CommitmentStatus,
+  DeadlineStatus,
 } from "@/lib/constants";
 
 const goalStatusColors: Record<GoalStatus, string> = {
@@ -42,6 +43,13 @@ const commitmentStatusColors: Record<CommitmentStatus, string> = {
   PENDING: "bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300",
   FULFILLED: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-300",
   BROKEN: "bg-rose-100 text-rose-700 dark:bg-rose-900/50 dark:text-rose-300",
+};
+
+const deadlineStatusColors: Record<DeadlineStatus, string> = {
+  OPEN: "bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300",
+  SUBMITTED: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-300",
+  MISSED: "bg-rose-100 text-rose-700 dark:bg-rose-900/50 dark:text-rose-300",
+  CANCELLED: "bg-slate-100 text-slate-700 dark:bg-slate-700/60 dark:text-slate-200",
 };
 
 function Badge({ className, label }: { className: string; label: string }) {
@@ -93,4 +101,14 @@ export function CommitmentStatusBadge({
   label: string;
 }) {
   return <Badge className={commitmentStatusColors[status]} label={label} />;
+}
+
+export function DeadlineStatusBadge({
+  status,
+  label,
+}: {
+  status: DeadlineStatus;
+  label: string;
+}) {
+  return <Badge className={deadlineStatusColors[status]} label={label} />;
 }

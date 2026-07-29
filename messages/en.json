@@ -6,6 +6,7 @@
     "indicators": "Success indicators",
     "contacts": "Directory",
     "calendar": "Calendar",
+    "deadlines": "Deadlines",
     "reports": "Reports",
     "publicPage": "Public view",
     "language": "Language",
@@ -77,6 +78,18 @@
       "PENDING": "Pending",
       "FULFILLED": "Fulfilled",
       "BROKEN": "Broken"
+    },
+    "deadlineKind": {
+      "PUBLIC_CONSULTATION": "Public consultation",
+      "HEARING": "Hearing",
+      "AMENDMENT": "Amendment",
+      "OTHER": "Other"
+    },
+    "deadlineStatus": {
+      "OPEN": "Open",
+      "SUBMITTED": "Submitted",
+      "MISSED": "Missed",
+      "CANCELLED": "Cancelled"
     }
   },
   "Home": {
@@ -221,7 +234,57 @@
     "addCommitment": "Add commitment",
     "noCommitments": "No commitments logged yet.",
     "madeOn": "made on {date}",
+    "followUpOn": "follow up on {date}",
+    "downloadBrief": "Download brief"
+  },
+  "Connections": {
+    "title": "Door-openers",
+    "subtitle": "Informal links to other contacts — who can help open a door.",
+    "addConnection": "Add connection",
+    "noConnections": "No connections logged yet.",
+    "titleNew": "Add connection",
+    "otherContact": "Connected to",
+    "description": "How are they connected?",
+    "descriptionHint": "E.g. a board member's relative works in this person's office.",
+    "descriptionPlaceholder": "E.g. Trained together at the same hospital"
+  },
+  "ContactBrief": {
+    "title": "Meeting brief",
+    "generatedAt": "Generated on {date}",
+    "contactInfoTitle": "Contact",
+    "openCommitmentsTitle": "Open commitments",
+    "noOpenCommitments": "No open commitments.",
+    "recentInteractionsTitle": "Recent interactions",
+    "noInteractions": "No interactions logged yet.",
+    "madeOn": "made on {date}",
     "followUpOn": "follow up on {date}"
+  },
+  "Deadlines": {
+    "title": "Deadlines",
+    "subtitle": "Public consultations, hearings and other external windows that shouldn't be missed.",
+    "newDeadline": "New deadline",
+    "emptyState": "No deadlines tracked yet.",
+    "columnTitle": "Deadline",
+    "columnKind": "Type",
+    "columnDue": "Due",
+    "columnGoal": "Linked goal",
+    "columnStatus": "Status",
+    "summaryOpen": "Open",
+    "summaryOverdue": "Missed",
+    "summaryNext30": "Due in 30 days"
+  },
+  "DeadlineForm": {
+    "titleNew": "New deadline",
+    "titleEdit": "Edit deadline",
+    "title": "Title",
+    "titlePlaceholder": "E.g. Public consultation on the orphan drugs decree",
+    "kind": "Type",
+    "description": "Description",
+    "dueDate": "Due date",
+    "responsible": "Owner",
+    "status": "Status",
+    "goal": "Related goal",
+    "goalNone": "None"
   },
   "Interactions": {
     "titleNew": "Log interaction",

@@ -12,6 +12,8 @@ import {
   ChevronDown,
   ChevronUp,
   Clock,
+  FileDown,
+  Unlink,
 } from "lucide-react";
 import { Link, useRouter } from "@/i18n/navigation";
 import { Button } from "./ui/form";
@@ -27,6 +29,7 @@ import { ActionTypeIcon } from "./ui/action-type-icon";
 import { DirectoryContactFormDialog } from "./directory-contact-form-dialog";
 import { InteractionFormDialog } from "./interaction-form-dialog";
 import { CommitmentFormDialog } from "./commitment-form-dialog";
+import { ConnectionFormDialog } from "./connection-form-dialog";
 import { api } from "@/lib/api-client";
 import { formatDate } from "@/lib/goal-helpers";
 import { STANCE_VALUES } from "@/lib/constants";
@@ -39,11 +42,18 @@ import type {
   CommitmentStatus,
 } from "@/lib/constants";
 
-export function ContactDetailView({ contact }: { contact: ContactDetail }) {
+export function ContactDetailView({
+  contact,
+  otherContacts,
+}: {
+  contact: ContactDetail;
+  otherContacts: { id: string; name: string }[];
+}) {
   const t = useTranslations("ContactDetail");
   const tDir = useTranslations("ContactDirectory");
   const tCommon = useTranslations("Common");
   const tEnums = useTranslations("Enums");
+  const tConn = useTranslations("Connections");
   const locale = useLocale();
   const router = useRouter();
 
@@ -66,6 +76,12 @@ export function ContactDetailView({ contact }: { contact: ContactDetail }) {
   }>({ open: false });
   const [deletingCommitment, setDeletingCommitment] = useState<CommitmentWithGoal | null>(null);
   const [commitmentDeletePending, setCommitmentDeletePending] = useState(false);
+
+  const [connectionDialogOpen, setConnectionDialogOpen] = useState(false);
+  const [deletingConnection, setDeletingConnection] = useState<
+    ContactDetail["connections"][number] | null
+  >(null);
+  const [connectionDeletePending, setConnectionDeletePending] = useState(false);
 
   const goalOptions = useMemo(
     () => contact.goalLinks.map((gl) => gl.goal),
@@ -106,6 +122,18 @@ export function ContactDetailView({ contact }: { contact: ContactDetail }) {
     }
   }
 
+  async function confirmDeleteConnection() {
+    if (!deletingConnection) return;
+    setConnectionDeletePending(true);
+    try {
+      await api.deleteConnection(deletingConnection.id);
+      router.refresh();
+      setDeletingConnection(null);
+    } finally {
+      setConnectionDeletePending(false);
+    }
+  }
+
   return (
     <div className="mx-auto max-w-4xl space-y-6 px-4 py-6 sm:px-6">
       <Link
@@ -119,7 +147,14 @@ export function ContactDetailView({ contact }: { contact: ContactDetail }) {
       <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
         <div className="mb-3 flex flex-wrap items-start justify-between gap-3">
           <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">{contact.name}</h1>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
+            <a
+              href={`/api/contacts/${contact.id}/brief/pdf?locale=${locale}`}
+              className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-3.5 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+            >
+              <FileDown className="h-4 w-4" />
+              {t("downloadBrief")}
+            </a>
             <Button variant="secondary" onClick={() => setEditOpen(true)}>
               <Pencil className="h-4 w-4" />
               {tCommon("edit")}
@@ -311,6 +346,46 @@ export function ContactDetailView({ contact }: { contact: ContactDetail }) {
         )}
       </Section>
 
+      <Section
+        title={tConn("title")}
+        subtitle={tConn("subtitle")}
+        addLabel={tConn("addConnection")}
+        onAdd={() => setConnectionDialogOpen(true)}
+      >
+        {contact.connections.length === 0 ? (
+          <p className="text-sm text-slate-500 dark:text-slate-400">{tConn("noConnections")}</p>
+        ) : (
+          <ul className="space-y-2">
+            {contact.connections.map((connection) => (
+              <li
+                key={connection.id}
+                className="flex flex-wrap items-start justify-between gap-3 rounded-lg border border-slate-200 p-3 dark:border-slate-800"
+              >
+                <div className="min-w-0 flex-1">
+                  <Link
+                    href={`/contacts/${connection.otherContact.id}`}
+                    className="font-medium text-slate-900 hover:text-teal-700 dark:text-slate-100 dark:hover:text-teal-400"
+                  >
+                    {connection.otherContact.name}
+                  </Link>
+                  <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+                    {connection.description}
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setDeletingConnection(connection)}
+                  aria-label={tCommon("delete")}
+                  className="shrink-0 rounded-lg p-1.5 text-slate-500 hover:bg-rose-50 hover:text-rose-600 dark:text-slate-400 dark:hover:bg-rose-900/40 dark:hover:text-rose-400"
+                >
+                  <Unlink className="h-4 w-4" />
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+      </Section>
+
       <DirectoryContactFormDialog open={editOpen} onClose={() => setEditOpen(false)} contact={contact} />
       <ConfirmDialog
         open={deleteOpen}
@@ -346,6 +421,19 @@ export function ContactDetailView({ contact }: { contact: ContactDetail }) {
         onClose={() => setDeletingCommitment(null)}
         onConfirm={confirmDeleteCommitment}
         pending={commitmentDeletePending}
+      />
+
+      <ConnectionFormDialog
+        open={connectionDialogOpen}
+        onClose={() => setConnectionDialogOpen(false)}
+        contactId={contact.id}
+        otherContacts={otherContacts}
+      />
+      <ConfirmDialog
+        open={!!deletingConnection}
+        onClose={() => setDeletingConnection(null)}
+        onConfirm={confirmDeleteConnection}
+        pending={connectionDeletePending}
       />
     </div>
   );

@@ -6,6 +6,7 @@
     "indicators": "Indicadores de éxito",
     "contacts": "Directorio",
     "calendar": "Calendario",
+    "deadlines": "Plazos",
     "reports": "Informes",
     "publicPage": "Vista pública",
     "language": "Idioma",
@@ -77,6 +78,18 @@
       "PENDING": "Pendiente",
       "FULFILLED": "Cumplido",
       "BROKEN": "Incumplido"
+    },
+    "deadlineKind": {
+      "PUBLIC_CONSULTATION": "Consulta pública",
+      "HEARING": "Comparecencia",
+      "AMENDMENT": "Enmienda",
+      "OTHER": "Otro"
+    },
+    "deadlineStatus": {
+      "OPEN": "Abierto",
+      "SUBMITTED": "Presentado",
+      "MISSED": "Perdido",
+      "CANCELLED": "Cancelado"
     }
   },
   "Home": {
@@ -221,7 +234,57 @@
     "addCommitment": "Añadir compromiso",
     "noCommitments": "Todavía no se ha registrado ningún compromiso.",
     "madeOn": "hecho el {date}",
+    "followUpOn": "seguimiento el {date}",
+    "downloadBrief": "Descargar brief"
+  },
+  "Connections": {
+    "title": "Puertas de entrada",
+    "subtitle": "Vínculos informales con otros contactos: quién puede ayudar a abrir una puerta.",
+    "addConnection": "Añadir conexión",
+    "noConnections": "Todavía no se ha registrado ninguna conexión.",
+    "titleNew": "Añadir conexión",
+    "otherContact": "Conectado con",
+    "description": "¿Cómo están conectados?",
+    "descriptionHint": "Ej: un familiar de un vocal de la junta trabaja en la oficina de esta persona.",
+    "descriptionPlaceholder": "Ej: Se formaron juntos en el mismo hospital"
+  },
+  "ContactBrief": {
+    "title": "Brief de reunión",
+    "generatedAt": "Generado el {date}",
+    "contactInfoTitle": "Contacto",
+    "openCommitmentsTitle": "Compromisos abiertos",
+    "noOpenCommitments": "Sin compromisos abiertos.",
+    "recentInteractionsTitle": "Interacciones recientes",
+    "noInteractions": "Todavía no se ha registrado ninguna interacción.",
+    "madeOn": "hecho el {date}",
     "followUpOn": "seguimiento el {date}"
+  },
+  "Deadlines": {
+    "title": "Plazos",
+    "subtitle": "Consultas públicas, comparecencias y otras ventanas externas que no deberían perderse.",
+    "newDeadline": "Nuevo plazo",
+    "emptyState": "Todavía no hay plazos registrados.",
+    "columnTitle": "Plazo",
+    "columnKind": "Tipo",
+    "columnDue": "Vence",
+    "columnGoal": "Labor vinculada",
+    "columnStatus": "Estado",
+    "summaryOpen": "Abiertos",
+    "summaryOverdue": "Perdidos",
+    "summaryNext30": "Vencen en 30 días"
+  },
+  "DeadlineForm": {
+    "titleNew": "Nuevo plazo",
+    "titleEdit": "Editar plazo",
+    "title": "Título",
+    "titlePlaceholder": "Ej: Consulta pública sobre el decreto de medicamentos huérfanos",
+    "kind": "Tipo",
+    "description": "Descripción",
+    "dueDate": "Fecha límite",
+    "responsible": "Responsable",
+    "status": "Estado",
+    "goal": "Labor relacionada",
+    "goalNone": "Ninguna"
   },
   "Interactions": {
     "titleNew": "Registrar interacción",

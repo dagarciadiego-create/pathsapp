@@ -46,3 +46,14 @@ export type Stance = (typeof STANCE_VALUES)[number];
 
 export const COMMITMENT_STATUSES = ["PENDING", "FULFILLED", "BROKEN"] as const;
 export type CommitmentStatus = (typeof COMMITMENT_STATUSES)[number];
+
+export const DEADLINE_KINDS = [
+  "PUBLIC_CONSULTATION",
+  "HEARING",
+  "AMENDMENT",
+  "OTHER",
+] as const;
+export type DeadlineKind = (typeof DEADLINE_KINDS)[number];
+
+export const DEADLINE_STATUSES = ["OPEN", "SUBMITTED", "MISSED", "CANCELLED"] as const;
+export type DeadlineStatus = (typeof DEADLINE_STATUSES)[number];
