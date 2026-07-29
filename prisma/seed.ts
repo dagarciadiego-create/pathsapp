@@ -7,6 +7,19 @@ const adapter = new PrismaPg({ connectionString: resolveDatabaseUrl() });
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
+  await prisma.evidence.deleteMany();
+  await prisma.petitionVersion.deleteMany();
+  await prisma.petition.deleteMany();
+  await prisma.jointLetterCosigner.deleteMany();
+  await prisma.jointLetter.deleteMany();
+  await prisma.mediaCoverage.deleteMany();
+  await prisma.strategicDate.deleteMany();
+  await prisma.positionHolder.deleteMany();
+  await prisma.position.deleteMany();
+  await prisma.deadline.deleteMany();
+  await prisma.stanceChange.deleteMany();
+  await prisma.commitment.deleteMany();
+  await prisma.contactConnection.deleteMany();
   await prisma.attachment.deleteMany();
   await prisma.indicator.deleteMany();
   await prisma.goalContact.deleteMany();
@@ -73,6 +86,23 @@ async function main() {
       organization: "Ayuntamiento",
       role: "Posible aliado local",
       notes: "Contacto reciente en el Día Mundial, todavía sin asignar a una labor.",
+    },
+  });
+  // Two more directory contacts, used below as the successive holders of
+  // the "Ministro/a de Sanidad" position (see Position/PositionHolder).
+  const martaSanchez = await prisma.contact.create({
+    data: {
+      name: "Marta Sánchez Ibáñez",
+      organization: "Gobierno de España",
+      role: "Exministra de Sanidad (2022-2024)",
+    },
+  });
+  const carlosFerrer = await prisma.contact.create({
+    data: {
+      name: "Carlos Ferrer Puig",
+      organization: "Gobierno de España",
+      role: "Ministro de Sanidad",
+      email: "gabinete.ministro@sanidad.gob.es",
     },
   });
 
@@ -270,18 +300,25 @@ async function main() {
   });
 
   // --- Link directory contacts to goals ------------------------------
+  // Elena Ruiz's link is created individually (not in the createMany batch
+  // below) so its id is available for the StanceChange history further
+  // down — she moved from skeptical to a champion over the year.
+  const elenaRuizOnFinanciacion = await prisma.goalContact.create({
+    data: {
+      goalId: financiacion.id,
+      contactId: drElenaRuiz.id,
+      relation: "SUPPORTER",
+      notes: "Puede avalar la petición con evidencia clínica.",
+      stance: "CHAMPION",
+    },
+  });
+
   await prisma.goalContact.createMany({
     data: [
       {
         goalId: financiacion.id,
         contactId: ministerioCartera.id,
         relation: "DECISION_MAKER",
-      },
-      {
-        goalId: financiacion.id,
-        contactId: drElenaRuiz.id,
-        relation: "SUPPORTER",
-        notes: "Puede avalar la petición con evidencia clínica.",
       },
       {
         goalId: financiacion.id,
@@ -315,6 +352,204 @@ async function main() {
       currentValue: 7.2,
       unit: "/10",
     },
+  });
+
+  // --- Stance history: Elena Ruiz warmed up over the year -----------
+  await prisma.stanceChange.createMany({
+    data: [
+      {
+        goalContactId: elenaRuizOnFinanciacion.id,
+        stance: "SKEPTICAL",
+        note: "Inicialmente reticente por el coste estimado para el sistema.",
+        changedAt: new Date("2026-05-15"),
+      },
+      {
+        goalContactId: elenaRuizOnFinanciacion.id,
+        stance: "CHAMPION",
+        note: "Cambió de postura tras revisar el estudio de coste-efectividad de la SETH.",
+        changedAt: new Date("2026-07-10"),
+      },
+    ],
+  });
+
+  // --- Door-opener connection between two contacts -------------------
+  await prisma.contactConnection.create({
+    data: {
+      contactAId: feder.id,
+      contactBId: drElenaRuiz.id,
+      description:
+        "Colaboran habitualmente en el grupo de trabajo de enfermedades raras; FEDER puede facilitar una presentación.",
+    },
+  });
+
+  // --- A promise made to us, not an action we took --------------------
+  await prisma.commitment.create({
+    data: {
+      contactId: drElenaRuiz.id,
+      goalId: financiacion.id,
+      description:
+        "Se comprometió a presentar el informe de coste-efectividad en el próximo pleno de la SETH.",
+      madeDate: new Date("2026-07-10"),
+      followUpDate: new Date("2026-09-15"),
+      status: "PENDING",
+    },
+  });
+
+  // --- An external window we need to act within -----------------------
+  await prisma.deadline.create({
+    data: {
+      title: "Consulta pública sobre actualización de la cartera común de servicios",
+      kind: "PUBLIC_CONSULTATION",
+      description: "Ventana para presentar alegaciones antes de que se cierre el trámite.",
+      dueDate: new Date("2026-09-01"),
+      responsible: "María López",
+      status: "OPEN",
+      goalId: financiacion.id,
+    },
+  });
+
+  // --- A position tracked separately from who currently holds it ------
+  const ministroSanidad = await prisma.position.create({
+    data: {
+      title: "Ministro/a de Sanidad",
+      organization: "Gobierno de España",
+    },
+  });
+  await prisma.positionHolder.createMany({
+    data: [
+      {
+        positionId: ministroSanidad.id,
+        contactId: martaSanchez.id,
+        startDate: new Date("2022-01-10"),
+        endDate: new Date("2024-11-20"),
+      },
+      {
+        positionId: ministroSanidad.id,
+        contactId: carlosFerrer.id,
+        startDate: new Date("2024-11-20"),
+      },
+    ],
+  });
+
+  // --- Strategic calendar overlay --------------------------------------
+  await prisma.strategicDate.createMany({
+    data: [
+      {
+        title: "Día Mundial de la Hemofilia",
+        kind: "AWARENESS_DAY",
+        date: new Date("2026-04-17"),
+        description: "Fecha clave para campañas de sensibilización y visibilidad mediática.",
+        isRecurring: true,
+      },
+      {
+        title: "Presentación de los Presupuestos Generales del Estado",
+        kind: "BUDGET",
+        date: new Date("2026-10-01"),
+        description: "Ventana crítica para incidir en la financiación pública de tratamientos.",
+        isRecurring: true,
+      },
+    ],
+  });
+
+  // --- Designated spokesperson ------------------------------------------
+  await prisma.spokesperson.create({
+    data: {
+      name: "María López",
+      role: "Vicepresidenta, Junta Directiva",
+      topics: "Acceso a tratamiento, financiación pública, relaciones institucionales",
+      bio: "Portavoz habitual ante medios nacionales y autonómicos sobre el acceso al tratamiento.",
+      mediaTrained: true,
+    },
+  });
+
+  // --- Petition & evidence library ---------------------------------------
+  const peticionProfilaxis = await prisma.petition.create({
+    data: {
+      title: "Acceso universal a la profilaxis con factores de vida media prolongada",
+      category: "Acceso a tratamiento",
+    },
+  });
+  await prisma.petitionVersion.create({
+    data: {
+      petitionId: peticionProfilaxis.id,
+      contentEs:
+        "Solicitamos que el Ministerio de Sanidad valore la inclusión de los factores de coagulación de vida media prolongada para los casos graves de hemofilia A y B.",
+      createdAt: new Date("2025-11-01"),
+    },
+  });
+  await prisma.petitionVersion.create({
+    data: {
+      petitionId: peticionProfilaxis.id,
+      contentEs:
+        "Solicitamos el acceso universal y gratuito a los factores de coagulación de vida media prolongada para todos los pacientes con hemofilia A y B, no solo los casos graves, dentro de la cartera común de servicios del Sistema Nacional de Salud.",
+      contentEn:
+        "We request universal, free access to extended half-life coagulation factors for all patients with hemophilia A and B, not only severe cases, within the National Health System's common services portfolio.",
+      notes: "Ampliada tras el informe de la SETH sobre coste-efectividad.",
+      createdAt: new Date("2026-06-20"),
+    },
+  });
+  await prisma.evidence.create({
+    data: {
+      petitionId: peticionProfilaxis.id,
+      title: "Informe técnico-clínico de la SETH sobre coste-efectividad",
+      source: "Sociedad Española de Trombosis y Hemostasia (SETH)",
+      summary:
+        "Estudio que respalda extender la cobertura a todos los pacientes, no solo a los casos graves.",
+    },
+  });
+
+  // --- Joint sign-on letter -----------------------------------------------
+  const cartaConjunta = await prisma.jointLetter.create({
+    data: {
+      title: "Carta conjunta a favor de la financiación universal de la profilaxis",
+      targetName: "Ministerio de Sanidad",
+      sentDate: new Date("2026-05-20"),
+      goalId: financiacion.id,
+      content:
+        "Las organizaciones abajo firmantes solicitamos conjuntamente la inclusión universal de los factores de vida media prolongada en la cartera común de servicios.",
+    },
+  });
+  await prisma.jointLetterCosigner.createMany({
+    data: [
+      {
+        jointLetterId: cartaConjunta.id,
+        organization: "Federación Española de Enfermedades Raras (FEDER)",
+        status: "SIGNED",
+      },
+      {
+        jointLetterId: cartaConjunta.id,
+        organization: "Sociedad Española de Trombosis y Hemostasia (SETH)",
+        contactName: "Dra. Elena Ruiz",
+        status: "CONFIRMED",
+      },
+      {
+        jointLetterId: cartaConjunta.id,
+        organization: "Plataforma de Organizaciones de Pacientes (POP)",
+        status: "INVITED",
+      },
+    ],
+  });
+
+  // --- Media coverage log -------------------------------------------------
+  await prisma.mediaCoverage.createMany({
+    data: [
+      {
+        outlet: "Televisión Regional",
+        title: "Piden financiación universal para el tratamiento de la hemofilia",
+        publishedDate: new Date("2026-04-18"),
+        tone: "POSITIVE",
+        reach: 45000,
+        goalId: sensibilizacion.id,
+      },
+      {
+        outlet: "Diario Sanitario",
+        title: "El coste de ampliar la cobertura de profilaxis genera debate",
+        publishedDate: new Date("2026-06-02"),
+        tone: "NEUTRAL",
+        reach: 12000,
+        goalId: financiacion.id,
+      },
+    ],
   });
 
   console.log("Seed complete:", {
