@@ -10,6 +10,7 @@ import {
   CalendarDays,
   Hourglass,
   Target,
+  GraduationCap,
   Landmark,
   Mic,
   FileDown,
@@ -38,6 +39,7 @@ export function NavHeader() {
   // planning/reporting views move into a "More" dropdown.
   const primaryLinks = [
     { href: "/", label: t("home"), icon: ClipboardList },
+    { href: "/workshop", label: t("workshop"), icon: GraduationCap },
     { href: "/contacts", label: t("contacts"), icon: BookUser },
     { href: "/calendar", label: t("calendar"), icon: CalendarDays },
     { href: "/deadlines", label: t("deadlines"), icon: Hourglass },

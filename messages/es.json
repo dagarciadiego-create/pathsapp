@@ -3,6 +3,7 @@
     "brand": "PATHSapp",
     "tagline": "Advocacy y lobby en hemofilia",
     "home": "Labores de advocacy",
+    "workshop": "Taller",
     "indicators": "Indicadores de éxito",
     "contacts": "Directorio",
     "calendar": "Calendario",
@@ -136,7 +137,10 @@
     "summaryTotal": "Labores totales",
     "summaryAchieved": "Conseguidas",
     "summaryInProgress": "En curso",
-    "summaryOverdue": "Con plazo vencido"
+    "summaryOverdue": "Con plazo vencido",
+    "workshopBannerTitle": "Modo taller: 15 retos para aprender haciendo",
+    "workshopBannerBody": "Cinco retos de nivel principiante, cinco intermedios y cinco avanzados, todos se resuelven dentro de esta misma app.",
+    "workshopBannerCta": "Ver los retos"
   },
   "GoalForm": {
     "titleNew": "Nueva labor de advocacy",
@@ -602,6 +606,123 @@
     "noAchieved": "Todavía no hay logros publicados.",
     "noInProgress": "No hay labores en curso en este momento.",
     "internalLink": "Acceder al panel interno"
+  },
+  "Workshop": {
+    "title": "Retos del taller",
+    "subtitle": "Quince retos prácticos para aprender PATHSapp haciendo, no mirando.",
+    "howItWorks": "Cada reto se hace dentro de la propia aplicación. Marca la casilla cuando lo consigas: tu avance se guarda solo en este navegador, así que cada persona lleva su propio ritmo.",
+    "progress": "{done} de {total} retos completados",
+    "reset": "Reiniciar mi avance",
+    "task": "Qué hacer",
+    "doneWhen": "Lo has conseguido cuando",
+    "why": "Por qué importa",
+    "backToApp": "Empezar a trastear con la app",
+    "levels": {
+      "BEGINNER": {
+        "name": "Principiante",
+        "hint": "Lo básico: crear, vincular y ver el resultado. Sin prisa."
+      },
+      "INTERMEDIATE": {
+        "name": "Intermedio",
+        "hint": "Aquí se cruzan datos entre páginas. Fíjate en cómo una cosa cambia otra."
+      },
+      "ADVANCED": {
+        "name": "Avanzado",
+        "hint": "Varios pasos y algo que razonar. No hay un único camino correcto."
+      }
+    },
+    "challenges": {
+      "b1": {
+        "title": "Tu primera labor de advocacy",
+        "task": "Crea una labor de tipo «Logro (conseguir)» con nombre, persona responsable, área temática y una fecha objetivo dentro de este año.",
+        "doneWhen": "Aparece en el tablero de inicio con su etiqueta «Logro (conseguir)» y el contador «Labores totales» ha subido en uno.",
+        "why": "La app distingue entre hacer cosas (Acción) y conseguir cosas (Logro). Elegir bien el tipo cambia cómo se mide después."
+      },
+      "b2": {
+        "title": "El directorio no es una libreta suelta",
+        "task": "Añade un contacto nuevo al directorio y vincúlalo a tu labor como «De quien depende». Después vincula ese mismo contacto a una segunda labor distinta.",
+        "doneWhen": "El contacto aparece en las dos labores, y al abrir su ficha en el directorio ves ambas labores listadas.",
+        "why": "Los contactos se comparten entre labores en vez de duplicarse. Un ministerio es el mismo ministerio en todas tus peticiones."
+      },
+      "b3": {
+        "title": "Del objetivo a las acciones concretas",
+        "task": "Añade tres acciones a tu labor: una carta, una reunión y una tercera marcada como NO planificada. Marca la carta como «Hecho».",
+        "doneWhen": "La barra de progreso indica 1 de 3 acciones, y el filtro «No planificadas» muestra solo una.",
+        "why": "Buena parte del lobby real es reactivo. Separar lo planificado de lo que surgió te deja ver cuánto de tu trabajo fue improvisado."
+      },
+      "b4": {
+        "title": "Medir, no solo hacer",
+        "task": "Crea un indicador ligado a tu labor con un valor objetivo y un valor actual (por ejemplo, 30 de 100 pacientes con acceso).",
+        "doneWhen": "El indicador sale en la página de Indicadores con su porcentaje ya calculado y su barra de progreso.",
+        "why": "Sin indicadores solo puedes contar reuniones. Con indicadores puedes contar resultados."
+      },
+      "b5": {
+        "title": "Lo que ve quien no es de casa",
+        "task": "Marca una de tus labores como «Conseguido» y entra en la Vista pública desde el menú superior.",
+        "doneWhen": "La labor aparece bajo «Logros conseguidos», y compruebas que ahí no se ve ningún contacto, nota interna ni dato de contacto.",
+        "why": "La vista pública sirve para rendir cuentas sin exponer con quién negocias. Conviene saber exactamente qué se publica antes de compartir el enlace."
+      },
+      "i1": {
+        "title": "El termómetro de una relación",
+        "task": "En una labor, marca la postura de un contacto como «Escéptico». Guarda, y después cámbiala a «Aliado». Abre el historial de cambios.",
+        "doneWhen": "El historial muestra los dos cambios de postura con sus fechas, no solo el último.",
+        "why": "Que alguien pase de escéptico a aliado ES el resultado del trabajo de incidencia. Si solo guardas el estado actual, pierdes la prueba de que lo conseguiste."
+      },
+      "i2": {
+        "title": "Brief de reunión en un clic",
+        "task": "Abre la ficha de un contacto, registra dos interacciones (por ejemplo una llamada y una reunión) y descarga su brief en PDF.",
+        "doneWhen": "El PDF se descarga e incluye las interacciones registradas, las labores vinculadas y la postura del contacto.",
+        "why": "Es el reto más útil del día a día: vas de camino a una reunión y necesitas recordar en dos minutos todo el historial con esa persona."
+      },
+      "i3": {
+        "title": "Lo que nos prometieron",
+        "task": "En la ficha de un contacto, registra un compromiso que esa persona te hizo, con fecha de seguimiento futura. Después márcalo como «Cumplido».",
+        "doneWhen": "El compromiso cambia de «Pendiente» a «Cumplido» y su fecha de seguimiento aparece destacada mientras está pendiente.",
+        "why": "Un compromiso no es una acción tuya: es una promesa ajena. Registrarlo aparte es lo que te permite reclamarlo seis meses después."
+      },
+      "i4": {
+        "title": "La ventana que no se puede perder",
+        "task": "Crea dos plazos de tipo «Consulta pública»: uno que venza dentro de los próximos 30 días y otro con fecha ya pasada.",
+        "doneWhen": "Las tarjetas de resumen muestran uno en «Vencen en 30 días», y el ya pasado sale con su fecha en rojo.",
+        "why": "Los plazos no los pones tú, los abre el mundo exterior. Perder una consulta pública puede costar un año entero de trabajo."
+      },
+      "i5": {
+        "title": "Priorizar cuando no llega el tiempo",
+        "task": "Ve a Triaje y puntúa el esfuerzo y el impacto (de 1 a 5) de al menos cuatro labores activas, buscando que caiga una en cada cuadrante.",
+        "doneWhen": "Los cuatro cuadrantes de la matriz tienen al menos una labor, y ninguna se queda en «Todavía sin puntuar».",
+        "why": "Toda organización pequeña tiene más frentes que manos. Ver cuáles son victorias rápidas y cuáles son poco agradecidas cambia la conversación de la junta directiva."
+      },
+      "a1": {
+        "title": "La campaña que se repite cada año",
+        "task": "Elige una labor con acciones y contactos y duplícala como plantilla con un nombre nuevo. Después compara el original con la copia.",
+        "doneWhen": "Puedes nombrar al menos tres cosas que se copiaron y tres que se reiniciaron a propósito.",
+        "why": "El Día Mundial de la Hemofilia llega cada año. Reutilizar el guion en vez de reinventarlo es la diferencia entre planificar y apagar fuegos."
+      },
+      "a2": {
+        "title": "La historia de cómo se consiguió",
+        "task": "Coge una labor, ponle acciones con fechas distintas y al menos un cambio de postura de un contacto. Márcala como «Conseguido». Lee la sección que aparece. Después vuelve a ponerla «En curso».",
+        "doneWhen": "Aparece «Cómo se consiguió» con los eventos en orden cronológico; al reabrir la labor, la sección desaparece.",
+        "why": "Cuando un financiador o un socio pregunta «¿y esto cómo lo lograsteis?», la respuesta no es una fecha: es la secuencia. La app la reconstruye sola."
+      },
+      "a3": {
+        "title": "El cargo sobrevive a la persona",
+        "task": "Crea un cargo (por ejemplo «Secretaría de Salud»), asígnale un titular con fecha de inicio, y después asigna un sucesor con una fecha posterior. Por último, edita al titular actual para registrar que se fue sin sucesor todavía.",
+        "doneWhen": "El historial de sucesión muestra el rango de fechas del primero, y el cargo queda marcado como «Vacante».",
+        "why": "Tras unas elecciones cambia la persona, pero tu interlocutor sigue siendo el cargo. Guardar quién estuvo antes te da contexto que un directorio normal borra."
+      },
+      "a4": {
+        "title": "La petición que evoluciona y la carta que se firma en grupo",
+        "task": "Crea una petición con dos versiones: la primera pidiendo algo limitado, la segunda ampliándola y con el texto también en inglés. Añádele una evidencia. Después crea una carta conjunta con tres firmantes, cada uno en un estado distinto.",
+        "doneWhen": "La versión antigua sigue consultable en «Versiones anteriores», y el resumen de firmantes cuenta uno invitado, uno confirmado y uno firmado.",
+        "why": "Tu petición formal se irá afinando durante años y necesitas poder citar la versión exacta que enviaste. Y en las cartas conjuntas, la mitad del trabajo es perseguir firmas."
+      },
+      "a5": {
+        "title": "El calendario a años vista, y rendir cuentas",
+        "task": "En el Calendario, crea un hito estratégico recurrente (un día de sensibilización). Navega con las flechas hasta ese mismo día del año siguiente. Después ve a Informes y descarga el PDF y el Excel.",
+        "doneWhen": "El hito aparece proyectado también en el otro año, no figura como «Vencido», y los dos archivos se descargan correctamente.",
+        "why": "Las fechas que de verdad marcan tu estrategia (presupuestos, elecciones, días mundiales) se repiten. Y todo esto no sirve de nada si no puedes sacarlo en un informe para la asamblea."
+      }
+    }
   },
   "Footer": {
     "installHint": "Consejo: añade PATHSapp a la pantalla de inicio de tu móvil para usarla como una app.",

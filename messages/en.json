@@ -3,6 +3,7 @@
     "brand": "PATHSapp",
     "tagline": "Hemophilia advocacy & lobby",
     "home": "Advocacy goals",
+    "workshop": "Workshop",
     "indicators": "Success indicators",
     "contacts": "Directory",
     "calendar": "Calendar",
@@ -136,7 +137,10 @@
     "summaryTotal": "Total goals",
     "summaryAchieved": "Achieved",
     "summaryInProgress": "In progress",
-    "summaryOverdue": "Past due date"
+    "summaryOverdue": "Past due date",
+    "workshopBannerTitle": "Workshop mode: 15 challenges to learn by doing",
+    "workshopBannerBody": "Five beginner, five intermediate and five advanced challenges, all completed inside this app.",
+    "workshopBannerCta": "See the challenges"
   },
   "GoalForm": {
     "titleNew": "New advocacy goal",
@@ -602,6 +606,123 @@
     "reachHint": "Estimated audience, if known",
     "goal": "Related goal",
     "goalNone": "None"
+  },
+  "Workshop": {
+    "title": "Workshop challenges",
+    "subtitle": "Fifteen hands-on challenges to learn PATHSapp by doing, not by watching.",
+    "howItWorks": "Every challenge is completed inside the app itself. Tick the box when you get it: your progress is saved only in this browser, so everyone moves at their own pace.",
+    "progress": "{done} of {total} challenges completed",
+    "reset": "Reset my progress",
+    "task": "What to do",
+    "doneWhen": "You've got it when",
+    "why": "Why it matters",
+    "backToApp": "Go and start playing with the app",
+    "levels": {
+      "BEGINNER": {
+        "name": "Beginner",
+        "hint": "The basics: create, link, and see the result. Take your time."
+      },
+      "INTERMEDIATE": {
+        "name": "Intermediate",
+        "hint": "Here data starts crossing between pages. Watch how one thing changes another."
+      },
+      "ADVANCED": {
+        "name": "Advanced",
+        "hint": "Several steps and something to reason about. There's no single right path."
+      }
+    },
+    "challenges": {
+      "b1": {
+        "title": "Your first advocacy goal",
+        "task": "Create a goal of type “Outcome (getting)” with a name, an owner, a topic area, and a target date within this year.",
+        "doneWhen": "It shows on the home board with its “Outcome (getting)” tag, and the “Total goals” counter has gone up by one.",
+        "why": "The app separates doing things (Action) from getting things (Outcome). Picking the right type changes how it gets measured later."
+      },
+      "b2": {
+        "title": "The directory is not a loose notebook",
+        "task": "Add a new contact to the directory and link them to your goal as “Depends on them”. Then link that same contact to a second, different goal.",
+        "doneWhen": "The contact appears on both goals, and opening their directory profile shows both goals listed.",
+        "why": "Contacts are shared across goals instead of duplicated. A ministry is the same ministry across every ask you make."
+      },
+      "b3": {
+        "title": "From the objective to concrete actions",
+        "task": "Add three actions to your goal: a letter, a meeting, and a third one marked as UNPLANNED. Mark the letter as “Done”.",
+        "doneWhen": "The progress bar reads 1 of 3 actions, and the “Unplanned” filter shows only one.",
+        "why": "A good share of real lobbying is reactive. Separating planned from what just came up lets you see how much of your work was improvised."
+      },
+      "b4": {
+        "title": "Measure, don't just do",
+        "task": "Create an indicator linked to your goal with a target value and a current value (for example, 30 out of 100 patients with access).",
+        "doneWhen": "The indicator shows on the Indicators page with its percentage already calculated and its progress bar.",
+        "why": "Without indicators you can only count meetings. With indicators you can count results."
+      },
+      "b5": {
+        "title": "What outsiders actually see",
+        "task": "Mark one of your goals as “Achieved” and open the Public view from the top menu.",
+        "doneWhen": "The goal shows under “Achievements”, and you've confirmed no contact, internal note, or contact detail is visible there.",
+        "why": "The public view exists to show accountability without exposing who you negotiate with. Worth knowing exactly what gets published before you share the link."
+      },
+      "i1": {
+        "title": "The thermometer of a relationship",
+        "task": "On a goal, set a contact's stance to “Skeptical”. Save, then change it to “Champion”. Open the change history.",
+        "doneWhen": "The history shows both stance changes with their dates, not just the latest one.",
+        "why": "Someone moving from skeptical to champion IS the result of advocacy work. If you only store the current state, you lose the proof that you achieved it."
+      },
+      "i2": {
+        "title": "Meeting brief in one click",
+        "task": "Open a contact's profile, log two interactions (say a call and a meeting), and download their brief as a PDF.",
+        "doneWhen": "The PDF downloads and includes the logged interactions, the linked goals, and the contact's stance.",
+        "why": "This is the most useful challenge day to day: you're on your way to a meeting and need to recall the whole history with that person in two minutes."
+      },
+      "i3": {
+        "title": "What they promised us",
+        "task": "On a contact's profile, log a commitment that person made to you, with a follow-up date in the future. Then mark it as “Fulfilled”.",
+        "doneWhen": "The commitment goes from “Pending” to “Fulfilled”, and its follow-up date shows highlighted while it's still pending.",
+        "why": "A commitment isn't an action of yours: it's someone else's promise. Logging it separately is what lets you chase it up six months later."
+      },
+      "i4": {
+        "title": "The window you can't afford to miss",
+        "task": "Create two deadlines of type “Public consultation”: one falling within the next 30 days, and another with a date already past.",
+        "doneWhen": "The summary cards show one under “Due in 30 days”, and the past one appears with its date in red.",
+        "why": "Deadlines aren't set by you, they're opened by the outside world. Missing a public consultation can cost a whole year of work."
+      },
+      "i5": {
+        "title": "Prioritizing when there isn't enough time",
+        "task": "Go to Triage and score effort and impact (1 to 5) for at least four active goals, aiming to land one in each quadrant.",
+        "doneWhen": "All four quadrants of the matrix hold at least one goal, and none are left under “Not scored yet”.",
+        "why": "Every small organization has more fronts than hands. Seeing which are quick wins and which are thankless changes the board meeting conversation."
+      },
+      "a1": {
+        "title": "The campaign that repeats every year",
+        "task": "Pick a goal that has actions and contacts and duplicate it as a template with a new name. Then compare the original with the copy.",
+        "doneWhen": "You can name at least three things that were copied and three that were deliberately reset.",
+        "why": "World Hemophilia Day comes round every year. Reusing the playbook instead of reinventing it is the difference between planning and firefighting."
+      },
+      "a2": {
+        "title": "The story of how it was won",
+        "task": "Take a goal, give it actions with different dates and at least one contact stance change. Mark it as “Achieved”. Read the section that appears. Then set it back to “In progress”.",
+        "doneWhen": "“How it happened” appears with the events in chronological order; reopening the goal makes the section disappear.",
+        "why": "When a funder or a partner asks “so how did you pull that off?”, the answer isn't a date: it's the sequence. The app reconstructs it for you."
+      },
+      "a3": {
+        "title": "The office outlives the person",
+        "task": "Create a position (say “Secretary of Health”), assign a holder with a start date, then assign a successor with a later date. Finally, edit the current holder to record that they left with no successor yet.",
+        "doneWhen": "The succession history shows the first holder's date range, and the position is marked “Vacant”.",
+        "why": "After an election the person changes, but your counterpart is still the office. Keeping who held it before gives you context a normal directory erases."
+      },
+      "a4": {
+        "title": "The ask that evolves and the letter signed as a group",
+        "task": "Create a petition with two versions: the first asking for something limited, the second broadening it and with the text in English too. Add one piece of evidence. Then create a joint letter with three co-signers, each in a different status.",
+        "doneWhen": "The old version is still readable under “Earlier versions”, and the co-signer summary counts one invited, one confirmed, and one signed.",
+        "why": "Your formal ask will keep getting refined over years and you need to cite the exact version you sent. And with joint letters, half the work is chasing signatures."
+      },
+      "a5": {
+        "title": "The calendar years ahead, and showing your work",
+        "task": "On the Calendar, create a recurring strategic milestone (an awareness day). Use the arrows to navigate to that same day next year. Then go to Reports and download both the PDF and the Excel.",
+        "doneWhen": "The milestone also appears projected in the other year, never shows as “Overdue”, and both files download correctly.",
+        "why": "The dates that really shape your strategy (budgets, elections, world days) repeat. And none of this counts if you can't get it out as a report for the general assembly."
+      }
+    }
   },
   "Footer": {
     "installHint": "Tip: add PATHSapp to your phone's home screen to use it like an app.",

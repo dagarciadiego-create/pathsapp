@@ -2,8 +2,8 @@
 
 import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
-import { Plus, Search } from "lucide-react";
-import { useRouter } from "@/i18n/navigation";
+import { Plus, Search, GraduationCap, ArrowRight } from "lucide-react";
+import { Link, useRouter } from "@/i18n/navigation";
 import { GOAL_KINDS, GOAL_STATUSES } from "@/lib/constants";
 import { isGoalOverdue } from "@/lib/goal-helpers";
 import { api } from "@/lib/api-client";
@@ -73,6 +73,30 @@ export function GoalsBoard({ initialGoals }: { initialGoals: GoalListItem[] }) {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6">
+      {/* Workshop entry point. This app has no login screen, so the home
+          board is the first thing a workshop participant sees — the banner
+          is what makes the challenges findable from a cold start. */}
+      <Link
+        href="/workshop"
+        className="mb-6 flex flex-wrap items-center gap-3 rounded-xl border border-teal-200 bg-teal-50 p-4 transition-colors hover:bg-teal-100 dark:border-teal-900/60 dark:bg-teal-900/30 dark:hover:bg-teal-900/50"
+      >
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-teal-600 text-white">
+          <GraduationCap className="h-5 w-5" aria-hidden />
+        </span>
+        <span className="min-w-0 flex-1">
+          <span className="block font-semibold text-teal-900 dark:text-teal-100">
+            {t("workshopBannerTitle")}
+          </span>
+          <span className="block text-sm text-teal-800/80 dark:text-teal-200/80">
+            {t("workshopBannerBody")}
+          </span>
+        </span>
+        <span className="flex shrink-0 items-center gap-1.5 text-sm font-semibold text-teal-800 dark:text-teal-200">
+          {t("workshopBannerCta")}
+          <ArrowRight className="h-4 w-4" aria-hidden />
+        </span>
+      </Link>
+
       <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">{t("title")}</h1>
