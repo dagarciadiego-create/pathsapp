@@ -184,15 +184,19 @@ export function WorkshopPage() {
                                 {t(`challenges.${id}.doneWhen`)}
                               </dd>
                             </div>
-                            <div>
-                              <dt className="text-xs font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-500">
-                                {t("why")}
-                              </dt>
-                              <dd className="mt-0.5 italic text-slate-500 dark:text-slate-400">
-                                {t(`challenges.${id}.why`)}
-                              </dd>
-                            </div>
                           </dl>
+
+                          {/* The two blocks above are the advocacy problem;
+                              this one is tool guidance, so it's set apart
+                              rather than reading as a third equal field. */}
+                          <div className="mt-3 rounded-lg bg-slate-50 px-3 py-2 dark:bg-slate-800/60">
+                            <p className="text-xs font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-500">
+                              {t("why")}
+                            </p>
+                            <p className="mt-0.5 text-sm text-slate-600 dark:text-slate-400">
+                              {t(`challenges.${id}.why`)}
+                            </p>
+                          </div>
                         </div>
 
                         <input

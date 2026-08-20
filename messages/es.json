@@ -138,8 +138,8 @@
     "summaryAchieved": "Conseguidas",
     "summaryInProgress": "En curso",
     "summaryOverdue": "Con plazo vencido",
-    "workshopBannerTitle": "Modo taller: 15 retos para aprender haciendo",
-    "workshopBannerBody": "Cinco retos de nivel principiante, cinco intermedios y cinco avanzados, todos se resuelven dentro de esta misma app.",
+    "workshopBannerTitle": "Taller: 15 retos de incidencia política",
+    "workshopBannerBody": "Retos reales de advocacy y lobby en tres niveles de complejidad, para planificarlos con esta app.",
     "workshopBannerCta": "Ver los retos"
   },
   "GoalForm": {
@@ -608,119 +608,119 @@
     "internalLink": "Acceder al panel interno"
   },
   "Workshop": {
-    "title": "Retos del taller",
-    "subtitle": "Quince retos prácticos para aprender PATHSapp haciendo, no mirando.",
-    "howItWorks": "Cada reto se hace dentro de la propia aplicación. Marca la casilla cuando lo consigas: tu avance se guarda solo en este navegador, así que cada persona lleva su propio ritmo.",
-    "progress": "{done} de {total} retos completados",
+    "title": "Retos de incidencia política",
+    "subtitle": "Quince retos reales de advocacy y lobby, de menor a mayor complejidad, para trabajarlos en grupo.",
+    "howItWorks": "Cada reto es un problema de incidencia, no un ejercicio de la aplicación. Elegid uno, decidid la estrategia, y usad PATHSapp para estructurarla: quién decide, quién ayuda, qué acciones, qué plazos y cómo medir si se consiguió. Marca la casilla cuando tu grupo lo haya trabajado.",
+    "progress": "{done} de {total} retos trabajados",
     "reset": "Reiniciar mi avance",
-    "task": "Qué hacer",
-    "doneWhen": "Lo has conseguido cuando",
-    "why": "Por qué importa",
-    "backToApp": "Empezar a trastear con la app",
+    "task": "El escenario",
+    "doneWhen": "Por qué cuesta",
+    "why": "Llévalo a la app",
+    "backToApp": "Abrir la app para trabajarlo",
     "levels": {
       "BEGINNER": {
-        "name": "Principiante",
-        "hint": "Lo básico: crear, vincular y ver el resultado. Sin prisa."
+        "name": "Complejidad baja",
+        "hint": "Un solo interlocutor, ámbito local, ciclo corto. Se puede conseguir en semanas o pocos meses y el resultado es fácil de verificar."
       },
       "INTERMEDIATE": {
-        "name": "Intermedio",
-        "hint": "Aquí se cruzan datos entre páginas. Fíjate en cómo una cosa cambia otra."
+        "name": "Complejidad media",
+        "hint": "Varios actores con intereses distintos, ámbito provincial o nacional sectorial. Hace falta evidencia técnica, aliados y un ciclo de uno o dos años."
       },
       "ADVANCED": {
-        "name": "Avanzado",
-        "hint": "Varios pasos y algo que razonar. No hay un único camino correcto."
+        "name": "Complejidad alta",
+        "hint": "Resistencia activa, dinero público en juego, ámbito nacional o regional. Requiere coalición, varias vías en paralelo y sobrevivir a cambios de gobierno."
       }
     },
     "challenges": {
       "b1": {
-        "title": "Tu primera labor de advocacy",
-        "task": "Crea una labor de tipo «Logro (conseguir)» con nombre, persona responsable, área temática y una fecha objetivo dentro de este año.",
-        "doneWhen": "Aparece en el tablero de inicio con su etiqueta «Logro (conseguir)» y el contador «Labores totales» ha subido en uno.",
-        "why": "La app distingue entre hacer cosas (Acción) y conseguir cosas (Logro). Elegir bien el tipo cambia cómo se mide después."
+        "title": "De conocido informal a interlocutor reconocido",
+        "task": "Tu asociación habla con el jefe del servicio de hematología del hospital de referencia solo cuando hay una urgencia, por WhatsApp y a título personal. El reto es conseguir una primera reunión formal, con acta o correo de constancia, que deje establecido un canal estable de interlocución.",
+        "doneWhen": "No hay oposición, pero tampoco urgencia para la otra parte: nadie os dice que no, simplemente no os responden. El reto real es la persistencia y no quemar la relación por insistir mal.",
+        "why": "Una labor de tipo Acción. El jefe de servicio es «de quien depende». Registra cada intento (llamada, correo, encuentro) para ver cuántos hicieron falta: ese dato te sirve para la próxima."
       },
       "b2": {
-        "title": "El directorio no es una libreta suelta",
-        "task": "Añade un contacto nuevo al directorio y vincúlalo a tu labor como «De quien depende». Después vincula ese mismo contacto a una segunda labor distinta.",
-        "doneWhen": "El contacto aparece en las dos labores, y al abrir su ficha en el directorio ves ambas labores listadas.",
-        "why": "Los contactos se comparten entre labores en vez de duplicarse. Un ministerio es el mismo ministerio en todas tus peticiones."
+        "title": "Que se sepa cuándo y cómo se recoge el factor",
+        "task": "Las familias no saben con certeza el horario del banco de factor ni a quién llamar si se agota fuera de horario, y la información circula de boca en boca. El reto es conseguir que el hospital publique esa información de forma oficial y accesible.",
+        "doneWhen": "Parece trivial, pero toca responsabilidades difusas: farmacia dice que es del servicio, el servicio dice que es de comunicación. Hay que encontrar quién firma.",
+        "why": "Aquí se ve por qué existen los cargos y no solo las personas: irás rebotando entre áreas hasta dar con la que tiene la competencia. Registra cada derivación."
       },
       "b3": {
-        "title": "Del objetivo a las acciones concretas",
-        "task": "Añade tres acciones a tu labor: una carta, una reunión y una tercera marcada como NO planificada. Marca la carta como «Hecho».",
-        "doneWhen": "La barra de progreso indica 1 de 3 acciones, y el filtro «No planificadas» muestra solo una.",
-        "why": "Buena parte del lobby real es reactivo. Separar lo planificado de lo que surgió te deja ver cuánto de tu trabajo fue improvisado."
+        "title": "Cuántos somos, según el Estado",
+        "task": "No existe una cifra oficial de personas con hemofilia en tu jurisdicción, o la que existe es visiblemente menor que la de vuestro propio padrón. El reto es conseguir por escrito el dato que maneja la autoridad sanitaria, aunque sea malo.",
+        "doneWhen": "Pedir un dato es fácil; conseguirlo por escrito es lo que cuesta. Y si sale muy bajo, tienes que decidir si lo denuncias o lo usas discretamente como palanca.",
+        "why": "El dato oficial es tu línea de base: guárdalo como indicador. La brecha entre su cifra y la tuya es el argumento de casi todo lo que vendrá después."
       },
       "b4": {
-        "title": "Medir, no solo hacer",
-        "task": "Crea un indicador ligado a tu labor con un valor objetivo y un valor actual (por ejemplo, 30 de 100 pacientes con acceso).",
-        "doneWhen": "El indicador sale en la página de Indicadores con su porcentaje ya calculado y su barra de progreso.",
-        "why": "Sin indicadores solo puedes contar reuniones. Con indicadores puedes contar resultados."
+        "title": "Que el 17 de abril exista para la autoridad",
+        "task": "El Día Mundial de la Hemofilia lo conmemora vuestra asociación en solitario. El reto es que la autoridad sanitaria local lo asuma: un comunicado oficial, iluminar un edificio público, o una actividad conjunta.",
+        "doneWhen": "Es un reto de bajo coste político, así que suele salir. La dificultad está en el calendario: si lo pides en marzo llegas tarde a sus procesos internos.",
+        "why": "Ideal para el calendario estratégico: es una fecha recurrente. Y para duplicar la labor como plantilla, porque vas a repetirla cada año."
       },
       "b5": {
-        "title": "Lo que ve quien no es de casa",
-        "task": "Marca una de tus labores como «Conseguido» y entra en la Vista pública desde el menú superior.",
-        "doneWhen": "La labor aparece bajo «Logros conseguidos», y compruebas que ahí no se ve ningún contacto, nota interna ni dato de contacto.",
-        "why": "La vista pública sirve para rendir cuentas sin exponer con quién negocias. Conviene saber exactamente qué se publica antes de compartir el enlace."
+        "title": "Una silla en una mesa que ya existe",
+        "task": "Hay un consejo consultivo de salud, una mesa de participación o un comité de usuarios ya constituido, y nadie que represente a las coagulopatías. El reto es conseguir esa plaza, aunque sea como invitado sin voto.",
+        "doneWhen": "Casi nunca hay una convocatoria pública clara: se entra por contacto. Y una vez dentro, hay que sostener la asistencia con gente voluntaria.",
+        "why": "Un caso claro de «puertas de entrada»: registra qué contacto puede presentarte a quién decide la composición de esa mesa."
       },
       "i1": {
-        "title": "El termómetro de una relación",
-        "task": "En una labor, marca la postura de un contacto como «Escéptico». Guarda, y después cámbiala a «Aliado». Abre el historial de cambios.",
-        "doneWhen": "El historial muestra los dos cambios de postura con sus fechas, no solo el último.",
-        "why": "Que alguien pase de escéptico a aliado ES el resultado del trabajo de incidencia. Si solo guardas el estado actual, pierdes la prueba de que lo conseguiste."
+        "title": "Que no se vuelva a cortar el suministro",
+        "task": "El año pasado hubo dos episodios de desabastecimiento de factor: uno de tres semanas y otro de mes y medio. El reto es conseguir un compromiso formal de stock mínimo y un mecanismo de alerta temprana que os avise antes de que se agote, no después.",
+        "doneWhen": "Nadie defiende el desabastecimiento, pero la causa se reparte entre compras, presupuesto, aduanas y el proveedor. Cada área te derivará a la siguiente, y hay que documentar el daño clínico sin exponer historias personales.",
+        "why": "Un reto con muchos interlocutores: usa la postura de cada uno para ver dónde tienes aliados y dónde no. Registra los compromisos que te hagan, con fecha de seguimiento, porque este es el tipo de promesa que se olvida."
       },
       "i2": {
-        "title": "Brief de reunión en un clic",
-        "task": "Abre la ficha de un contacto, registra dos interacciones (por ejemplo una llamada y una reunión) y descarga su brief en PDF.",
-        "doneWhen": "El PDF se descarga e incluye las interacciones registradas, las labores vinculadas y la postura del contacto.",
-        "why": "Es el reto más útil del día a día: vas de camino a una reunión y necesitas recordar en dos minutos todo el historial con esa persona."
+        "title": "Un registro que sirva para planificar",
+        "task": "No hay registro nacional de coagulopatías, o existe en la norma pero sin presupuesto ni personal. El reto es conseguir que se cree o se reactive, con partida asignada y responsable con nombre.",
+        "doneWhen": "Todo el mundo está de acuerdo en abstracto y nadie quiere pagarlo. Además choca con protección de datos, y hay que entrar en el ciclo presupuestario del año siguiente, no del actual.",
+        "why": "Aquí el calendario estratégico manda: si no entras antes de que se cierre el anteproyecto de presupuesto, pierdes un año. Marca esa ventana."
       },
       "i3": {
-        "title": "Lo que nos prometieron",
-        "task": "En la ficha de un contacto, registra un compromiso que esa persona te hizo, con fecha de seguimiento futura. Después márcalo como «Cumplido».",
-        "doneWhen": "El compromiso cambia de «Pendiente» a «Cumplido» y su fecha de seguimiento aparece destacada mientras está pendiente.",
-        "why": "Un compromiso no es una acción tuya: es una promesa ajena. Registrarlo aparte es lo que te permite reclamarlo seis meses después."
+        "title": "De tratar la hemorragia a evitarla",
+        "task": "El protocolo vigente contempla tratamiento a demanda; la profilaxis se aplica de forma discrecional según el centro y el médico. El reto es que la profilaxis quede reconocida en la guía o protocolo clínico nacional.",
+        "doneWhen": "Es una discusión técnica donde tu asociación no es la voz experta: necesitas que la sociedad científica lidere. Y el argumento de coste inmediato juega en contra, aunque el de coste a largo plazo juegue a favor.",
+        "why": "El reto de las peticiones versionadas: tu texto irá cambiando según lo que acepte la sociedad científica. Y de las cartas conjuntas, porque sola no lo vas a conseguir."
       },
       "i4": {
-        "title": "La ventana que no se puede perder",
-        "task": "Crea dos plazos de tipo «Consulta pública»: uno que venza dentro de los próximos 30 días y otro con fecha ya pasada.",
-        "doneWhen": "Las tarjetas de resumen muestran uno en «Vencen en 30 días», y el ya pasado sale con su fecha en rojo.",
-        "why": "Los plazos no los pones tú, los abre el mundo exterior. Perder una consulta pública puede costar un año entero de trabajo."
+        "title": "Centros de tratamiento integral, no atención dispersa",
+        "task": "Las personas con hemofilia se atienden en cualquier hospital, sin hematólogo con experiencia ni fisioterapia ni odontología coordinadas. El reto es que se reconozcan formalmente centros de tratamiento integral acreditados.",
+        "doneWhen": "Concentrar la atención significa que algunos hospitales pierden pacientes y presupuesto: ahí aparece la resistencia real, y viene de dentro del sistema. Además, a las familias que viven lejos les empeora el acceso si no se resuelve el traslado.",
+        "why": "Fíjate en que este reto genera oposición: usa la postura «opuesto» sin miedo, y registra el historial cuando alguien cambie de posición."
       },
       "i5": {
-        "title": "Priorizar cuando no llega el tiempo",
-        "task": "Ve a Triaje y puntúa el esfuerzo y el impacto (de 1 a 5) de al menos cuatro labores activas, buscando que caiga una en cada cuadrante.",
-        "doneWhen": "Los cuatro cuadrantes de la matriz tienen al menos una labor, y ninguna se queda en «Todavía sin puntuar».",
-        "why": "Toda organización pequeña tiene más frentes que manos. Ver cuáles son victorias rápidas y cuáles son poco agradecidas cambia la conversación de la junta directiva."
+        "title": "Que vivir lejos no cueste el tratamiento",
+        "task": "Las familias del interior gastan en pasajes y alojamiento más de lo que pueden para llegar al centro de referencia, y algunas simplemente dejan de ir. El reto es conseguir cobertura de traslado y estadía.",
+        "doneWhen": "No es un reto sanitario, es de asistencia social o de transporte, así que tu interlocutor habitual no es competente. Hay que abrir una puerta nueva en un ministerio con el que no tienes relación.",
+        "why": "Un caso donde el grafo de contactos vale más que la lista: busca quién de tu directorio te puede presentar a alguien en el área social."
       },
       "a1": {
-        "title": "La campaña que se repite cada año",
-        "task": "Elige una labor con acciones y contactos y duplícala como plantilla con un nombre nuevo. Después compara el original con la copia.",
-        "doneWhen": "Puedes nombrar al menos tres cosas que se copiaron y tres que se reiniciaron a propósito.",
-        "why": "El Día Mundial de la Hemofilia llega cada año. Reutilizar el guion en vez de reinventarlo es la diferencia entre planificar y apagar fuegos."
+        "title": "Entrar en el listado nacional de medicamentos",
+        "task": "Existe un tratamiento de vida media prolongada o una terapia no-factor disponible en el país, pero no está en el listado nacional de medicamentos esenciales (cuadro básico, formulario terapéutico, PMO o su equivalente). El reto es conseguir su inclusión con cobertura pública.",
+        "doneWhen": "Es el reto más duro y más largo: hay que pasar una evaluación de tecnologías sanitarias con criterios de coste-efectividad, y aun aprobándola puede quedar frenada por el veto presupuestario. Se mide en años, no en meses, y el precio lo fija alguien que no está en la mesa.",
+        "why": "Aquí necesitas todo: petición versionada, evidencia clínica y económica adjunta, mapa de posturas del comité evaluador, y la cadena de resultado para poder contar después cómo se logró."
       },
       "a2": {
-        "title": "La historia de cómo se consiguió",
-        "task": "Coge una labor, ponle acciones con fechas distintas y al menos un cambio de postura de un contacto. Márcala como «Conseguido». Lee la sección que aparece. Después vuelve a ponerla «En curso».",
-        "doneWhen": "Aparece «Cómo se consiguió» con los eventos en orden cronológico; al reabrir la labor, la sección desaparece.",
-        "why": "Cuando un financiador o un socio pregunta «¿y esto cómo lo lograsteis?», la respuesta no es una fecha: es la secuencia. La app la reconstruye sola."
+        "title": "Revertir un recorte ya decidido",
+        "task": "La autoridad sanitaria acaba de reducir una cobertura que ya teníais: menos unidades por paciente, o exclusión de un grupo de edad. El reto es que se reponga.",
+        "doneWhen": "Estás jugando a la defensiva y con el reloj en contra. Hay que abrir tres vías a la vez (administrativa, judicial vía amparo o tutela, y pública en prensa) sabiendo que la vía pública puede cerrar la puerta de la negociación. Decidir cuánto ruido hacer es la decisión estratégica del reto.",
+        "why": "Un reto de plazos: el recurso administrativo tiene fecha límite. Y de cobertura mediática: registra cada aparición y su tono, porque tendrás que justificar la estrategia después."
       },
       "a3": {
-        "title": "El cargo sobrevive a la persona",
-        "task": "Crea un cargo (por ejemplo «Secretaría de Salud»), asígnale un titular con fecha de inicio, y después asigna un sucesor con una fecha posterior. Por último, edita al titular actual para registrar que se fue sin sucesor todavía.",
-        "doneWhen": "El historial de sucesión muestra el rango de fechas del primero, y el cargo queda marcado como «Vacante».",
-        "why": "Tras unas elecciones cambia la persona, pero tu interlocutor sigue siendo el cargo. Guardar quién estuvo antes te da contexto que un directorio normal borra."
+        "title": "Comprar juntos para pagar menos",
+        "task": "Vuestro país compra factor en volúmenes pequeños y paga un precio muy superior al de países vecinos. El reto es impulsar una compra conjunta regional o el uso de un mecanismo ya existente, como el Fondo Estratégico de la OPS o una negociación conjunta subregional.",
+        "doneWhen": "Tu contraparte deja de ser tu ministerio y pasa a ser un organismo multilateral donde no tienes acceso directo. Necesitas que las asociaciones de varios países pidan lo mismo a la vez, coordinando sin una estructura común y con calendarios políticos distintos.",
+        "why": "El reto de las cartas conjuntas por excelencia: varias organizaciones, cada una en un estado de firma distinto, y un plazo común que no puedes mover."
       },
       "a4": {
-        "title": "La petición que evoluciona y la carta que se firma en grupo",
-        "task": "Crea una petición con dos versiones: la primera pidiendo algo limitado, la segunda ampliándola y con el texto también en inglés. Añádele una evidencia. Después crea una carta conjunta con tres firmantes, cada uno en un estado distinto.",
-        "doneWhen": "La versión antigua sigue consultable en «Versiones anteriores», y el resumen de firmantes cuenta uno invitado, uno confirmado y uno firmado.",
-        "why": "Tu petición formal se irá afinando durante años y necesitas poder citar la versión exacta que enviaste. Y en las cartas conjuntas, la mitad del trabajo es perseguir firmas."
+        "title": "Una ley que sobreviva al gobierno que la aprobó",
+        "task": "La hemofilia no aparece en ninguna política nacional de enfermedades poco frecuentes, o aparece sin presupuesto etiquetado. El reto es conseguir que entre en la norma con financiación asignada, y que siga en pie después de una elección.",
+        "doneWhen": "El ciclo es más largo que un mandato. Tus interlocutores cambian a mitad del camino y hay que reconstruir la relación desde cero con quien llega, muchas veces sin que la administración le haya transferido el expediente.",
+        "why": "El reto que justifica seguir cargos y no solo personas: cuando cambie el titular, el historial de quién estuvo antes y qué se acordó es lo único que te queda."
       },
       "a5": {
-        "title": "El calendario a años vista, y rendir cuentas",
-        "task": "En el Calendario, crea un hito estratégico recurrente (un día de sensibilización). Navega con las flechas hasta ese mismo día del año siguiente. Después ve a Informes y descarga el PDF y el Excel.",
-        "doneWhen": "El hito aparece proyectado también en el otro año, no figura como «Vencido», y los dos archivos se descargan correctamente.",
-        "why": "Las fechas que de verdad marcan tu estrategia (presupuestos, elecciones, días mundiales) se repiten. Y todo esto no sirve de nada si no puedes sacarlo en un informe para la asamblea."
+        "title": "Las mujeres que el sistema no cuenta",
+        "task": "Las mujeres portadoras con sintomatología hemorrágica y las mujeres con hemofilia no están reconocidas en la norma, no acceden a diagnóstico ni a tratamiento, y en muchos registros ni figuran. El reto es cambiar la definición misma que usa el sistema.",
+        "doneWhen": "No estás pidiendo un recurso: estás pidiendo que se reconozca a un grupo que oficialmente no existe, así que no hay línea de base con la que argumentar. Y choca con la creencia clínica establecida de que la hemofilia es cosa de hombres, incluso entre profesionales aliados.",
+        "why": "El reto más difícil de medir: piensa qué indicador podrías construir cuando el punto de partida es cero registrado, y usa el registro de cobertura mediática, porque este es un reto que se gana también cambiando la conversación pública."
       }
     }
   },

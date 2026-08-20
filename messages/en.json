@@ -138,8 +138,8 @@
     "summaryAchieved": "Achieved",
     "summaryInProgress": "In progress",
     "summaryOverdue": "Past due date",
-    "workshopBannerTitle": "Workshop mode: 15 challenges to learn by doing",
-    "workshopBannerBody": "Five beginner, five intermediate and five advanced challenges, all completed inside this app.",
+    "workshopBannerTitle": "Workshop: 15 advocacy challenges",
+    "workshopBannerBody": "Real advocacy and lobbying challenges at three levels of complexity, to plan out using this app.",
     "workshopBannerCta": "See the challenges"
   },
   "GoalForm": {
@@ -608,119 +608,119 @@
     "goalNone": "None"
   },
   "Workshop": {
-    "title": "Workshop challenges",
-    "subtitle": "Fifteen hands-on challenges to learn PATHSapp by doing, not by watching.",
-    "howItWorks": "Every challenge is completed inside the app itself. Tick the box when you get it: your progress is saved only in this browser, so everyone moves at their own pace.",
-    "progress": "{done} of {total} challenges completed",
+    "title": "Advocacy challenges",
+    "subtitle": "Fifteen real advocacy and lobbying challenges, from lower to higher complexity, to work through as a group.",
+    "howItWorks": "Each challenge is an advocacy problem, not an exercise about the app. Pick one, decide the strategy, and use PATHSapp to structure it: who decides, who can help, what actions, what deadlines, and how you'll know it worked. Tick the box once your group has worked it through.",
+    "progress": "{done} of {total} challenges worked through",
     "reset": "Reset my progress",
-    "task": "What to do",
-    "doneWhen": "You've got it when",
-    "why": "Why it matters",
-    "backToApp": "Go and start playing with the app",
+    "task": "The scenario",
+    "doneWhen": "Why it's hard",
+    "why": "Take it to the app",
+    "backToApp": "Open the app to work on it",
     "levels": {
       "BEGINNER": {
-        "name": "Beginner",
-        "hint": "The basics: create, link, and see the result. Take your time."
+        "name": "Lower complexity",
+        "hint": "One counterpart, local scope, short cycle. Achievable in weeks or a few months, and the result is easy to verify."
       },
       "INTERMEDIATE": {
-        "name": "Intermediate",
-        "hint": "Here data starts crossing between pages. Watch how one thing changes another."
+        "name": "Medium complexity",
+        "hint": "Several actors with competing interests, provincial or national sector scope. Needs technical evidence, allies, and a one- to two-year cycle."
       },
       "ADVANCED": {
-        "name": "Advanced",
-        "hint": "Several steps and something to reason about. There's no single right path."
+        "name": "High complexity",
+        "hint": "Active resistance, public money at stake, national or regional scope. Requires a coalition, several parallel tracks, and surviving changes of government."
       }
     },
     "challenges": {
       "b1": {
-        "title": "Your first advocacy goal",
-        "task": "Create a goal of type “Outcome (getting)” with a name, an owner, a topic area, and a target date within this year.",
-        "doneWhen": "It shows on the home board with its “Outcome (getting)” tag, and the “Total goals” counter has gone up by one.",
-        "why": "The app separates doing things (Action) from getting things (Outcome). Picking the right type changes how it gets measured later."
+        "title": "From informal acquaintance to recognized counterpart",
+        "task": "Your association only talks to the head of haematology at the referral hospital when there's an emergency, over WhatsApp and on a personal basis. The challenge is to secure a first formal meeting, with minutes or a confirming email, establishing a stable channel.",
+        "doneWhen": "There's no opposition, but no urgency for the other side either: nobody says no, they just don't reply. The real challenge is persistence without burning the relationship by pushing badly.",
+        "why": "An Action-type goal. The department head is the one it “depends on”. Log every attempt (call, email, encounter) to see how many it took — that number is useful next time."
       },
       "b2": {
-        "title": "The directory is not a loose notebook",
-        "task": "Add a new contact to the directory and link them to your goal as “Depends on them”. Then link that same contact to a second, different goal.",
-        "doneWhen": "The contact appears on both goals, and opening their directory profile shows both goals listed.",
-        "why": "Contacts are shared across goals instead of duplicated. A ministry is the same ministry across every ask you make."
+        "title": "Making factor pickup hours public knowledge",
+        "task": "Families aren't sure of the factor bank's opening hours or who to call if it runs out after hours, and the information travels by word of mouth. The challenge is getting the hospital to publish it officially and accessibly.",
+        "doneWhen": "It looks trivial, but it hits diffuse responsibility: pharmacy says it's the department's, the department says it's communications'. You have to find who actually signs off.",
+        "why": "This is where tracking offices rather than just people pays off: you'll bounce between areas until you find the one with the mandate. Log each hand-off."
       },
       "b3": {
-        "title": "From the objective to concrete actions",
-        "task": "Add three actions to your goal: a letter, a meeting, and a third one marked as UNPLANNED. Mark the letter as “Done”.",
-        "doneWhen": "The progress bar reads 1 of 3 actions, and the “Unplanned” filter shows only one.",
-        "why": "A good share of real lobbying is reactive. Separating planned from what just came up lets you see how much of your work was improvised."
+        "title": "How many of us there are, according to the State",
+        "task": "There's no official count of people with haemophilia in your jurisdiction, or the one that exists is visibly lower than your own membership list. The challenge is getting the health authority's figure in writing, however bad it is.",
+        "doneWhen": "Asking for a figure is easy; getting it in writing is the hard part. And if it comes back very low, you have to decide whether to call it out publicly or use it quietly as leverage.",
+        "why": "The official figure is your baseline: store it as an indicator. The gap between their number and yours is the argument behind almost everything that follows."
       },
       "b4": {
-        "title": "Measure, don't just do",
-        "task": "Create an indicator linked to your goal with a target value and a current value (for example, 30 out of 100 patients with access).",
-        "doneWhen": "The indicator shows on the Indicators page with its percentage already calculated and its progress bar.",
-        "why": "Without indicators you can only count meetings. With indicators you can count results."
+        "title": "Making 17 April exist for the authorities",
+        "task": "World Haemophilia Day is marked by your association alone. The challenge is getting the local health authority to take it on: an official statement, lighting up a public building, or a joint activity.",
+        "doneWhen": "It's a low political cost ask, so it usually lands. The difficulty is the calendar: ask in March and you've missed their internal processes.",
+        "why": "Perfect for the strategic calendar: it's a recurring date. And for duplicating the goal as a template, since you'll run it again every year."
       },
       "b5": {
-        "title": "What outsiders actually see",
-        "task": "Mark one of your goals as “Achieved” and open the Public view from the top menu.",
-        "doneWhen": "The goal shows under “Achievements”, and you've confirmed no contact, internal note, or contact detail is visible there.",
-        "why": "The public view exists to show accountability without exposing who you negotiate with. Worth knowing exactly what gets published before you share the link."
+        "title": "A seat at a table that already exists",
+        "task": "There's an existing health advisory council, participation forum, or patient committee, with nobody representing bleeding disorders. The challenge is getting that seat, even as a non-voting guest.",
+        "doneWhen": "There's rarely a clear public call for applications: you get in through contacts. And once in, attendance has to be sustained with volunteers.",
+        "why": "A clear “door-opener” case: log which contact can introduce you to whoever decides that forum's composition."
       },
       "i1": {
-        "title": "The thermometer of a relationship",
-        "task": "On a goal, set a contact's stance to “Skeptical”. Save, then change it to “Champion”. Open the change history.",
-        "doneWhen": "The history shows both stance changes with their dates, not just the latest one.",
-        "why": "Someone moving from skeptical to champion IS the result of advocacy work. If you only store the current state, you lose the proof that you achieved it."
+        "title": "Making sure supply doesn't break again",
+        "task": "Last year there were two factor stockouts: one of three weeks, another of six. The challenge is securing a formal minimum-stock commitment and an early-warning mechanism that tells you before it runs out, not after.",
+        "doneWhen": "Nobody defends a stockout, but the cause is split between procurement, budget, customs, and the supplier. Each area refers you to the next, and you have to document the clinical harm without exposing personal stories.",
+        "why": "A challenge with many counterparts: use each one's stance to see where you have allies and where you don't. Log the commitments they make to you, with follow-up dates, because this is exactly the kind of promise that gets forgotten."
       },
       "i2": {
-        "title": "Meeting brief in one click",
-        "task": "Open a contact's profile, log two interactions (say a call and a meeting), and download their brief as a PDF.",
-        "doneWhen": "The PDF downloads and includes the logged interactions, the linked goals, and the contact's stance.",
-        "why": "This is the most useful challenge day to day: you're on your way to a meeting and need to recall the whole history with that person in two minutes."
+        "title": "A registry that's actually usable for planning",
+        "task": "There's no national bleeding disorders registry, or it exists on paper with no budget or staff. The challenge is getting it created or reactivated, with an allocated budget line and a named owner.",
+        "doneWhen": "Everyone agrees in the abstract and nobody wants to pay for it. It also collides with data protection, and you have to get into next year's budget cycle, not this one's.",
+        "why": "Here the strategic calendar rules: miss the window before the draft budget closes and you lose a year. Mark that window."
       },
       "i3": {
-        "title": "What they promised us",
-        "task": "On a contact's profile, log a commitment that person made to you, with a follow-up date in the future. Then mark it as “Fulfilled”.",
-        "doneWhen": "The commitment goes from “Pending” to “Fulfilled”, and its follow-up date shows highlighted while it's still pending.",
-        "why": "A commitment isn't an action of yours: it's someone else's promise. Logging it separately is what lets you chase it up six months later."
+        "title": "From treating bleeds to preventing them",
+        "task": "The current protocol covers on-demand treatment; prophylaxis is applied at each centre's and clinician's discretion. The challenge is getting prophylaxis recognized in the national clinical guideline or protocol.",
+        "doneWhen": "It's a technical debate where your association isn't the expert voice: you need the scientific society to lead. And the short-term cost argument works against you, even though the long-term one works for you.",
+        "why": "The versioned-petition challenge: your text will shift with whatever the scientific society will endorse. And joint letters, because you won't win this one alone."
       },
       "i4": {
-        "title": "The window you can't afford to miss",
-        "task": "Create two deadlines of type “Public consultation”: one falling within the next 30 days, and another with a date already past.",
-        "doneWhen": "The summary cards show one under “Due in 30 days”, and the past one appears with its date in red.",
-        "why": "Deadlines aren't set by you, they're opened by the outside world. Missing a public consultation can cost a whole year of work."
+        "title": "Comprehensive treatment centres, not scattered care",
+        "task": "People with haemophilia are seen at whichever hospital is nearest, with no experienced haematologist and no coordinated physiotherapy or dentistry. The challenge is getting accredited comprehensive treatment centres formally recognized.",
+        "doneWhen": "Concentrating care means some hospitals lose patients and budget — that's where the real resistance appears, and it comes from inside the system. It also worsens access for families living far away unless travel is solved too.",
+        "why": "Note that this challenge creates opposition: use the “opposed” stance without hesitation, and log the history when someone shifts position."
       },
       "i5": {
-        "title": "Prioritizing when there isn't enough time",
-        "task": "Go to Triage and score effort and impact (1 to 5) for at least four active goals, aiming to land one in each quadrant.",
-        "doneWhen": "All four quadrants of the matrix hold at least one goal, and none are left under “Not scored yet”.",
-        "why": "Every small organization has more fronts than hands. Seeing which are quick wins and which are thankless changes the board meeting conversation."
+        "title": "Living far away shouldn't cost you treatment",
+        "task": "Families in the interior spend more than they can afford on fares and lodging to reach the referral centre, and some simply stop going. The challenge is getting travel and accommodation covered.",
+        "doneWhen": "This isn't a health ask, it's social assistance or transport, so your usual counterpart has no mandate. You have to open a new door in a ministry you have no relationship with.",
+        "why": "A case where the contact graph beats the contact list: find who in your directory can introduce you to someone on the social side."
       },
       "a1": {
-        "title": "The campaign that repeats every year",
-        "task": "Pick a goal that has actions and contacts and duplicate it as a template with a new name. Then compare the original with the copy.",
-        "doneWhen": "You can name at least three things that were copied and three that were deliberately reset.",
-        "why": "World Hemophilia Day comes round every year. Reusing the playbook instead of reinventing it is the difference between planning and firefighting."
+        "title": "Getting onto the national medicines list",
+        "task": "An extended half-life or non-factor therapy is available in the country but isn't on the national essential medicines list (formulary, basic basket, or local equivalent). The challenge is getting it included with public coverage.",
+        "doneWhen": "The hardest and longest challenge: it has to clear a health technology assessment on cost-effectiveness criteria, and even when approved it can be blocked on budget. It's measured in years, not months, and the price is set by someone who isn't at the table.",
+        "why": "This needs everything: a versioned petition, clinical and economic evidence attached, a stance map of the assessment committee, and the outcome chain so you can explain afterwards how it was won."
       },
       "a2": {
-        "title": "The story of how it was won",
-        "task": "Take a goal, give it actions with different dates and at least one contact stance change. Mark it as “Achieved”. Read the section that appears. Then set it back to “In progress”.",
-        "doneWhen": "“How it happened” appears with the events in chronological order; reopening the goal makes the section disappear.",
-        "why": "When a funder or a partner asks “so how did you pull that off?”, the answer isn't a date: it's the sequence. The app reconstructs it for you."
+        "title": "Reversing a cut that's already decided",
+        "task": "The health authority has just reduced coverage you already had: fewer units per patient, or an age group excluded. The challenge is getting it restored.",
+        "doneWhen": "You're on the defensive with the clock against you. Three tracks have to open at once (administrative, judicial, and public via the press) knowing the public track can slam the negotiating door shut. Deciding how much noise to make is the strategic call.",
+        "why": "A deadline challenge: the administrative appeal has a hard cut-off. And a media coverage one: log every appearance and its tone, because you'll have to justify the strategy later."
       },
       "a3": {
-        "title": "The office outlives the person",
-        "task": "Create a position (say “Secretary of Health”), assign a holder with a start date, then assign a successor with a later date. Finally, edit the current holder to record that they left with no successor yet.",
-        "doneWhen": "The succession history shows the first holder's date range, and the position is marked “Vacant”.",
-        "why": "After an election the person changes, but your counterpart is still the office. Keeping who held it before gives you context a normal directory erases."
+        "title": "Buying together to pay less",
+        "task": "Your country buys factor in small volumes and pays far more than neighbouring countries. The challenge is pushing for regional joint procurement, or for use of an existing mechanism such as the PAHO Strategic Fund or a sub-regional joint negotiation.",
+        "doneWhen": "Your counterpart stops being your ministry and becomes a multilateral body you have no direct access to. You need associations in several countries asking for the same thing at the same time, coordinating with no shared structure and on different political calendars.",
+        "why": "The joint-letter challenge par excellence: several organizations, each at a different signing stage, against a shared deadline you can't move."
       },
       "a4": {
-        "title": "The ask that evolves and the letter signed as a group",
-        "task": "Create a petition with two versions: the first asking for something limited, the second broadening it and with the text in English too. Add one piece of evidence. Then create a joint letter with three co-signers, each in a different status.",
-        "doneWhen": "The old version is still readable under “Earlier versions”, and the co-signer summary counts one invited, one confirmed, and one signed.",
-        "why": "Your formal ask will keep getting refined over years and you need to cite the exact version you sent. And with joint letters, half the work is chasing signatures."
+        "title": "A law that outlives the government that passed it",
+        "task": "Haemophilia appears in no national rare disease policy, or appears with no earmarked budget. The challenge is getting it into the legislation with allocated funding, and keeping it there after an election.",
+        "doneWhen": "The cycle is longer than a term of office. Your counterparts change midway and the relationship has to be rebuilt from scratch with whoever arrives, often without the administration having handed over the file.",
+        "why": "The challenge that justifies tracking offices, not just people: when the holder changes, the record of who was there before and what was agreed is all you have left."
       },
       "a5": {
-        "title": "The calendar years ahead, and showing your work",
-        "task": "On the Calendar, create a recurring strategic milestone (an awareness day). Use the arrows to navigate to that same day next year. Then go to Reports and download both the PDF and the Excel.",
-        "doneWhen": "The milestone also appears projected in the other year, never shows as “Overdue”, and both files download correctly.",
-        "why": "The dates that really shape your strategy (budgets, elections, world days) repeat. And none of this counts if you can't get it out as a report for the general assembly."
+        "title": "The women the system doesn't count",
+        "task": "Symptomatic carriers and women with haemophilia aren't recognized in the regulations, can't access diagnosis or treatment, and don't even appear in many registries. The challenge is changing the definition the system itself uses.",
+        "doneWhen": "You're not asking for a resource: you're asking for recognition of a group that officially doesn't exist, so there's no baseline to argue from. And it collides with the established clinical belief that haemophilia is a male condition, even among allied professionals.",
+        "why": "The hardest one to measure: think about what indicator you could build when the starting point is zero on record, and use the media coverage log, because this is a challenge won partly by changing the public conversation."
       }
     }
   },
