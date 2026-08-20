@@ -3,8 +3,12 @@ import { NextResponse } from "next/server";
 import { buildReportLabels, getReportData } from "@/lib/reports";
 import { percentOf } from "@/lib/goal-helpers";
 import { routing } from "@/i18n/routing";
+import { requireTeamApi } from "@/lib/team-api";
 
 export async function GET(request: Request) {
+  const { team, error: authError } = await requireTeamApi();
+  if (authError) return authError;
+
   const { searchParams } = new URL(request.url);
   const rawLocale = searchParams.get("locale");
   const locale = routing.locales.includes(rawLocale as never)
@@ -12,7 +16,7 @@ export async function GET(request: Request) {
     : routing.defaultLocale;
 
   const [{ goals, globalIndicators }, labels] = await Promise.all([
-    getReportData(),
+    getReportData(team),
     buildReportLabels(locale),
   ]);
 

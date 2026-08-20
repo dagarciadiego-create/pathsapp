@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { CheckCircle2, Sparkles, Gauge } from "lucide-react";
 import { prisma } from "@/lib/prisma";
+import { requireTeam } from "@/lib/team-session";
 import { StatCard } from "@/components/ui/stat-card";
 import { ProgressBar } from "@/components/ui/progress-bar";
 import { computeGoalProgress, formatDate, formatIndicatorValue, percentOf } from "@/lib/goal-helpers";
@@ -14,22 +15,26 @@ export default async function PublicPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+  // Scoped like every other page: this is the team's own public view,
+  // not a shared page pooling all ten teams' achievements together.
+  const team = await requireTeam(locale);
 
   const [t, tEnums, achievedGoals, inProgressGoals, globalIndicators] = await Promise.all([
     getTranslations("PublicPage"),
     getTranslations("Enums"),
     prisma.advocacyGoal.findMany({
-      where: { status: "ACHIEVED" },
+      where: { team, status: "ACHIEVED" },
       include: { subtasks: { select: { status: true } } },
       orderBy: { updatedAt: "desc" },
     }),
     prisma.advocacyGoal.findMany({
-      where: { status: "IN_PROGRESS" },
+      where: { team, status: "IN_PROGRESS" },
       include: { subtasks: { select: { status: true } } },
       orderBy: { createdAt: "asc" },
     }),
     prisma.indicator.findMany({
       where: {
+        team,
         OR: [{ goalId: null }, { goal: { status: { in: ["ACHIEVED", "IN_PROGRESS"] } } }],
       },
       orderBy: { createdAt: "asc" },

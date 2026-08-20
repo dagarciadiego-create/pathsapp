@@ -65,6 +65,26 @@ añadirse a la pantalla de inicio del móvil y usarse como una app.
   indicadores de impacto. Tiene su propia cabecera, distinta del panel
   interno, pensada para compartir con socios, prensa o el público en general.
 
+### Modo taller: diez equipos, diez espacios separados
+- La aplicación se abre en `/login`, donde solo hay que elegir un equipo:
+  **EQUIPO1 … EQUIPO10**. No hay contraseñas: es un separador de trabajo
+  para un taller, no un sistema de autenticación.
+- Cada equipo ve y edita **únicamente sus propios datos**. Todo lo que se
+  crea queda marcado con el equipo, y todas las consultas y modificaciones
+  se filtran por él, así que diez grupos pueden trabajar a la vez en la
+  misma instalación sin pisarse.
+- Los diez equipos arrancan con **el mismo juego de ejemplos**, para que
+  todos empiecen desde el mismo punto.
+- La cabecera muestra siempre a qué equipo pertenece lo que se está viendo,
+  y desde ahí se puede cambiar de equipo.
+
+### Taller: 15 retos de incidencia política
+- En `/workshop` hay quince retos reales de advocacy y lobby, en tres niveles
+  de complejidad (baja, media, alta), pensados para trabajarlos en grupo y
+  planificarlos con la aplicación.
+- Los retos **se pueden leer sin elegir equipo**, para repartirlos antes de
+  empezar. El progreso de cada reto se marca en el propio navegador.
+
 ### Bilingüe y "como una app"
 - Selector de idioma ES/EN persistente en la URL (`/es/...`, `/en/...`).
 - Manifest + iconos PWA: en el móvil se puede "Añadir a pantalla de inicio"
@@ -180,6 +200,14 @@ Contact (directorio compartido, independiente de las labores)
 
 Indicator (también puede existir sin `goal` → indicador general de la entidad)
 ```
+
+Todos los modelos que se crean directamente (labores, contactos, cargos, fechas
+estratégicas, portavoces, indicadores, plazos, peticiones, evidencias, cartas
+conjuntas y cobertura mediática) llevan una columna `team` obligatoria y sin
+valor por defecto: el código **tiene** que decir para qué equipo escribe, y el
+compilador avisa si se olvida. Los registros hijos (acciones, adjuntos,
+compromisos, versiones, firmantes…) no la llevan: heredan el equipo de su
+padre, y la propiedad se comprueba a través de la relación.
 
 Esquema completo en [`prisma/schema.prisma`](./prisma/schema.prisma).
 

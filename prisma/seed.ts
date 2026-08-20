@@ -2,9 +2,15 @@ import "dotenv/config";
 import { PrismaClient } from "../src/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { resolveDatabaseUrl } from "../src/lib/database-url";
+import { TEAMS } from "../src/lib/teams";
 
 const adapter = new PrismaPg({ connectionString: resolveDatabaseUrl() });
 const prisma = new PrismaClient({ adapter });
+
+// Everything below belongs to one team. That's deliberate: this is the
+// local development fixture, so a single team is enough to work against,
+// and it matches the team the team-scoping migration backfilled into.
+const TEAM = TEAMS[0];
 
 async function main() {
   await prisma.evidence.deleteMany();
@@ -33,6 +39,7 @@ async function main() {
   // being duplicated per goal.
   const ministerioCartera = await prisma.contact.create({
     data: {
+      team: TEAM,
       name: "Dirección General de Cartera Común de Servicios",
       organization: "Ministerio de Sanidad",
       role: "Órgano decisor",
@@ -42,6 +49,7 @@ async function main() {
   });
   const ministerioCalidad = await prisma.contact.create({
     data: {
+      team: TEAM,
       name: "Subdirección de Calidad y Cohesión",
       organization: "Ministerio de Sanidad",
       role: "Responsable de registros de enfermedades raras",
@@ -49,6 +57,7 @@ async function main() {
   });
   const drElenaRuiz = await prisma.contact.create({
     data: {
+      team: TEAM,
       name: "Dra. Elena Ruiz",
       organization: "Sociedad Española de Trombosis y Hemostasia (SETH)",
       role: "Vocal de hemofilia",
@@ -59,6 +68,7 @@ async function main() {
   });
   const diputadoSanidad = await prisma.contact.create({
     data: {
+      team: TEAM,
       name: "Diputado Portavoz de Sanidad",
       organization: "Comisión de Sanidad del Congreso",
       role: "Portavoz",
@@ -66,6 +76,7 @@ async function main() {
   });
   const feder = await prisma.contact.create({
     data: {
+      team: TEAM,
       name: "Federación Española de Enfermedades Raras (FEDER)",
       role: "Aliado",
       email: "info@feder.org",
@@ -73,6 +84,7 @@ async function main() {
   });
   const redaccionSalud = await prisma.contact.create({
     data: {
+      team: TEAM,
       name: "Redacción de Salud",
       organization: "Televisión regional",
       role: "Contacto de prensa",
@@ -82,6 +94,7 @@ async function main() {
   // A contact in the directory not linked to any goal yet.
   await prisma.contact.create({
     data: {
+      team: TEAM,
       name: "Concejalía de Sanidad y Bienestar Social",
       organization: "Ayuntamiento",
       role: "Posible aliado local",
@@ -92,6 +105,7 @@ async function main() {
   // the "Ministro/a de Sanidad" position (see Position/PositionHolder).
   const martaSanchez = await prisma.contact.create({
     data: {
+      team: TEAM,
       name: "Marta Sánchez Ibáñez",
       organization: "Gobierno de España",
       role: "Exministra de Sanidad (2022-2024)",
@@ -99,6 +113,7 @@ async function main() {
   });
   const carlosFerrer = await prisma.contact.create({
     data: {
+      team: TEAM,
       name: "Carlos Ferrer Puig",
       organization: "Gobierno de España",
       role: "Ministro de Sanidad",
@@ -108,6 +123,7 @@ async function main() {
 
   const financiacion = await prisma.advocacyGoal.create({
     data: {
+      team: TEAM,
       name: "Financiación pública de la profilaxis con factores de vida media prolongada",
       kind: "OUTCOME",
       responsible: "María López (Junta Directiva)",
@@ -156,6 +172,7 @@ async function main() {
       indicators: {
         create: [
           {
+            team: TEAM,
             name: "% de pacientes con acceso a profilaxis de vida media prolongada",
             targetValue: 100,
             currentValue: 42,
@@ -168,6 +185,7 @@ async function main() {
 
   const registro = await prisma.advocacyGoal.create({
     data: {
+      team: TEAM,
       name: "Puesta en marcha del Registro Nacional de Hemofilia",
       kind: "OUTCOME",
       responsible: "Javier Torres (Coordinador de Incidencia Política)",
@@ -199,6 +217,7 @@ async function main() {
       indicators: {
         create: [
           {
+            team: TEAM,
             name: "Comunidades Autónomas que alimentan el registro",
             targetValue: 17,
             currentValue: 0,
@@ -211,6 +230,7 @@ async function main() {
 
   const sensibilizacion = await prisma.advocacyGoal.create({
     data: {
+      team: TEAM,
       name: "Campaña de sensibilización 'Hemofilia Visible' en el Día Mundial",
       kind: "ACTION",
       responsible: "Ana Belén Gómez (Comunicación)",
@@ -250,12 +270,14 @@ async function main() {
       indicators: {
         create: [
           {
+            team: TEAM,
             name: "Impactos en medios de comunicación",
             targetValue: 20,
             currentValue: 6,
             unit: "impactos",
           },
           {
+            team: TEAM,
             name: "Personas alcanzadas en redes sociales",
             targetValue: 50000,
             currentValue: 12500,
@@ -268,6 +290,7 @@ async function main() {
 
   const centroReferencia = await prisma.advocacyGoal.create({
     data: {
+      team: TEAM,
       name: "Reconocimiento de la unidad de referencia en hemofilia",
       kind: "OUTCOME",
       responsible: "María López (Junta Directiva)",
@@ -347,6 +370,7 @@ async function main() {
   // A global indicator not tied to a single goal.
   await prisma.indicator.create({
     data: {
+      team: TEAM,
       name: "Satisfacción general de los socios con la labor de incidencia",
       targetValue: 9,
       currentValue: 7.2,
@@ -398,6 +422,7 @@ async function main() {
   // --- An external window we need to act within -----------------------
   await prisma.deadline.create({
     data: {
+      team: TEAM,
       title: "Consulta pública sobre actualización de la cartera común de servicios",
       kind: "PUBLIC_CONSULTATION",
       description: "Ventana para presentar alegaciones antes de que se cierre el trámite.",
@@ -411,6 +436,7 @@ async function main() {
   // --- A position tracked separately from who currently holds it ------
   const ministroSanidad = await prisma.position.create({
     data: {
+      team: TEAM,
       title: "Ministro/a de Sanidad",
       organization: "Gobierno de España",
     },
@@ -435,6 +461,7 @@ async function main() {
   await prisma.strategicDate.createMany({
     data: [
       {
+        team: TEAM,
         title: "Día Mundial de la Hemofilia",
         kind: "AWARENESS_DAY",
         date: new Date("2026-04-17"),
@@ -442,6 +469,7 @@ async function main() {
         isRecurring: true,
       },
       {
+        team: TEAM,
         title: "Presentación de los Presupuestos Generales del Estado",
         kind: "BUDGET",
         date: new Date("2026-10-01"),
@@ -454,6 +482,7 @@ async function main() {
   // --- Designated spokesperson ------------------------------------------
   await prisma.spokesperson.create({
     data: {
+      team: TEAM,
       name: "María López",
       role: "Vicepresidenta, Junta Directiva",
       topics: "Acceso a tratamiento, financiación pública, relaciones institucionales",
@@ -465,6 +494,7 @@ async function main() {
   // --- Petition & evidence library ---------------------------------------
   const peticionProfilaxis = await prisma.petition.create({
     data: {
+      team: TEAM,
       title: "Acceso universal a la profilaxis con factores de vida media prolongada",
       category: "Acceso a tratamiento",
     },
@@ -490,6 +520,7 @@ async function main() {
   });
   await prisma.evidence.create({
     data: {
+      team: TEAM,
       petitionId: peticionProfilaxis.id,
       title: "Informe técnico-clínico de la SETH sobre coste-efectividad",
       source: "Sociedad Española de Trombosis y Hemostasia (SETH)",
@@ -501,6 +532,7 @@ async function main() {
   // --- Joint sign-on letter -----------------------------------------------
   const cartaConjunta = await prisma.jointLetter.create({
     data: {
+      team: TEAM,
       title: "Carta conjunta a favor de la financiación universal de la profilaxis",
       targetName: "Ministerio de Sanidad",
       sentDate: new Date("2026-05-20"),
@@ -534,6 +566,7 @@ async function main() {
   await prisma.mediaCoverage.createMany({
     data: [
       {
+        team: TEAM,
         outlet: "Televisión Regional",
         title: "Piden financiación universal para el tratamiento de la hemofilia",
         publishedDate: new Date("2026-04-18"),
@@ -542,6 +575,7 @@ async function main() {
         goalId: sensibilizacion.id,
       },
       {
+        team: TEAM,
         outlet: "Diario Sanitario",
         title: "El coste de ampliar la cobertura de profilaxis genera debate",
         publishedDate: new Date("2026-06-02"),

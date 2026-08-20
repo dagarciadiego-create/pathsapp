@@ -2,7 +2,7 @@
   "Nav": {
     "brand": "PATHSapp",
     "tagline": "Advocacy y lobby en hemofilia",
-    "home": "Labores de advocacy",
+    "home": "Labores",
     "workshop": "Taller",
     "indicators": "Indicadores de éxito",
     "contacts": "Directorio",
@@ -19,6 +19,22 @@
     "publicPage": "Vista pública",
     "language": "Idioma",
     "menu": "Menú"
+  },
+  "Login": {
+    "title": "Elige tu equipo",
+    "subtitle": "Este es el espacio de trabajo del taller. Selecciona el equipo que te han asignado para empezar.",
+    "isolationNote": "Cada equipo trabaja en su propio espacio: lo que creéis no lo verán los demás equipos, y lo que hagan ellos no os afectará.",
+    "pickTeam": "Equipos",
+    "invalidTeam": "Ese equipo no existe. Elige uno de la lista.",
+    "currentlyIn": "Ahora mismo estás en {team}. Si eliges otro equipo, dejarás de ver el trabajo de este.",
+    "seeChallenges": "Ver los retos del taller",
+    "challengesHint": "Puedes leer los retos antes de elegir equipo."
+  },
+  "TeamBadge": {
+    "label": "Equipo",
+    "switch": "Cambiar de equipo",
+    "noTeam": "Sin equipo",
+    "chooseTeam": "Elegir equipo"
   },
   "Common": {
     "add": "Añadir",

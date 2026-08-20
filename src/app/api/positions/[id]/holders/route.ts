@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { positionHolderAssignSchema } from "@/lib/validation";
 import { jsonError, parseJson, zodError } from "@/lib/api-utils";
+import { requireTeamApi } from "@/lib/team-api";
 
 type Params = { params: Promise<{ id: string }> };
 
@@ -11,6 +12,9 @@ type Params = { params: Promise<{ id: string }> };
 // overlap. Corrections to an existing holder record go through
 // PATCH /api/position-holders/[id] instead, which has no such side effect.
 export async function POST(request: Request, { params }: Params) {
+  const { team, error: authError } = await requireTeamApi();
+  if (authError) return authError;
+
   const { id: positionId } = await params;
   const { data, error } = await parseJson(request);
   if (error) return error;
@@ -18,10 +22,10 @@ export async function POST(request: Request, { params }: Params) {
   const parsed = positionHolderAssignSchema.safeParse(data);
   if (!parsed.success) return zodError(parsed.error);
 
-  const position = await prisma.position.findUnique({ where: { id: positionId } });
+  const position = await prisma.position.findFirst({ where: { id: positionId, team } });
   if (!position) return jsonError("Position not found", 404);
 
-  const contact = await prisma.contact.findUnique({ where: { id: parsed.data.contactId } });
+  const contact = await prisma.contact.findFirst({ where: { id: parsed.data.contactId, team } });
   if (!contact) return jsonError("Contact not found", 404);
 
   const startDate = new Date(parsed.data.startDate);

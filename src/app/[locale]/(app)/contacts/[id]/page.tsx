@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
+import { requireTeam } from "@/lib/team-session";
 import { ContactDetailView } from "@/components/contact-detail-view";
 import { normalizeConnections } from "@/lib/contact-helpers";
 
@@ -13,10 +14,11 @@ export default async function ContactDetailPage({
 }) {
   const { locale, id } = await params;
   setRequestLocale(locale);
+  const team = await requireTeam(locale);
 
   const [contact, allContacts] = await Promise.all([
-    prisma.contact.findUnique({
-      where: { id },
+    prisma.contact.findFirst({
+      where: { id, team },
       include: {
         goalLinks: {
           include: { goal: { select: { id: true, name: true } }, stanceHistory: { orderBy: { changedAt: "desc" } } },
@@ -34,7 +36,11 @@ export default async function ContactDetailPage({
         connectionsAsB: { include: { contactA: true, contactB: true } },
       },
     }),
-    prisma.contact.findMany({ select: { id: true, name: true }, orderBy: { name: "asc" } }),
+    prisma.contact.findMany({
+      where: { team },
+      select: { id: true, name: true },
+      orderBy: { name: "asc" },
+    }),
   ]);
 
   if (!contact) notFound();

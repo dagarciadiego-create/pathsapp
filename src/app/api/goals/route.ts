@@ -2,14 +2,19 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { goalInputSchema } from "@/lib/validation";
 import { parseJson, zodError } from "@/lib/api-utils";
+import { requireTeamApi } from "@/lib/team-api";
 
 export async function GET(request: Request) {
+  const { team, error: authError } = await requireTeamApi();
+  if (authError) return authError;
+
   const { searchParams } = new URL(request.url);
   const kind = searchParams.get("kind");
   const status = searchParams.get("status");
 
   const goals = await prisma.advocacyGoal.findMany({
     where: {
+      team,
       ...(kind ? { kind } : {}),
       ...(status ? { status } : {}),
     },
@@ -24,6 +29,9 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
+  const { team, error: authError } = await requireTeamApi();
+  if (authError) return authError;
+
   const { data, error } = await parseJson(request);
   if (error) return error;
 
@@ -34,6 +42,7 @@ export async function POST(request: Request) {
   const goal = await prisma.advocacyGoal.create({
     data: {
       ...rest,
+      team,
       targetDate: targetDate ? new Date(targetDate) : null,
       achievedAt: rest.status === "ACHIEVED" ? new Date() : null,
     },

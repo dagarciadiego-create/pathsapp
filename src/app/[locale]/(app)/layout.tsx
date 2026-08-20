@@ -1,24 +1,16 @@
-import { getTranslations } from "next-intl/server";
-import { NavHeader } from "@/components/nav-header";
+import { AppShell } from "@/components/app-shell";
+import { requireTeam } from "@/lib/team-session";
 
-export default function AppLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <>
-      <NavHeader />
-      <main className="flex-1">{children}</main>
-      <footer className="border-t border-slate-200 py-4 text-center text-xs text-slate-500 dark:border-slate-800 dark:text-slate-400">
-        <FooterHint />
-      </footer>
-    </>
-  );
-}
-
-async function FooterHint() {
-  const t = await getTranslations("Footer");
-  return (
-    <div className="space-y-1 px-4">
-      <p>{t("installHint")}</p>
-      <p>{t("privacyNotice", { year: new Date().getFullYear() })}</p>
-    </div>
-  );
+export default async function AppLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  // Every page under (app) also requires a team, but gating the layout
+  // means a page added later without that check still can't render.
+  const team = await requireTeam(locale);
+  return <AppShell team={team}>{children}</AppShell>;
 }

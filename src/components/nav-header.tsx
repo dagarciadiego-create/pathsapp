@@ -21,13 +21,15 @@ import {
   Menu,
   X,
   ChevronDown,
+  Users,
 } from "lucide-react";
 import { Link, usePathname } from "@/i18n/navigation";
 import { LocaleSwitcher } from "./locale-switcher";
 import { clsx } from "clsx";
 
-export function NavHeader() {
+export function NavHeader({ team }: { team: string | null }) {
   const t = useTranslations("Nav");
+  const tTeam = useTranslations("TeamBadge");
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
@@ -53,6 +55,7 @@ export function NavHeader() {
     { href: "/media-coverage", label: t("mediaCoverage"), icon: Newspaper },
     { href: "/indicators", label: t("indicators"), icon: Gauge },
     { href: "/reports", label: t("reports"), icon: FileDown },
+    { href: "/public", label: t("publicPage"), icon: Globe },
   ];
   const allLinks = [...primaryLinks, ...moreLinks];
 
@@ -90,6 +93,26 @@ export function NavHeader() {
         >
           <HeartPulse className="h-6 w-6" aria-hidden />
           <span>{t("brand")}</span>
+        </Link>
+
+        {/* Shown at every width on purpose: in a room of ten teams the
+            most important thing on screen is whose data this is. On the
+            workshop challenges page, which is readable before a team is
+            assigned, it becomes the invitation to pick one. */}
+        <Link
+          href="/login?switch=1"
+          title={team ? tTeam("switch") : tTeam("chooseTeam")}
+          className="flex shrink-0 items-center gap-1.5 rounded-full border border-amber-300 bg-amber-50 px-2.5 py-1 text-xs font-semibold tracking-wide text-amber-800 hover:bg-amber-100 dark:border-amber-700 dark:bg-amber-950 dark:text-amber-200 dark:hover:bg-amber-900"
+        >
+          <Users className="h-3.5 w-3.5" aria-hidden />
+          {team ? (
+            <>
+              <span className="sr-only">{tTeam("label")}: </span>
+              {team}
+            </>
+          ) : (
+            tTeam("chooseTeam")
+          )}
         </Link>
 
         <nav className="hidden flex-1 items-center gap-1 lg:flex">
@@ -138,13 +161,6 @@ export function NavHeader() {
         </div>
 
         <div className="hidden items-center gap-2 lg:ml-auto lg:flex">
-          <Link
-            href="/public"
-            className="flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
-          >
-            <Globe className="h-4 w-4" aria-hidden />
-            {t("publicPage")}
-          </Link>
           <LocaleSwitcher />
         </div>
 
@@ -178,12 +194,12 @@ export function NavHeader() {
             </Link>
           ))}
           <Link
-            href="/public"
+            href="/login?switch=1"
             onClick={() => setMenuOpen(false)}
             className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-500 dark:text-slate-400"
           >
-            <Globe className="h-4 w-4" aria-hidden />
-            {t("publicPage")}
+            <Users className="h-4 w-4" aria-hidden />
+            {team ? tTeam("switch") : tTeam("chooseTeam")}
           </Link>
           <div className="px-3 py-2">
             <LocaleSwitcher />

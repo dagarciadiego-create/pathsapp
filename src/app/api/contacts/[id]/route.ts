@@ -2,14 +2,17 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { contactUpdateSchema } from "@/lib/validation";
 import { isRecordNotFoundError, jsonError, parseJson, zodError } from "@/lib/api-utils";
+import { requireTeamApi } from "@/lib/team-api";
 import { normalizeConnections } from "@/lib/contact-helpers";
 
 type Params = { params: Promise<{ id: string }> };
 
 export async function GET(_request: Request, { params }: Params) {
+  const { team, error: authError } = await requireTeamApi();
+  if (authError) return authError;
+
   const { id } = await params;
-  const contact = await prisma.contact.findUnique({
-    where: { id },
+  const contact = await prisma.contact.findFirst({ where: { id, team },
     include: {
       goalLinks: {
         include: { goal: { select: { id: true, name: true } } },
@@ -37,6 +40,9 @@ export async function GET(_request: Request, { params }: Params) {
 }
 
 export async function PATCH(request: Request, { params }: Params) {
+  const { team, error: authError } = await requireTeamApi();
+  if (authError) return authError;
+
   const { id } = await params;
   const { data, error } = await parseJson(request);
   if (error) return error;
@@ -45,7 +51,7 @@ export async function PATCH(request: Request, { params }: Params) {
   if (!parsed.success) return zodError(parsed.error);
 
   const contact = await prisma.contact
-    .update({ where: { id }, data: parsed.data })
+    .update({ where: { id, team }, data: parsed.data })
     .catch((err) => {
       if (isRecordNotFoundError(err)) return null;
       throw err;
@@ -56,8 +62,12 @@ export async function PATCH(request: Request, { params }: Params) {
 }
 
 export async function DELETE(_request: Request, { params }: Params) {
+  const { team, error: authError } = await requireTeamApi();
+  if (authError) return authError;
+
   const { id } = await params;
-  const deleted = await prisma.contact.delete({ where: { id } }).catch((err) => {
+  const deleted = await prisma.contact
+    .delete({ where: { id, team } }).catch((err) => {
     if (isRecordNotFoundError(err)) return null;
     throw err;
   });

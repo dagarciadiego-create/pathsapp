@@ -2,7 +2,7 @@
   "Nav": {
     "brand": "PATHSapp",
     "tagline": "Hemophilia advocacy & lobby",
-    "home": "Advocacy goals",
+    "home": "Goals",
     "workshop": "Workshop",
     "indicators": "Success indicators",
     "contacts": "Directory",
@@ -19,6 +19,22 @@
     "publicPage": "Public view",
     "language": "Language",
     "menu": "Menu"
+  },
+  "Login": {
+    "title": "Choose your team",
+    "subtitle": "This is the workshop workspace. Select the team you've been assigned to get started.",
+    "isolationNote": "Each team works in its own space: what you create won't be visible to the other teams, and what they do won't affect you.",
+    "pickTeam": "Teams",
+    "invalidTeam": "That team doesn't exist. Pick one from the list.",
+    "currentlyIn": "You're currently in {team}. Choosing another team means you'll stop seeing this one's work.",
+    "seeChallenges": "See the workshop challenges",
+    "challengesHint": "You can read the challenges before choosing a team."
+  },
+  "TeamBadge": {
+    "label": "Team",
+    "switch": "Switch team",
+    "noTeam": "No team",
+    "chooseTeam": "Choose team"
   },
   "Common": {
     "add": "Add",

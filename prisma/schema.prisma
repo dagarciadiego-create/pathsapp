@@ -14,7 +14,10 @@ datasource db {
 
 /// A single advocacy/lobby objective ("labor de advocacy y lobby").
 model AdvocacyGoal {
-  id          String   @id @default(cuid())
+  id          String    @id @default(cuid())
+  /// Workshop team that owns this record. Every query is scoped by
+  /// it so the groups in the room don't see each other's work.
+  team        String
   name        String
   /// "ACTION" (hacer cosas) | "OUTCOME" (conseguir cosas)
   kind        String
@@ -24,7 +27,7 @@ model AdvocacyGoal {
   description String?
   targetDate  DateTime?
   /// "NOT_STARTED" | "IN_PROGRESS" | "ACHIEVED" | "STALLED" | "CANCELLED"
-  status      String   @default("IN_PROGRESS")
+  status      String    @default("IN_PROGRESS")
   /// Effort to achieve it (1=low..5=high) for the effort-impact triage view.
   /// Unset until the user scores it.
   effortScore Int?
@@ -34,8 +37,8 @@ model AdvocacyGoal {
   /// so the outcome-chain narrative has a real date instead of reusing
   /// updatedAt, which changes on any unrelated edit.
   achievedAt  DateTime?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
   goalContacts  GoalContact[]
   subtasks      Subtask[]
@@ -44,6 +47,8 @@ model AdvocacyGoal {
   deadlines     Deadline[]
   jointLetters  JointLetter[]
   mediaCoverage MediaCoverage[]
+
+  @@index([team])
 }
 
 /// A stakeholder in the shared contact directory. Not tied to a single
@@ -51,6 +56,9 @@ model AdvocacyGoal {
 /// (see GoalContact).
 model Contact {
   id           String   @id @default(cuid())
+  /// Workshop team that owns this record. Every query is scoped by
+  /// it so the groups in the room don't see each other's work.
+  team         String
   name         String
   organization String?
   role         String?
@@ -60,13 +68,15 @@ model Contact {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  goalLinks    GoalContact[]
+  goalLinks           GoalContact[]
   /// Interaction log entries involving this contact (see Subtask.contactId).
-  interactions Subtask[]
-  commitments  Commitment[]
-  connectionsAsA ContactConnection[] @relation("ConnectionA")
-  connectionsAsB ContactConnection[] @relation("ConnectionB")
+  interactions        Subtask[]
+  commitments         Commitment[]
+  connectionsAsA      ContactConnection[] @relation("ConnectionA")
+  connectionsAsB      ContactConnection[] @relation("ConnectionB")
   positionHolderships PositionHolder[]
+
+  @@index([team])
 }
 
 /// An office/seat whose occupant changes over time (a ministry
@@ -75,12 +85,17 @@ model Contact {
 /// "whoever holds this role" survives an election or a reshuffle.
 model Position {
   id           String   @id @default(cuid())
+  /// Workshop team that owns this record. Every query is scoped by
+  /// it so the groups in the room don't see each other's work.
+  team         String
   title        String
   organization String?
   notes        String?
   createdAt    DateTime @default(now())
 
   holders PositionHolder[]
+
+  @@index([team])
 }
 
 /// One person's tenure in a Position. The current holder is the one with
@@ -107,6 +122,9 @@ model PositionHolder {
 /// takes itself.
 model StrategicDate {
   id          String   @id @default(cuid())
+  /// Workshop team that owns this record. Every query is scoped by
+  /// it so the groups in the room don't see each other's work.
+  team        String
   title       String
   /// "BUDGET" | "ELECTION" | "AWARENESS_DAY" | "LEGISLATIVE" | "OTHER"
   kind        String
@@ -117,6 +135,8 @@ model StrategicDate {
   /// particular election).
   isRecurring Boolean  @default(false)
   createdAt   DateTime @default(now())
+
+  @@index([team])
 }
 
 /// A designated spokesperson authorized to represent the organization
@@ -124,6 +144,9 @@ model StrategicDate {
 /// rather than the organization's own people.
 model Spokesperson {
   id           String   @id @default(cuid())
+  /// Workshop team that owns this record. Every query is scoped by
+  /// it so the groups in the room don't see each other's work.
+  team         String
   name         String
   role         String?
   /// Topics/areas this person is prepared to speak on (free text, kept
@@ -138,6 +161,8 @@ model Spokesperson {
   notes        String?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+
+  @@index([team])
 }
 
 /// An informal link between two contacts — "who can open a door to X" —
@@ -241,18 +266,22 @@ model Attachment {
 
 /// A success indicator / KPI, optionally linked to a specific goal.
 model Indicator {
-  id           String   @id @default(cuid())
+  id           String        @id @default(cuid())
+  /// Workshop team that owns this record. Every query is scoped by
+  /// it so the groups in the room don't see each other's work.
+  team         String
   goalId       String?
   goal         AdvocacyGoal? @relation(fields: [goalId], references: [id], onDelete: SetNull)
   name         String
   targetValue  Float
-  currentValue Float    @default(0)
+  currentValue Float         @default(0)
   unit         String?
   notes        String?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
 
   @@index([goalId])
+  @@index([team])
 }
 
 /// A promise made *to us* by a contact (not an action we took) — e.g. "the
@@ -283,6 +312,9 @@ model Commitment {
 /// window the outside world opened that we need to act within.
 model Deadline {
   id          String        @id @default(cuid())
+  /// Workshop team that owns this record. Every query is scoped by
+  /// it so the groups in the room don't see each other's work.
+  team        String
   title       String
   /// "PUBLIC_CONSULTATION" | "HEARING" | "AMENDMENT" | "OTHER"
   kind        String
@@ -298,6 +330,7 @@ model Deadline {
   updatedAt   DateTime      @updatedAt
 
   @@index([goalId])
+  @@index([team])
 }
 
 /// A reusable formal ask/petition (a policy demand, a position statement)
@@ -305,6 +338,9 @@ model Deadline {
 /// changes to the wording stay visible instead of being overwritten.
 model Petition {
   id        String   @id @default(cuid())
+  /// Workshop team that owns this record. Every query is scoped by
+  /// it so the groups in the room don't see each other's work.
+  team      String
   title     String
   category  String?
   createdAt DateTime @default(now())
@@ -312,6 +348,8 @@ model Petition {
 
   versions PetitionVersion[]
   evidence Evidence[]
+
+  @@index([team])
 }
 
 /// One version of a petition's text, in Spanish and (optionally) English
@@ -332,6 +370,10 @@ model PetitionVersion {
 /// testimonials) backing a petition.
 model Evidence {
   id         String    @id @default(cuid())
+  // Evidence carries its own team rather than inheriting one from the
+  // petition: petitionId is nullable, so a deleted petition would
+  // otherwise leave orphan rows belonging to nobody.
+  team       String
   petitionId String?
   petition   Petition? @relation(fields: [petitionId], references: [id], onDelete: SetNull)
   title      String
@@ -341,6 +383,7 @@ model Evidence {
   createdAt  DateTime  @default(now())
 
   @@index([petitionId])
+  @@index([team])
 }
 
 /// A joint sign-on letter — an advocacy letter several organizations
@@ -349,6 +392,9 @@ model Evidence {
 /// took alone.
 model JointLetter {
   id         String        @id @default(cuid())
+  /// Workshop team that owns this record. Every query is scoped by
+  /// it so the groups in the room don't see each other's work.
+  team       String
   title      String
   targetName String?
   sentDate   DateTime?
@@ -363,6 +409,7 @@ model JointLetter {
   cosigners JointLetterCosigner[]
 
   @@index([goalId])
+  @@index([team])
 }
 
 /// One organization's co-signing status on a joint letter.
@@ -384,6 +431,9 @@ model JointLetterCosigner {
 /// show its media footprint and track how coverage of a goal evolves.
 model MediaCoverage {
   id            String        @id @default(cuid())
+  /// Workshop team that owns this record. Every query is scoped by
+  /// it so the groups in the room don't see each other's work.
+  team          String
   outlet        String
   title         String
   url           String?
@@ -397,4 +447,5 @@ model MediaCoverage {
   createdAt     DateTime      @default(now())
 
   @@index([goalId])
+  @@index([team])
 }

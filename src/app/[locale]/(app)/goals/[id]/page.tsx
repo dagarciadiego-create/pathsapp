@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
+import { requireTeam } from "@/lib/team-session";
 import { GoalDetailView } from "@/components/goal-detail-view";
 
 export const dynamic = "force-dynamic";
@@ -12,10 +13,11 @@ export default async function GoalDetailPage({
 }) {
   const { locale, id } = await params;
   setRequestLocale(locale);
+  const team = await requireTeam(locale);
 
   const [goal, directoryContacts] = await Promise.all([
-    prisma.advocacyGoal.findUnique({
-      where: { id },
+    prisma.advocacyGoal.findFirst({
+      where: { id, team },
       include: {
         goalContacts: {
           include: { contact: true, stanceHistory: { orderBy: { changedAt: "desc" } } },
@@ -25,7 +27,7 @@ export default async function GoalDetailPage({
         indicators: { orderBy: { createdAt: "asc" } },
       },
     }),
-    prisma.contact.findMany({ orderBy: { name: "asc" } }),
+    prisma.contact.findMany({ where: { team }, orderBy: { name: "asc" } }),
   ]);
 
   if (!goal) notFound();

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { goalDuplicateSchema } from "@/lib/validation";
 import { jsonError, parseJson, zodError } from "@/lib/api-utils";
+import { requireTeamApi } from "@/lib/team-api";
 
 type Params = { params: Promise<{ id: string }> };
 
@@ -11,6 +12,9 @@ type Params = { params: Promise<{ id: string }> };
 // everything tied to a specific past run: dates, statuses and stance
 // history reset, attachments/deadlines/commitments aren't carried over.
 export async function POST(request: Request, { params }: Params) {
+  const { team, error: authError } = await requireTeamApi();
+  if (authError) return authError;
+
   const { id } = await params;
   const { data, error } = await parseJson(request);
   if (error) return error;
@@ -18,8 +22,7 @@ export async function POST(request: Request, { params }: Params) {
   const parsed = goalDuplicateSchema.safeParse(data);
   if (!parsed.success) return zodError(parsed.error);
 
-  const original = await prisma.advocacyGoal.findUnique({
-    where: { id },
+  const original = await prisma.advocacyGoal.findFirst({ where: { id, team },
     include: { subtasks: true, goalContacts: true, indicators: true },
   });
   if (!original) return jsonError("Goal not found", 404);
@@ -27,6 +30,7 @@ export async function POST(request: Request, { params }: Params) {
   const created = await prisma.advocacyGoal.create({
     data: {
       name: parsed.data.name,
+      team,
       kind: original.kind,
       responsible: original.responsible,
       category: original.category,
@@ -56,6 +60,7 @@ export async function POST(request: Request, { params }: Params) {
       },
       indicators: {
         create: original.indicators.map((i) => ({
+          team,
           name: i.name,
           targetValue: i.targetValue,
           currentValue: 0,

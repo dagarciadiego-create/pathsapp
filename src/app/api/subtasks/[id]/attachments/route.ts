@@ -6,13 +6,22 @@ import {
   MAX_ATTACHMENT_SIZE,
   saveUploadedFile,
 } from "@/lib/storage";
+import { requireTeamApi } from "@/lib/team-api";
 
 type Params = { params: Promise<{ id: string }> };
 
 export async function POST(request: Request, { params }: Params) {
+  const { team, error: authError } = await requireTeamApi();
+  if (authError) return authError;
+
   const { id: subtaskId } = await params;
 
-  const subtask = await prisma.subtask.findUnique({ where: { id: subtaskId } });
+  // The subtask has no team of its own — it inherits one from its
+  // parent, so ownership is checked through the relation.
+  const subtask = await prisma.subtask.findFirst({
+    where: { id: subtaskId, OR: [{ goal: { team } }, { contact: { team } }] },
+    select: { id: true },
+  });
   if (!subtask) return jsonError("Subtask not found", 404);
 
   const formData = await request.formData().catch(() => null);

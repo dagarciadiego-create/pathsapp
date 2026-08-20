@@ -2,10 +2,12 @@ import { getTranslations } from "next-intl/server";
 import { prisma } from "./prisma";
 import { computeGoalProgress } from "./goal-helpers";
 import { GOAL_KINDS, GOAL_STATUSES } from "./constants";
+import type { Team } from "./teams";
 
-export async function getReportData() {
+export async function getReportData(team: Team) {
   const [goals, indicators] = await Promise.all([
     prisma.advocacyGoal.findMany({
+      where: { team },
       include: {
         subtasks: { select: { status: true } },
         goalContacts: { include: { contact: true } },
@@ -14,7 +16,7 @@ export async function getReportData() {
       orderBy: { createdAt: "asc" },
     }),
     prisma.indicator.findMany({
-      where: { goalId: null },
+      where: { team, goalId: null },
       orderBy: { createdAt: "asc" },
     }),
   ]);
@@ -38,10 +40,10 @@ export type ReportData = Awaited<ReturnType<typeof getReportData>>;
 // Lightweight variant for the Reports page's summary cards, which only
 // need the three counts below — unlike getReportData (used by the actual
 // PDF/Excel export), it never loads every goal's subtasks/contacts.
-export async function getReportSummary() {
+export async function getReportSummary(team: Team) {
   const [total, byStatus] = await Promise.all([
-    prisma.advocacyGoal.count(),
-    prisma.advocacyGoal.groupBy({ by: ["status"], _count: true }),
+    prisma.advocacyGoal.count({ where: { team } }),
+    prisma.advocacyGoal.groupBy({ by: ["status"], where: { team }, _count: true }),
   ]);
   const countFor = (status: string) =>
     byStatus.find((g) => g.status === status)?._count ?? 0;

@@ -1,6 +1,7 @@
 import { renderToBuffer } from "@react-pdf/renderer";
 import { NextResponse } from "next/server";
 import { jsonError } from "@/lib/api-utils";
+import { requireTeamApi } from "@/lib/team-api";
 import { buildContactBriefLabels, getContactBriefData } from "@/lib/contact-brief";
 import { ContactBriefPdf } from "@/components/pdf/contact-brief-pdf";
 import { routing } from "@/i18n/routing";
@@ -8,6 +9,9 @@ import { routing } from "@/i18n/routing";
 type Params = { params: Promise<{ id: string }> };
 
 export async function GET(request: Request, { params }: Params) {
+  const { team, error: authError } = await requireTeamApi();
+  if (authError) return authError;
+
   const { id } = await params;
   const { searchParams } = new URL(request.url);
   const rawLocale = searchParams.get("locale");
@@ -16,7 +20,7 @@ export async function GET(request: Request, { params }: Params) {
     : routing.defaultLocale;
 
   const [contact, labels] = await Promise.all([
-    getContactBriefData(id),
+    getContactBriefData(id, team),
     buildContactBriefLabels(locale),
   ]);
   if (!contact) return jsonError("Contact not found", 404);

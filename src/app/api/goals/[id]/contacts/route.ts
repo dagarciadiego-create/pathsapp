@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { goalContactLinkSchema } from "@/lib/validation";
 import { isUniqueConstraintError, jsonError, parseJson, zodError } from "@/lib/api-utils";
+import { requireTeamApi } from "@/lib/team-api";
 
 type Params = { params: Promise<{ id: string }> };
 
@@ -9,6 +10,9 @@ type Params = { params: Promise<{ id: string }> };
 // an existing contact by id, or creates a brand new directory contact and
 // links it in the same step.
 export async function POST(request: Request, { params }: Params) {
+  const { team, error: authError } = await requireTeamApi();
+  if (authError) return authError;
+
   const { id: goalId } = await params;
   const { data, error } = await parseJson(request);
   if (error) return error;
@@ -16,13 +20,13 @@ export async function POST(request: Request, { params }: Params) {
   const parsed = goalContactLinkSchema.safeParse(data);
   if (!parsed.success) return zodError(parsed.error);
 
-  const goal = await prisma.advocacyGoal.findUnique({ where: { id: goalId } });
+  const goal = await prisma.advocacyGoal.findFirst({ where: { id: goalId, team } });
   if (!goal) return jsonError("Goal not found", 404);
 
   const { contactId, contact, relation, notes } = parsed.data;
 
   if (contactId) {
-    const existing = await prisma.contact.findUnique({ where: { id: contactId } });
+    const existing = await prisma.contact.findFirst({ where: { id: contactId, team } });
     if (!existing) return jsonError("Contact not found", 404);
   }
 
@@ -32,7 +36,9 @@ export async function POST(request: Request, { params }: Params) {
         goal: { connect: { id: goalId } },
         relation,
         notes,
-        contact: contactId ? { connect: { id: contactId } } : { create: contact! },
+        contact: contactId
+          ? { connect: { id: contactId } }
+          : { create: { ...contact!, team } },
       },
       include: { contact: true },
     })

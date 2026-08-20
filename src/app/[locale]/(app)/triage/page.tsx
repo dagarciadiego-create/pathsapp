@@ -1,5 +1,6 @@
 import { setRequestLocale } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
+import { requireTeam } from "@/lib/team-session";
 import { TriagePage } from "@/components/triage-page";
 
 export const dynamic = "force-dynamic";
@@ -11,9 +12,10 @@ export default async function TriageRoute({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const team = await requireTeam(locale);
 
   const goals = await prisma.advocacyGoal.findMany({
-    where: { status: { notIn: ["ACHIEVED", "CANCELLED"] } },
+    where: { team, status: { notIn: ["ACHIEVED", "CANCELLED"] } },
     select: {
       id: true,
       name: true,

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { jsonError } from "@/lib/api-utils";
+import { requireTeamApi } from "@/lib/team-api";
 import { INLINE_RENDERABLE_MIME_TYPES, readStoredFile } from "@/lib/storage";
 
 type Params = { params: Promise<{ id: string }> };
@@ -12,8 +13,15 @@ function asciiFallback(filename: string) {
 }
 
 export async function GET(_request: Request, { params }: Params) {
+  const { team, error: authError } = await requireTeamApi();
+  if (authError) return authError;
+
   const { id } = await params;
-  const attachment = await prisma.attachment.findUnique({ where: { id } });
+  // The attachment has no team of its own — it inherits one through
+  // its subtask, so ownership is checked through the relation.
+  const attachment = await prisma.attachment.findFirst({
+    where: { id, subtask: { OR: [{ goal: { team } }, { contact: { team } }] } },
+  });
   if (!attachment) return jsonError("Attachment not found", 404);
 
   const buffer = await readStoredFile(attachment.storageKey).catch(() => null);

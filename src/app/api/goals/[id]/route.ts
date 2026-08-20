@@ -2,13 +2,16 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { goalUpdateSchema } from "@/lib/validation";
 import { isRecordNotFoundError, jsonError, parseJson, zodError } from "@/lib/api-utils";
+import { requireTeamApi } from "@/lib/team-api";
 
 type Params = { params: Promise<{ id: string }> };
 
 export async function GET(_request: Request, { params }: Params) {
+  const { team, error: authError } = await requireTeamApi();
+  if (authError) return authError;
+
   const { id } = await params;
-  const goal = await prisma.advocacyGoal.findUnique({
-    where: { id },
+  const goal = await prisma.advocacyGoal.findFirst({ where: { id, team },
     include: {
       goalContacts: {
         include: { contact: true, stanceHistory: { orderBy: { changedAt: "desc" } } },
@@ -23,6 +26,9 @@ export async function GET(_request: Request, { params }: Params) {
 }
 
 export async function PATCH(request: Request, { params }: Params) {
+  const { team, error: authError } = await requireTeamApi();
+  if (authError) return authError;
+
   const { id } = await params;
   const { data, error } = await parseJson(request);
   if (error) return error;
@@ -30,7 +36,7 @@ export async function PATCH(request: Request, { params }: Params) {
   const parsed = goalUpdateSchema.safeParse(data);
   if (!parsed.success) return zodError(parsed.error);
 
-  const existing = await prisma.advocacyGoal.findUnique({ where: { id }, select: { status: true } });
+  const existing = await prisma.advocacyGoal.findFirst({ where: { id, team }, select: { status: true } });
   if (!existing) return jsonError("Goal not found", 404);
 
   const { targetDate, ...rest } = parsed.data;
@@ -47,7 +53,7 @@ export async function PATCH(request: Request, { params }: Params) {
 
   const goal = await prisma.advocacyGoal
     .update({
-      where: { id },
+      where: { id, team },
       data: {
         ...rest,
         ...(targetDate !== undefined
@@ -66,8 +72,12 @@ export async function PATCH(request: Request, { params }: Params) {
 }
 
 export async function DELETE(_request: Request, { params }: Params) {
+  const { team, error: authError } = await requireTeamApi();
+  if (authError) return authError;
+
   const { id } = await params;
-  const deleted = await prisma.advocacyGoal.delete({ where: { id } }).catch((err) => {
+  const deleted = await prisma.advocacyGoal
+    .delete({ where: { id, team } }).catch((err) => {
     if (isRecordNotFoundError(err)) return null;
     throw err;
   });

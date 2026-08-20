@@ -1,9 +1,9 @@
 import { getTranslations } from "next-intl/server";
 import { prisma } from "./prisma";
 
-export async function getContactBriefData(contactId: string) {
-  return prisma.contact.findUnique({
-    where: { id: contactId },
+export async function getContactBriefData(contactId: string, team: string) {
+  return prisma.contact.findFirst({
+    where: { id: contactId, team },
     include: {
       goalLinks: { include: { goal: true }, orderBy: { createdAt: "asc" } },
       interactions: { orderBy: { createdAt: "desc" }, take: 8 },
